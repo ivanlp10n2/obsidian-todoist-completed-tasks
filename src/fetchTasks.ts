@@ -1,3 +1,4 @@
+import { log } from "console";
 import { Notice } from "obsidian";
 
 export interface RawTodoistTask {
@@ -29,6 +30,7 @@ function generateRawTodoistTask(
             projectId: task.project_id,
         };
     }
+
 }
 
 export async function fetchTasks(
@@ -43,7 +45,8 @@ export async function fetchTasks(
         timeEndFormattedTime,
     } = timeFrames;
 
-    const limit = renderSubtasks ? 30 : 200;
+    // const limit = renderSubtasks ? 30 : 200;
+    const limit = 200; // https://developer.todoist.com/sync/v9/#get-all-completed-items
 
     let mappedResults: any[] = [];
 
@@ -149,18 +152,19 @@ export async function fetchTasks(
 
 export async function fetchSingleTask(
     authToken: string,
-    parentId: string
+    parentId: string,
+    fetchFn: (url: string, options: RequestInit) => Promise<Response> = fetch
 ): Promise<any> {
     try {
         const url = `https://api.todoist.com/sync/v9/items/get?item_id=${parentId}`;
-        let parentTask = await fetch(url, {
+        let parentTask = await fetchFn(url, {
             headers: {
                 Authorization: `Bearer ${authToken}`,
             },
         });
         const task = await parentTask.json();
-
-        return generateRawTodoistTask(task, true);
+        const res = generateRawTodoistTask(task, true)
+        return res;
     } catch (e) {
         let errorMsg = "";
         switch (e.httpStatusCode) {

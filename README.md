@@ -1,5 +1,22 @@
 # Todoist Completed Tasks - Obsidian Plugin
 
+
+# how to run it as dev
+-  `npm install`
+-  `npm run build`
+    - this should create `main.js` 
+- copy `main.js` to `<vault>/plugins/todoist-completed-tasks/main.js`
+- `npm run build && cp main.js ~/Obsidian\ Notebook/personal/.obsidian/plugins/todoist-completed-tasks-plugin/main.js`
+- disable and enable the plugin to reload it
+
+- add __mocks__ folder to the root of the project
+
+### how to test it
+- `npm install --save-dev ts-jest @types/jest`
+
+
+
+
 This obsidian plugin fetches your completed tasks from Todoist and adds them to your obsidian note.
 
 ![demo](https://raw.githubusercontent.com/Ledaryy/obsidian-todoist-completed-tasks/master/static/gif/plugin_preview_v1.2.0.gif)
