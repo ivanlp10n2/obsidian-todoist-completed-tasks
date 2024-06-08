@@ -1,6 +1,5 @@
 # Todoist Completed Tasks - Obsidian Plugin
 #### forked to do my things, donations are for they
-<<<<<<< HEAD
 
 ### 📋 current todolist :
 - [ ] feat: test serialization and document jsons in code
@@ -54,8 +53,6 @@
 - `npm test`
 
 ---
-=======
->>>>>>> 9858c15 (updated README)
 
 ### 📋 current todolist :
 - [ ] feat: test serialization and document jsons in code
