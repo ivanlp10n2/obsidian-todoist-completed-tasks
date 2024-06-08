@@ -1,8 +1,8 @@
 import { App, Notice, MarkdownView } from "obsidian";
-import { TodoistSettings } from "./DefaultSettings";
-import { fetchTasks } from "./fetchTasks";
+import { TodoistSettings } from "../constants/DefaultSettings";
+import { fetchCompletedTasks } from "./fetchTasks";
 import { renderTasksAsText, prepareTasksForRendering } from "./formatTasks";
-import { FETCH_STRATEGIES } from "./constants/shared";
+import { FETCH_STRATEGIES } from "../constants/shared";
 import {
     getTimeframesForUsersToday,
     getTimeframesForLastNHours,
@@ -44,10 +44,9 @@ export async function updateFileFromServer(
         return;
     }
 
-    const fetchResults = await fetchTasks(
+    const fetchResults = await fetchCompletedTasks(
         settings.authToken,
-        timeFrames,
-        settings.renderSubtasks
+        timeFrames
     );
 
     if (fetchResults.tasksResults.length === 0) {

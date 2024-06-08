@@ -1,11 +1,11 @@
 import { Notice, Plugin } from "obsidian";
-import { updateFileFromServer } from "./src/updateFileContent";
-import { DEFAULT_SETTINGS, TodoistSettings } from "./src/DefaultSettings";
-import { migrateSettings } from "./src/settingsMigrations";
-import { ExampleModal } from "./src/modal";
-import { getTimeframesForLastNHoursWithoutOffset } from "./src/utils";
-import { TodoistPluginSettingTab } from "./src/settingsTabs";
-import { FETCH_STRATEGIES } from "./src/constants/shared";
+import { updateFileFromServer } from "./components/updateFileContent";
+import { DEFAULT_SETTINGS, TodoistSettings } from "./constants/DefaultSettings";
+import { migrateSettings } from "./components/settingsMigrations";
+import { ExampleModal } from "./components/modal";
+import { getTimeframesForLastNHoursWithoutOffset } from "./components/utils";
+import { TodoistPluginSettingTab } from "./components/settingsTabs";
+import { FETCH_STRATEGIES } from "./constants/shared";
 
 export default class TodoistCompletedTasks extends Plugin {
     settings: TodoistSettings;

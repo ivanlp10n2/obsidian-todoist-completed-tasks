@@ -1,14 +1,8 @@
 import { moment, Notice } from "obsidian";
-import { TodoistSettings } from "./DefaultSettings";
-import { RawTodoistTask } from "./constants/shared";
+import { TodoistSettings } from "../constants/DefaultSettings";
+import { RawTodoistTask } from "../constants/shared";
+import { TodoistTask } from "../constants/formatTasks";
 
-export interface TodoistTask {
-    taskId: number;
-    content: string;
-    dateCompleted: Date | null;
-    childTasks: TodoistTask[];
-    projectId?: string | null;
-}
 
 function prepareTasksForRendering(tasks: any) {
     let childTasks = tasks.filter(
@@ -140,7 +134,6 @@ function renderTasksAsText(
                         });
                     returnString += "\n" + childTasks.join("\n");
                 }
-                console.log("return string: ", returnString);
                 return returnString;
 
             });

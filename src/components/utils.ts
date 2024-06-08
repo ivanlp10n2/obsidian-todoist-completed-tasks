@@ -1,6 +1,6 @@
 import { moment, Notice } from "obsidian";
-import { CONSTANTS_SEGMENTS, CONSTANTS_REGEX } from "./constants/utils";
-import { FETCH_STRATEGIES } from "./constants/shared";
+import { CONSTANTS_SEGMENTS, CONSTANTS_REGEX } from "../constants/utils";
+import { FETCH_STRATEGIES } from "../constants/shared";
 
 function getTimeframesForUsersToday(): any {
     let currentTime = new Date();
