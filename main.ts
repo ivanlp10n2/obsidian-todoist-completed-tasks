@@ -5,7 +5,7 @@ import { migrateSettings } from "./src/settingsMigrations";
 import { ExampleModal } from "./src/modal";
 import { getTimeframesForLastNHoursWithoutOffset } from "./src/utils";
 import { TodoistPluginSettingTab } from "./src/settingsTabs";
-import { FETCH_STRATEGIES } from "./src/constants";
+import { FETCH_STRATEGIES } from "./src/constants/shared";
 
 export default class TodoistCompletedTasks extends Plugin {
     settings: TodoistSettings;

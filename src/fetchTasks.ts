@@ -1,13 +1,7 @@
 import { log } from "console";
 import { Notice } from "obsidian";
 
-export interface RawTodoistTask {
-    readonly taskId: string;
-    readonly parentId: string | null;
-    readonly content: string;
-    readonly dateCompleted: string | null;
-    readonly projectId: string;
-}
+import { RawTodoistTask } from "./constants/shared";
 
 function generateRawTodoistTask(
     task: any,
@@ -144,16 +138,24 @@ export async function fetchTasks(
             default:
                 `There was a problem pulling data from Todoist. ${e.responseData}`;
         }
-        console.log(errorMsg, e);
+        console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;
     }
 }
 
+async function wrapperFetch(url: string, options: RequestInit): Promise<Response> {
+    console.log("fetching", url);
+    console.log("with options", options);
+    const res = await fetch(url, options);
+    console.log("res", res);
+    return res;
+}
+
 export async function fetchSingleTask(
     authToken: string,
     parentId: string,
-    fetchFn: (url: string, options: RequestInit) => Promise<Response> = fetch
+    fetchFn: (url: string, options: RequestInit) => Promise<Response> = wrapperFetch
 ): Promise<any> {
     try {
         const url = `https://api.todoist.com/sync/v9/items/get?item_id=${parentId}`;
@@ -162,8 +164,8 @@ export async function fetchSingleTask(
                 Authorization: `Bearer ${authToken}`,
             },
         });
-        const task = await parentTask.json();
-        const res = generateRawTodoistTask(task, true)
+        const task: any = await parentTask.json();
+        const res: RawTodoistTask = generateRawTodoistTask(task, true)
         return res;
     } catch (e) {
         let errorMsg = "";
@@ -179,7 +181,7 @@ export async function fetchSingleTask(
             default:
                 `There was a problem pulling data from Todoist. ${e.responseData}`;
         }
-        console.log(errorMsg, e);
+        console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;
     }

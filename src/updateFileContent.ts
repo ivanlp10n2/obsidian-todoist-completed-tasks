@@ -2,7 +2,7 @@ import { App, Notice, MarkdownView } from "obsidian";
 import { TodoistSettings } from "./DefaultSettings";
 import { fetchTasks } from "./fetchTasks";
 import { renderTasksAsText, prepareTasksForRendering } from "./formatTasks";
-import { FETCH_STRATEGIES } from "./constants";
+import { FETCH_STRATEGIES } from "./constants/shared";
 import {
     getTimeframesForUsersToday,
     getTimeframesForLastNHours,

@@ -1,6 +1,6 @@
 import { moment, Notice } from "obsidian";
 import { TodoistSettings } from "./DefaultSettings";
-import { RawTodoistTask } from "./fetchTasks";
+import { RawTodoistTask } from "./constants/shared";
 
 export interface TodoistTask {
     taskId: number;
@@ -140,7 +140,9 @@ function renderTasksAsText(
                         });
                     returnString += "\n" + childTasks.join("\n");
                 }
+                console.log("return string: ", returnString);
                 return returnString;
+
             });
         }
 
@@ -166,7 +168,7 @@ function renderTasksAsText(
             return formattedTasks;
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
         new Notice(
             "There was a problem formatting your tasks. Check the console for more details.",
             10000

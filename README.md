@@ -1,7 +1,46 @@
 # Todoist Completed Tasks - Obsidian Plugin
+#### forked to do my things, donations are for they
+<<<<<<< HEAD
 
+### 📋 current todolist :
+- [ ] feat: test serialization and document jsons in code
+- feat: refactor tested code
+- [ ] res: define what's the best way to handle data for dataview
+    - I will have to `upsert` notes for each task
+    - I will create folders for each day
+        - todoist-sync/YYYY/MM/DD/task-title.md
+        - I would create folders based on `dueAt`
+            - update `status` based on `completedAt`
+    - with metadata:
+        - status: inprogress | completed
+        - section: section-name
+        - project: project-name
+        - createdAt: YYYY-MM-DD:HH:MM:SS
+        - dueAt: YYYY-MM-DD:HH:MM:SS
+        - completedAt: YYYY-MM-DD:HH:MM:SS
+        - priority: 1
+        - tags: #todoist #sync #labels
+    - and data structure:
+        - description
+        - sub-tasks
+            - link to `todoist-sync/YYYY/MM/DD/task-title/sub-task-title.md`
+        - comments
+            - link to `todoist-sync/YYYY/MM/DD/task-title/comments.md`
+- [ ] res: define how can I save it into a particular path
+    - [ ] res: how can I create files in there or put at the end if the already exists
+- [ ] tech: add new values to test
+- [ ] implement solution. can be a new serialization impl
+    - [ ] deserialize
+    - [ ] save in folder with upsert strategy
+    - [ ] paste script only (depends on how do we handle data) 
+- [ ] test all other important functions to start refactoring
+- convention in code would be: 
+    - `startLowerCamelCase` for variable and class names
+    - `StartUpperCamelCase` for constants
+    - `snake_case` for json and object fields becase todoist also uses it
+    - `kebab-case` for filenames and folders
 
-# how to run it as dev
+## how to run it as dev
 -  `npm install`
 -  `npm run build`
     - this should create `main.js` 
@@ -9,13 +48,67 @@
 - `npm run build && cp main.js ~/Obsidian\ Notebook/personal/.obsidian/plugins/todoist-completed-tasks-plugin/main.js`
 - disable and enable the plugin to reload it
 
+## how to test it
 - add __mocks__ folder to the root of the project
-
-### how to test it
 - `npm install --save-dev ts-jest @types/jest`
+- `npm test`
 
+---
+=======
+>>>>>>> 9858c15 (updated README)
 
+### 📋 current todolist :
+- [ ] feat: test serialization and document jsons in code
+- feat: refactor tested code
+- [ ] res: define what's the best way to handle data for dataview
+    - I will have to `upsert` notes for each task
+    - I will create folders for each day
+        - todoist-sync/YYYY/MM/DD/task-title.md
+        - I would create folders based on `dueAt`
+            - update `status` based on `completedAt`
+    - with metadata:
+        - status: inprogress | completed
+        - section: section-name
+        - project: project-name
+        - createdAt: YYYY-MM-DD:HH:MM:SS
+        - dueAt: YYYY-MM-DD:HH:MM:SS
+        - completedAt: YYYY-MM-DD:HH:MM:SS
+        - priority: 1
+        - tags: #todoist #sync #labels
+    - and data structure:
+        - description
+        - sub-tasks
+            - link to `todoist-sync/YYYY/MM/DD/task-title/sub-task-title.md`
+        - comments
+            - link to `todoist-sync/YYYY/MM/DD/task-title/comments.md`
+- [ ] res: define how can I save it into a particular path
+    - [ ] res: how can I create files in there or put at the end if the already exists
+- [ ] tech: add new values to test
+- [ ] implement solution. can be a new serialization impl
+    - [ ] deserialize
+    - [ ] save in folder with upsert strategy
+    - [ ] paste script only (depends on how do we handle data) 
+- [ ] test all other important functions to start refactoring
+- convention in code would be: 
+    - `startLowerCamelCase` for variable and class names
+    - `StartUpperCamelCase` for constants
+    - `snake_case` for json and object fields becase todoist also uses it
+    - `kebab-case` for filenames and folders
 
+## how to run it as dev
+-  `npm install`
+-  `npm run build`
+    - this should create `main.js` 
+- copy `main.js` to `<vault>/plugins/todoist-completed-tasks/main.js`
+- `npm run build && cp main.js ~/Obsidian\ Notebook/personal/.obsidian/plugins/todoist-completed-tasks-plugin/main.js`
+- disable and enable the plugin to reload it
+
+## how to test it
+- add __mocks__ folder to the root of the project
+- `npm install --save-dev ts-jest @types/jest`
+- `npm test`
+
+---
 
 This obsidian plugin fetches your completed tasks from Todoist and adds them to your obsidian note.
 

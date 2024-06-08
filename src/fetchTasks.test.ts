@@ -1,6 +1,11 @@
 import { fetchSingleTask } from './fetchTasks';
+import { apiGetItems } from './constants/fetchTasks';
 
 describe('fetchSingleTask', () => {
+  xit ('fetch a tasks with rendering', () => {
+
+  })
+
  it('should fetch a single task successfully', async () => {
     const authToken = 'your-auth-token';
     const parentId = 'task-id';
@@ -13,18 +18,19 @@ describe('fetchSingleTask', () => {
 
     const result = await fetchSingleTask(authToken, parentId, fetchMock);
 
-    expect(fetchMock).toHaveBeenCalledWith( `https://api.todoist.com/sync/v9/items/get?item_id=${parentId}`,
+    expect(fetchMock).toHaveBeenCalledWith( apiGetItems(parentId),
       { headers: { Authorization: `Bearer ${authToken}` } }
     );
     expect(result).toEqual(expectedSingleTask);
   });
 
-  it('should handle authentication error', async () => {
+  it('fetch single task handle authentication error', async () => {
     const authToken = 'invalid-auth-token';
     const parentId = 'task-id';
     const errorResponse = {
       httpStatusCode: 403,
-      responseData: 'Authentication failed',
+      responseData: 'Authentication with todoist server failed. Check that' +
+                    ' your API token is set correctly in the settings.',
     };
 
     const fetchMock = jest.fn().mockRejectedValueOnce(errorResponse);
@@ -36,6 +42,7 @@ describe('fetchSingleTask', () => {
   });
 
 });
+
 const expectedSingleTask = { 
   taskId: '6587712824', 
   parentId: null as null, 
