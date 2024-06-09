@@ -4,17 +4,15 @@ import { RawTodoistTask } from "../constants/shared";
 import { TodoistTask } from "../constants/formatTasks";
 
 
-function prepareTasksForRendering(tasks: RawTodoistTask[]) {
-    // console.log("prepare tasks for rendering", tasks);
-    let childTasks = tasks.filter(
-        (task: RawTodoistTask) => task.parentId !== null
+function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
+    let childTasks: RawTodoistTask[] = tasks.filter(
+    (task: RawTodoistTask) => task.parentId !== null
     );
+
     let renderedTasks: TodoistTask[] = [];
 
-    function convertToDateObj(date: string) {
-        if (date === null) {
-            return null;
-        }
+    function convertToDateObj(date: string): Date | null {
+        if (date === null) return null;
         return new Date(date);
     }
 
@@ -31,9 +29,10 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]) {
     });
 
     childTasks.forEach(async (task: any) => {
-        const parentTaskIndex = renderedTasks.findIndex(
+        const parentTaskIndex: number = renderedTasks.findIndex(
             (t: TodoistTask) => t.taskId === task.parentId
         );
+
         renderedTasks[parentTaskIndex].childTasks.push({
             taskId: task.taskId,
             content: task.content,
@@ -143,12 +142,12 @@ function renderTasksAsText(
 
         if (settings.renderProjectsHeaders) {
             for (const [key, project] of Object.entries(projectsMetadata)) {
-                let projectTasks = tasks.filter(
+                let projectTasks: RawTodoistTask[] = tasks.filter(
                     (task: any) => task.projectId === key
                 );
                 allTasks += renderProjectHeader(project);
 
-                let formattedTasks = renderTaskText(projectTasks, settings);
+                let formattedTasks: string[] = renderTaskText(projectTasks, settings);
 
                 allTasks += formattedTasks.join("\n");
             }

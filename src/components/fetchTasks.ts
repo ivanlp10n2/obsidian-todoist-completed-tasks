@@ -10,7 +10,6 @@ import { Domain } from "../constants/fetchTasks";
 
 async function debugWrapper(url: string, options: RequestInit): Promise<any> {
     const jsonResponse: any = await fetch(url, options).then((res) => res.json());
-    // console.log(`task_id [${jsonResponse.item.id}] : `, jsonResponse)
     return jsonResponse;
 }
 export async function fetchSingleTask(
@@ -87,8 +86,6 @@ export async function fetchCompletedTasks(
         let childTasks = mappedResults.filter(
             (task: RawTodoistTask) => task.parentId !== null
         );
-
-        // console.log("childTasks", childTasks)
 
         let queuedParentTasks = [] as string[];
         childTasks.forEach((task: any) => {
