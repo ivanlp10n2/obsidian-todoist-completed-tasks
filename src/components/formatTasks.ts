@@ -4,7 +4,8 @@ import { RawTodoistTask } from "../constants/shared";
 import { TodoistTask } from "../constants/formatTasks";
 
 
-function prepareTasksForRendering(tasks: any) {
+function prepareTasksForRendering(tasks: RawTodoistTask[]) {
+    // console.log("prepare tasks for rendering", tasks);
     let childTasks = tasks.filter(
         (task: RawTodoistTask) => task.parentId !== null
     );
@@ -42,6 +43,7 @@ function prepareTasksForRendering(tasks: any) {
         });
     });
 
+    // console.log("prepare tasks for rendering results", renderedTasks);
     return renderedTasks;
 }
 

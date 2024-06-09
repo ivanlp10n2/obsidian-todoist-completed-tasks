@@ -88,7 +88,7 @@ export async function fetchCompletedTasks(
             (task: RawTodoistTask) => task.parentId !== null
         );
 
-        console.log("childTasks", childTasks)
+        // console.log("childTasks", childTasks)
 
         let queuedParentTasks = [] as string[];
         childTasks.forEach((task: any) => {

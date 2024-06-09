@@ -54,12 +54,16 @@ export async function updateFileFromServer(
         return;
     }
 
+
     let formattedTasks = prepareTasksForRendering(fetchResults.tasksResults);
+    console.log("input for renderTaskAsText: ", formattedTasks, fetchResults.projectsResults, settings)
     let renderedText = renderTasksAsText(
         formattedTasks,
         fetchResults.projectsResults,
         settings
     );
+    console.log("---------------------------------")
+    console.log("output for renderTaskAsText: ", renderedText)
 
     let rangeStart = fileContent.indexOf(settings.keywordSegmentStart);
     let rangeEnd = fileContent.indexOf(settings.keywordSegmentEnd);
