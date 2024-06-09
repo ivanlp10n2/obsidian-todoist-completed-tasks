@@ -4,8 +4,9 @@
 ---
 
 ### 📋 current todolist :
-- [ ] feat: test serialization and document jsons in code
-- feat: refactor tested code
+- [x] feat: test serialization and document jsons in code
+    - at least `fetchTasks` and `formatTasks`
+- [x] feat: refactor tested code
 - [ ] res: define what's the best way to handle data for dataview
     - I will have to `upsert` notes for each task
     - I will create folders for each day
