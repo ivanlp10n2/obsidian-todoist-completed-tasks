@@ -82,7 +82,6 @@ describe('fetchTasks component', () => {
       }
 
       const result = await fetchCompletedTasks(authToken, input, fetchParentAndChildren)
-      console.log(result)
 
       expect(result).toEqual(expectedResultFetchCompletedTasks)
     })
@@ -205,7 +204,7 @@ describe('fetchTasks component', () => {
     }
 }
   `
-  const getChildrenApiResponse: string = `
+  const getSingleChildrenApiResponse: string = `
   {
     "ancestors": [
         {
@@ -304,7 +303,8 @@ describe('fetchTasks component', () => {
         "v2_project_id": "6P5Q7J4hfJC67c6m"
     }
 }`
-  const getAllAPiResponse: string = `
+
+  const getAllCompletedTasksApiResponse: string = `
   {
     "items": [
         {
@@ -462,9 +462,9 @@ describe('fetchTasks component', () => {
 }
   `
   const getSingleTaskAPI = JSON.parse(getSingleTaskApiResponse)
-  const getSingleChildrenTaskAPI = JSON.parse(getChildrenApiResponse)
+  const getSingleChildrenTaskAPI = JSON.parse(getSingleChildrenApiResponse)
   const getSingleParentTaskAPI = JSON.parse(getParentApiResponse)
-  const getAllCompletedTasksAPI = JSON.parse(getAllAPiResponse)
+  const getAllCompletedTasksAPI = JSON.parse(getAllCompletedTasksApiResponse)
 })
 
 

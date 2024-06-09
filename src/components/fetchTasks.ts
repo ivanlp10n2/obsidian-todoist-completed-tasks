@@ -1,10 +1,11 @@
 import { Notice } from "obsidian";
 
 import { RawTodoistTask } from "../constants/shared";
-import { ObsidianGetTaskApi, ObsidianCompletedTaskApi, ObsidianTaskApi } from "../constants/fetchTasks";
+import { ObsidianGetTaskApi, ObsidianCompletedTaskApi, ObsidianTaskApi, } from "../constants/fetchTasks";
 import { 
     UrlGetItem, UrlGetAllItems, HandleErrorMsg, ConvertToRawDomain
 } from "../constants/fetchTasks";
+import { Domain } from "../constants/fetchTasks";
 
 
 async function debugWrapper(url: string, options: RequestInit): Promise<any> {
@@ -15,7 +16,8 @@ async function debugWrapper(url: string, options: RequestInit): Promise<any> {
 export async function fetchSingleTask(
     authToken: string,
     taskId: string,
-    fetchJsonResponse: (url: string, options: RequestInit) => Promise<ObsidianCompletedTaskApi.CompletedObsidianTask> = debugWrapper
+    // fetchJsonResponse: (url: string, options: RequestInit) => Promise<ObsidianGetTaskApi.ObsidianItemApi> = debugWrapper
+    fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
 ): Promise<RawTodoistTask> {
     try {
         const url = UrlGetItem(taskId);
@@ -34,6 +36,7 @@ export async function fetchSingleTask(
 export async function fetchCompletedTasks(
     authToken: string,
     timeFrames: any,
+    // fetchJsonResponse: (url: string, options: RequestInit) => Promise<ObsidianCompletedTaskApi.CompletedTasksApiResponse> = debugWrapper
     fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
 ): Promise<any> {
     const {
@@ -55,7 +58,7 @@ export async function fetchCompletedTasks(
     let mappedResults: any[] = [];
 
     try {
-        const completedTasksMetadata: ObsidianCompletedTaskApi.TopStructureCompletedTasksApiResponse = await fetchJsonResponse(url, {
+        const completedTasksMetadata: ObsidianCompletedTaskApi.CompletedTasksApiResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
         // If there are no completed tasks, return an empty array

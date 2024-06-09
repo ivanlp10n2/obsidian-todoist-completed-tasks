@@ -7,6 +7,13 @@ export const UrlGetItem = (todoistId: string): string => {
     return `${TodoistApi}/items/get?item_id=${todoistId}`;
 };
 
+export module Domain {
+    export type GetAllCompletedTasks = {
+        taskResults: RawTodoistTask[],
+        projectsResults: ObsidianCompletedTaskApi.CompletedProjectsMap,
+    }
+}
+
 export type ObsidianTaskApi = {
     ancestors: [],
     item: ObsidianGetTaskApi.ObsidianItemApi,
@@ -15,94 +22,8 @@ export type ObsidianTaskApi = {
 }
 
 export module ObsidianCompletedTaskApi {
-    /**
-     * example json:
-     * {
-    "items": [
-        {
-            "completed_at": "2023-06-17T13:26:46.000000Z",
-            "content": "What it takes - Stephen Schwarzman",
-            "id": "6405499044",
-            "item_object": null,
-            "meta_data": null,
-            "note_count": 0,
-            "notes": [],
-            "project_id": "2308886701",
-            "section_id": "117184017",
-            "task_id": "6973917578",
-            "user_id": "7429672
-        },
-        {
-            "completed_at": "2023-06-17T13:23:53.000000Z",
-            "content": "Resolver el numero de telefono",
-            "id": "6405494055",
-            "item_object": null,
-            "meta_data": null,
-            "note_count": 0,
-            "notes": [],
-            "project_id": "2308886701",
-            "section_id": "117184024",
-            "task_id": "6965182658",
-            "user_id": "7429672
-        }
-    ],
-    "projects": {
-        "2308886701": {
-            "can_assign_tasks": false,
-            "child_order": 0,
-            "collapsed": false,
-            "color": "lavender",
-            "created_at": "2023-07-13T11:05:04Z",
-            "id": "2308886701",
-            "is_archived": true,
-            "is_deleted": false,
-            "is_favorite": false,
-            "name": "June 2023",
-            "parent_id": null,
-            "shared": false,
-            "sync_id": null,
-            "updated_at": "2024-03-29T14:22:25Z",
-            "v2_id": "6P5Q7J4hfJC67c6m",
-            "v2_parent_id": null,
-            "view_style": "board"
-        }
-    },
-    "sections": {
-        "117184017": {
-            "added_at": "2023-03-02T01:49:42.278867Z",
-            "archived_at": null,
-            "collapsed": false,
-            "id": "117184017",
-            "is_archived": false,
-            "is_deleted": false,
-            "name": "Better me",
-            "project_id": "2308886701",
-            "section_order": 1,
-            "sync_id": null,
-            "user_id": "7429672,
-            "v2_id": "68539cm5GCpXCHQm",
-            "v2_project_id": "6P5Q7J4hfJC67c6m"
-        },
-        "117184024": {
-            "added_at": "2023-03-02T01:49:42.955631Z",
-            "archived_at": null,
-            "collapsed": false,
-            "id": "117184024",
-            "is_archived": false,
-            "is_deleted": false,
-            "name": "material tasks",
-            "project_id": "2308886701",
-            "section_order": 12,
-            "sync_id": null,
-            "user_id": "7429672,
-            "v2_id": "6853xVmrVpWhXWqF",
-            "v2_project_id": "6P5Q7J4hfJC67c6m"
-        }
-    }
-}
-     */
 
-    export type TopStructureCompletedTasksApiResponse = {
+    export type CompletedTasksApiResponse = {
         items: CompletedObsidianTask[],
         projects: CompletedProjectsMap,
         sections: CompletedSectionsMap
@@ -180,10 +101,6 @@ export const UrlGetAllItems: (params: UrlGetAllItemsFilter) => string =
     };
 
 
-export type GetAllCompletedTasks = {
-    taskResults: [],
-    projectsResults: any
-}
 
 export module FetchErrors {
     export const NetworkErrorMsg = "There was a problem pulling data from Todoist. Is your internet connection working?"
@@ -231,111 +148,6 @@ export function ConvertToRawDomain(
 
 
 export module ObsidianGetTaskApi {
-    /** * Example json: 
-     * * {
-     * "ancestors": [],
-     * "item": {
-         "added_at": "2023-06-17T13:25:07.453000Z",
-         "added_by_uid": "7429672",
-         "assigned_by_uid": null,
-         "checked": false,
-         "child_order": 8,
-         "collapsed": false,
-         "completed_at": null,
-         "content": "Escuchar 3 audiolibros",
-         "description": "",
-         "due": null,
-         "duration": null,
-         "id": "6973914935",
-         "is_deleted": false,
-         "labels": [
-             "✅",
-             "🟩🟩🟩🟩🟩"
-         ],
-         "parent_id": null,
-         "priority": 1,
-         "project_id": "2308886701",
-         "responsible_uid": null,
-         "section_id": "117184028",
-         "sync_id": null,
-         "updated_at": "2023-07-10T03:14:40Z",
-         "user_id": "7429672",
-         "v2_id": "68r8PcHJ28F8Xm4m",
-         "v2_parent_id": null,
-         "v2_project_id": "6P5Q7J4hfJC67c6m",
-         "v2_section_id": "68539cm5GCpXCHQm"
-     },
-     "notes": [],
-     "project": {
-         "can_assign_tasks": false,
-         "child_order": 0,
-         "collapsed": false,
-         "color": "lavender",
-         "created_at": "2023-07-13T11:05:04Z",
-         "id": "2308886701",
-         "is_archived": true,
-         "is_deleted": false,
-         "is_favorite": false,
-         "name": "June 2023",
-         "parent_id": null,
-         "shared": false,
-         "sync_id": null,
-         "updated_at": "2024-03-29T14:22:25Z",
-         "v2_id": "6P5Q7J4hfJC67c6m",
-         "v2_parent_id": null,
-         "view_style": "board"
-     },
-     "section": {
-         "added_at": "2023-03-02T01:49:42.278867Z",
-         "archived_at": null,
-         "collapsed": false,
-         "id": "117184028",
-         "is_archived": false,
-         "is_deleted": false,
-         "name": "Better me",
-         "project_id": "2308886701",
-         "section_order": 1,
-         "sync_id": null,
-         "user_id": "7429672",
-         "v2_id": "68539cm5GCpXCHQm",
-         "v2_project_id": "6P5Q7J4hfJC67c6m"
-     }
- }
-  */
-
-    /**
-     * "item": {
-            "added_at": "2023-06-17T13:25:07.453000Z",
-            "added_by_uid": "7429672",
-            "assigned_by_uid": null,
-            "checked": false,
-            "child_order": 8,
-            "collapsed": false,
-            "completed_at": null,
-            "content": "Escuchar 3 audiolibros",
-            "description": "",
-            "due": null,
-            "duration": null,
-            "id": "6973914935",
-            "is_deleted": false,
-            "labels": [
-                "✅",
-                "🟩🟩🟩🟩🟩"
-            ],
-            "parent_id": null,
-            "priority": 1,
-            "project_id": "2308886701",
-            "responsible_uid": null,
-            "section_id": "117184028",
-            "sync_id": null,
-            "updated_at": "2023-07-10T03:14:40Z",
-            "user_id": "7429672",
-            "v2_id": "68r8PcHJ28F8Xm4m",
-            "v2_parent_id": null,
-            "v2_project_id": "6P5Q7J4hfJC67c6m",
-            "v2_section_id": "68539cm5GCpXCHQm"
-        }
-     */
     export type ObsidianItemApi = {
         added_at: string;
         added_by_uid: string;
@@ -364,28 +176,7 @@ export module ObsidianGetTaskApi {
         v2_project_id: string;
         v2_section_id: string;
     }
-    // /**
-    //  * example json:
-    //  *     "project": {
-    //         "can_assign_tasks": false,
-    //         "child_order": 0,
-    //         "collapsed": false,
-    //         "color": "lavender",
-    //         "created_at": "2023-07-13T11:05:04Z",
-    //         "id": "2308886701",
-    //         "is_archived": true,
-    //         "is_deleted": false,
-    //         "is_favorite": false,
-    //         "name": "June 2023",
-    //         "parent_id": null,
-    //         "shared": false,
-    //         "sync_id": null,
-    //         "updated_at": "2024-03-29T14:22:25Z",
-    //         "v2_id": "6P5Q7J4hfJC67c6m",
-    //         "v2_parent_id": null,
-    //         "view_style": "board"
-    //     }
-    //  */
+ 
     export type ObsidianProjectApi = {
         can_assign_tasks: boolean;
         child_order: number;
@@ -403,24 +194,7 @@ export module ObsidianGetTaskApi {
         v2_parent_id: string | null;
         view_style: string;
     }
-    // /**
-    //  * example json:
-    //  * "section": {
-    //         "added_at": "2023-03-02T01:49:42.278867Z",
-    //         "archived_at": null,
-    //         "collapsed": false,
-    //         "id": "117184028",
-    //         "is_archived": false,
-    //         "is_deleted": false,
-    //         "name": "Better me",
-    //         "project_id": "2308886701",
-    //         "section_order": 1,
-    //         "sync_id": null,
-    //         "user_id": "7429672",
-    //         "v2_id": "68539cm5GCpXCHQm",
-    //         "v2_project_id": "6P5Q7J4hfJC67c6m"
-    //     }
-    //  */
+    
     export type ObsidianSectionApi = {
         added_at: string;
         archived_at: string | null;
