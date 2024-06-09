@@ -1,6 +1,6 @@
 import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
 import { RawTodoistTask } from '../constants/shared';
-import { UrlGetAllItems, DefaultParams, UnauthenticatedErrorMsg, NetworkErrorMsg, DefaultErrorMsg, UrlGetItem, ConvertToRawDomain } from '../constants/fetchTasks';
+import { UrlGetAllItems, DefaultParams, FetchErrors, UrlGetItem, ConvertToRawDomain } from '../constants/fetchTasks';
 import { UrlGetAllItemsFilter } from '../constants/fetchTasks';
 
 describe('fetchTasks component', () => {
@@ -26,7 +26,7 @@ describe('fetchTasks component', () => {
     it('should handle authentication error', async () => {
       const errorResponse = {
         httpStatusCode: 403,
-        responseData: UnauthenticatedErrorMsg
+        responseData: FetchErrors.UnauthenticatedErrorMsg
       };
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorResponse);
 
@@ -37,7 +37,7 @@ describe('fetchTasks component', () => {
     it('should handle network error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: NetworkErrorMsg
+        responseData: FetchErrors.NetworkErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -49,7 +49,7 @@ describe('fetchTasks component', () => {
     it('should handle default error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: DefaultErrorMsg
+        responseData: FetchErrors.DefaultErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -72,7 +72,6 @@ describe('fetchTasks component', () => {
           .mockResolvedValueOnce(Promise.resolve(getSingleChildrenTaskAPI))
           .mockResolvedValueOnce(Promise.resolve(getSingleTaskAPI))
           .mockResolvedValueOnce(Promise.resolve(getSingleParentTaskAPI))
-
 
       const input: UrlGetAllItemsFilter = {
         timeStartFormattedDate: DefaultParams.timeStartFormattedDate,
