@@ -21,7 +21,7 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
             renderedTasks.push({
                 taskId: task.taskId,
                 content: task.content,
-                dateCompleted: convertToDateObj(task.dateCompleted),
+                completedAt: convertToDateObj(task.completedAt),
                 projectId: task.projectId,
                 childTasks: [],
             });
@@ -36,7 +36,7 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
         renderedTasks[parentTaskIndex].childTasks.push({
             taskId: task.taskId,
             content: task.content,
-            dateCompleted: convertToDateObj(task.dateCompleted),
+            completedAt: convertToDateObj(task.completedAt),
             projectId: task.projectId,
             childTasks: [],
         });
@@ -52,33 +52,33 @@ function renderTasksAsText(
     settings: TodoistSettings
 ) {
     function renderTaskFinishDate(task: any) {
-        if (task.dateCompleted === null) {
+        if (task.completedAt === null) {
             return "N/A";
         }
 
         if (settings.taskPostfix.includes("{task_finish_date}")) {
-            const formattedDate = moment(task.dateCompleted).format(
+            const formattedDate = moment(task.completedAt).format(
                 "YYYY-MM-DD"
             );
             return formattedDate;
         }
 
         if (settings.taskPostfix.includes("{task_finish_datetime}")) {
-            const formattedDate = moment(task.dateCompleted).format(
+            const formattedDate = moment(task.completedAt).format(
                 "YYYY-MM-DD HH:mm"
             );
             return formattedDate;
         }
 
         if (settings.taskPostfix.includes("{current_date}")) {
-            const formattedDate = moment(task.dateCompleted).format(
+            const formattedDate = moment(task.completedAt).format(
                 "YYYY-MM-DD"
             );
             return formattedDate;
         }
 
         if (settings.taskPostfix.includes("{current_datetime}")) {
-            const formattedDate = moment(task.dateCompleted).format(
+            const formattedDate = moment(task.completedAt).format(
                 "YYYY-MM-DD HH:mm"
             );
             return formattedDate;

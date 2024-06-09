@@ -1,7 +1,7 @@
 export interface TodoistTask {
     taskId: number;
     content: string;
-    dateCompleted: Date | null;
+    completedAt: Date | null;
     childTasks: TodoistTask[];
     projectId?: string | null;
 }

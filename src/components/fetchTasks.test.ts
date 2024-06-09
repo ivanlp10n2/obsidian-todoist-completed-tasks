@@ -1,7 +1,7 @@
 import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
 import { RawTodoistTask } from '../constants/shared';
-import { UrlGetAllItems, DefaultParams, FetchErrors, UrlGetItem, ConvertToRawDomain } from '../constants/fetchTasks';
-import { UrlGetAllItemsFilter } from '../constants/fetchTasks';
+import { ObsidianApi, Domain, Codecs } from '../constants/fetchTasks';
+
 
 describe('fetchTasks component', () => {
   const authToken = 'your-auth-token';
@@ -16,17 +16,17 @@ describe('fetchTasks component', () => {
 
       const result = await fetchSingleTask(authToken, taskId, fetchSingleTaskFn);
 
-      expect(fetchSingleTaskFn).toHaveBeenCalledWith(UrlGetItem(taskId),
+      expect(fetchSingleTaskFn).toHaveBeenCalledWith(ObsidianApi.GetTask.UrlGetItem(taskId),
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
-      const singleTaskRaw = ConvertToRawDomain(getSingleTaskAPI, true)
+      const singleTaskRaw = Codecs.ConvertToRawDomain(getSingleTaskAPI, true)
       expect(result).toEqual(singleTaskRaw);
     });
 
     it('should handle authentication error', async () => {
       const errorResponse = {
         httpStatusCode: 403,
-        responseData: FetchErrors.UnauthenticatedErrorMsg
+        responseData: ObsidianApi.FetchErrors.UnauthenticatedErrorMsg
       };
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorResponse);
 
@@ -37,7 +37,7 @@ describe('fetchTasks component', () => {
     it('should handle network error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: FetchErrors.NetworkErrorMsg
+        responseData: ObsidianApi.FetchErrors.NetworkErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -49,7 +49,7 @@ describe('fetchTasks component', () => {
     it('should handle default error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: FetchErrors.DefaultErrorMsg
+        responseData: ObsidianApi.FetchErrors.DefaultErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -73,11 +73,11 @@ describe('fetchTasks component', () => {
           .mockResolvedValueOnce(Promise.resolve(getSingleTaskAPI))
           .mockResolvedValueOnce(Promise.resolve(getSingleParentTaskAPI))
 
-      const input: UrlGetAllItemsFilter = {
-        timeStartFormattedDate: DefaultParams.timeStartFormattedDate,
-        timeStartFormattedTime: DefaultParams.timeStartFormattedTime,
-        timeEndFormattedDate: DefaultParams.timeEndFormattedDate,
-        timeEndFormattedTime: DefaultParams.timeEndFormattedTime,
+      const input: ObsidianApi.GetAllTasks.UrlGetAllItemsFilter = {
+        timeStartFormattedDate: ObsidianApi.GetAllTasks.DefaultParams.timeStartFormattedDate,
+        timeStartFormattedTime: ObsidianApi.GetAllTasks.DefaultParams.timeStartFormattedTime,
+        timeEndFormattedDate: ObsidianApi.GetAllTasks.DefaultParams.timeEndFormattedDate,
+        timeEndFormattedTime: ObsidianApi.GetAllTasks.DefaultParams.timeEndFormattedTime,
         limit: 20
       }
 
@@ -93,21 +93,22 @@ describe('fetchTasks component', () => {
         taskId: '6973917578',
         parentId: '6973914935',
         content: 'What it takes - Stephen Schwarzman',
-        dateCompleted: '2023-06-17T13:26:46.000000Z',
+        completedAt: '2023-06-17T13:26:46.000000Z',
+
         projectId: '2308886701'
       },
       {
         taskId: '6965182658',
         parentId: null,
         content: 'Resolver el numero de telefono',
-        dateCompleted: '2023-06-17T13:23:53.000000Z',
+        completedAt: '2023-06-17T13:23:53.000000Z',
         projectId: '2308886701'
       },
       {
         taskId: '6973914935',
         parentId: null,
         content: 'Escuchar 3 audiolibros',
-        dateCompleted: null,
+        completedAt: null,
         projectId: '2308886701'
       }
     ],

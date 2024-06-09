@@ -8,6 +8,6 @@ export interface RawTodoistTask {
     readonly taskId: string;
     readonly parentId: string | null;
     readonly content: string;
-    readonly dateCompleted: string | null;
+    readonly completedAt: string | null;
     readonly projectId: string;
 }

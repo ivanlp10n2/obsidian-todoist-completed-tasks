@@ -1,10 +1,7 @@
 import { Notice } from "obsidian";
 
 import { RawTodoistTask } from "../constants/shared";
-import { ObsidianGetTaskApi, ObsidianCompletedTaskApi, ObsidianTaskApi, } from "../constants/fetchTasks";
-import { 
-    UrlGetItem, UrlGetAllItems, HandleErrorMsg, ConvertToRawDomain
-} from "../constants/fetchTasks";
+import { ObsidianApi, Codecs } from "../constants/fetchTasks";
 import { Domain } from "../constants/fetchTasks";
 
 
@@ -19,13 +16,13 @@ export async function fetchSingleTask(
     fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
 ): Promise<RawTodoistTask> {
     try {
-        const url = UrlGetItem(taskId);
+        const url = ObsidianApi.GetTask.UrlGetItem(taskId);
         let task = await fetchJsonResponse(url,
             { headers: { Authorization: `Bearer ${authToken}` }, })
-            .then((res: any) => { return ConvertToRawDomain(res, true); });
+            .then((res: any) => { return Codecs.ConvertToRawDomain(res, true); });
         return task;
     } catch (e: any) {
-        let errorMsg = HandleErrorMsg(e);
+        let errorMsg = ObsidianApi.FetchErrors.HandleErrorMsg(e);
         console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;
@@ -47,7 +44,7 @@ export async function fetchCompletedTasks(
 
     // const limit = renderSubtasks ? 30 : 200;
     const limit = 200; // https://developer.todoist.com/sync/v9/#get-all-completed-items
-    const url = UrlGetAllItems({
+    const url = ObsidianApi.GetAllTasks.UrlGetAllItems({
         timeStartFormattedDate: timeStartFormattedDate,
         timeStartFormattedTime: timeStartFormattedTime,
         timeEndFormattedDate: timeEndFormattedDate,
@@ -57,7 +54,7 @@ export async function fetchCompletedTasks(
     let mappedResults: any[] = [];
 
     try {
-        const completedTasksMetadata: ObsidianCompletedTaskApi.CompletedTasksApiResponse = await fetchJsonResponse(url, {
+        const completedTasksMetadata: ObsidianApi.GetAllTasks.CompletedTasksApiResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
         // If there are no completed tasks, return an empty array
@@ -73,7 +70,7 @@ export async function fetchCompletedTasks(
         );
 
         const completedTasksPromises: Promise<RawTodoistTask>[] = completedTasksMetadata.items.map(
-            async (task: ObsidianCompletedTaskApi.CompletedObsidianTask) => {
+            async (task: ObsidianApi.GetAllTasks.CompletedObsidianTask) => {
                 return fetchSingleTask(
                     authToken,
                     task.task_id,
@@ -111,9 +108,9 @@ export async function fetchCompletedTasks(
                 (t: any) => t.task_id === task.taskId
             );
             if (!taskMetadata) {
-                task.dateCompleted = null;
+                task.completedAt = null;
             } else {
-                task.dateCompleted = taskMetadata.completed_at;
+                task.completedAt = taskMetadata.completed_at;
             }
         });
         const result = {
@@ -123,7 +120,7 @@ export async function fetchCompletedTasks(
         // console.log("output for fetchTasks: ", result)
         return result;
     } catch (e) {
-        let errorMsg = HandleErrorMsg(e);
+        let errorMsg = ObsidianApi.FetchErrors.HandleErrorMsg(e);
         console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;
