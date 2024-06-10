@@ -118,6 +118,7 @@ function renderTasksAsText(
                 }
 
                 // Add createdAt and updatedAt timestamps for the parent task
+                returnString += `\n\t\t- taskId: ${t.taskId}`;
                 returnString += `\n\t\t- createdAt: ${t.createdAt}`;
                 returnString += `\n\t\t- updatedAt: ${t.updatedAt}`;
 
@@ -139,6 +140,7 @@ function renderTasksAsText(
                             }
 
                             // Add createdAt and updatedAt timestamps for the child task
+                            childTaskString += `\n\t\t\t- taskId: ${childTask.taskId}`;
                             childTaskString += `\n\t\t\t- createdAt: ${childTask.createdAt}`;
                             childTaskString += `\n\t\t\t- updatedAt: ${childTask.updatedAt}`;
 

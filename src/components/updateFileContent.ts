@@ -11,6 +11,35 @@ import {
     segmentsCheck,
 } from "./utils";
 
+const createFoldersAndFiles = (renderedText: string) => {
+    const activeFile = app.workspace.getActiveFile();
+    const directoryPath = activeFile.parent.path;
+    const fileName = "completed-tasks.md";
+    const filePath = `${directoryPath}/${fileName}`;
+
+    app.vault.create(filePath, renderedText).then(() => {
+        new Notice("Completed tasks file created.");
+    }).catch(err => {
+        new Notice("Error creating file: " + err.message);
+    });
+}
+
+function getOrCreateFolder(folderPath: string) {
+    const folder = app.vault.getAbstractFileByPath(folderPath);
+    if (!folder) {
+        createNewFolder(folderPath);
+    }
+}
+
+async function createNewFolder(folderPath: string) {
+    try {
+        await app.vault.createFolder(folderPath);
+        new Notice('Folder created successfully.');
+    } catch (error) {
+        new Notice('Error creating folder: ' + error.message);
+    }
+}
+
 export async function updateFileFromServer(
     settings: TodoistSettings,
     app: App,
@@ -78,5 +107,8 @@ export async function updateFileFromServer(
         editor.offsetToPos(rangeEnd)
     );
 
+    // createFoldersAndFiles(filePath);
+
+    // createFoldersAndFiles(renderedText);
     new Notice("Completed tasks loaded.");
 }

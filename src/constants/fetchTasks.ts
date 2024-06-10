@@ -22,7 +22,7 @@ export module Codecs {
                 completedAt: task.item.completed_at,
                 projectId: task.project.id,
                 createdAt: task.item.added_at,
-                updatedAt: task.item.updated_at,
+                updatedAt: task.item.updated_at
             };
         } else {
             return { //fetch - get-all-api.items
