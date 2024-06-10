@@ -45,13 +45,13 @@ export module ObsidianApi {
         export const UrlGetItem = (todoistId: string): string => {
             return `${TodoistApi}/items/get?item_id=${todoistId}`;
         };
-        export type ObsidianTaskApi = {
+        export type SingleTaskResponse = {
             ancestors: [],
-            item: ObsidianItemApi,
-            project: ObsidianProjectApi,
-            section: ObsidianSectionApi,
+            item: SingleTaskItem,
+            project: SingleTaskProject,
+            section: SingleTaskSection,
         }
-        export type ObsidianItemApi = {
+        export type SingleTaskItem = {
             added_at: string;
             added_by_uid: string;
             assigned_by_uid: string | null;
@@ -80,7 +80,7 @@ export module ObsidianApi {
             v2_section_id: string;
         }
 
-        export type ObsidianProjectApi = {
+        export type SingleTaskProject = {
             can_assign_tasks: boolean;
             child_order: number;
             collapsed: boolean;
@@ -98,7 +98,7 @@ export module ObsidianApi {
             view_style: string;
         }
 
-        export type ObsidianSectionApi = {
+        export type SingleTaskSection = {
             added_at: string;
             archived_at: string | null;
             collapsed: boolean;
@@ -140,13 +140,13 @@ export module ObsidianApi {
             timeEndFormattedTime: "00:00:00",
             limit: 100,
         }
-        export type CompletedTasksApiResponse = {
-            items: CompletedObsidianTask[],
+        export type CompletedTasksResponse = {
+            items: CompletedTask[],
             projects: CompletedProjectsMap,
             sections: CompletedSectionsMap
         }
 
-        export type CompletedObsidianTask = {
+        export type CompletedTask = {
             completed_at: string;
             content: string;
             id: string;
@@ -161,9 +161,9 @@ export module ObsidianApi {
         }
 
         export type CompletedProjectsMap = {
-            [key: string]: CompletedTaskApiObsidianProject;
+            [key: string]: CompletedTaskProject;
         }
-        export type CompletedTaskApiObsidianProject = {
+        export type CompletedTaskProject = {
             name: string;
             id: string;
             parent_id: string;
@@ -176,10 +176,10 @@ export module ObsidianApi {
         }
 
         export type CompletedSectionsMap = {
-            [key: string]: CompletedTaskApiObsidianSection;
+            [key: string]: CompletedTaskSection;
         }
 
-        export type CompletedTaskApiObsidianSection = {
+        export type CompletedTaskSection = {
             added_at: string;
             archived_at: string | null;
             collapsed: boolean;
@@ -211,9 +211,5 @@ export module ObsidianApi {
                     return FetchErrors.DefaultErrorMsg(e);
             }
         }
-
-
     }
-
-
 }

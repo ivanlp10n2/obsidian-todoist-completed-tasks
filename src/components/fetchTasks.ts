@@ -54,7 +54,7 @@ export async function fetchCompletedTasks(
     let mappedResults: any[] = [];
 
     try {
-        const completedTasksMetadata: ObsidianApi.GetAllTasks.CompletedTasksApiResponse = await fetchJsonResponse(url, {
+        const completedTasksMetadata: ObsidianApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
         // If there are no completed tasks, return an empty array
@@ -70,7 +70,7 @@ export async function fetchCompletedTasks(
         );
 
         const completedTasksPromises: Promise<RawTodoistTask>[] = completedTasksMetadata.items.map(
-            async (task: ObsidianApi.GetAllTasks.CompletedObsidianTask) => {
+            async (task: ObsidianApi.GetAllTasks.CompletedTask) => {
                 return fetchSingleTask(
                     authToken,
                     task.task_id,
