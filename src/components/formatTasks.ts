@@ -3,6 +3,7 @@ import { TodoistSettings } from "../constants/DefaultSettings";
 import { RawTodoistTask } from "../constants/shared";
 import { TodoistTask } from "../constants/formatTasks";
 
+const neverUpdated = "1970-01-01T00:00:00Z";
 
 function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
     let childTasks: RawTodoistTask[] = tasks.filter(
@@ -11,19 +12,16 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
 
     let renderedTasks: TodoistTask[] = [];
 
-    function convertToDateObj(date: string): Date | null {
-        if (date === null) return null;
-        return new Date(date);
-    }
-
     tasks.forEach((task: any) => {
         if (task.parentId === null) {
             renderedTasks.push({
                 taskId: task.taskId,
                 content: task.content,
-                completedAt: convertToDateObj(task.completedAt),
+                completedAt: task.completedAt,
                 projectId: task.projectId,
                 childTasks: [],
+                createdAt: task.createdAt,
+                updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt
             });
         }
     });
@@ -36,9 +34,11 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
         renderedTasks[parentTaskIndex].childTasks.push({
             taskId: task.taskId,
             content: task.content,
-            completedAt: convertToDateObj(task.completedAt),
+            completedAt: task.completedAt,
             projectId: task.projectId,
             childTasks: [],
+            createdAt: task.createdAt,
+            updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt
         });
     });
 
@@ -117,6 +117,10 @@ function renderTasksAsText(
                     returnString = `${formattedParentPrefix} ${t.content} ${formattedParentPostfix}`;
                 }
 
+                // Add createdAt and updatedAt timestamps for the parent task
+                returnString += `\n\t\t- createdAt: ${t.createdAt}`;
+                returnString += `\n\t\t- updatedAt: ${t.updatedAt}`;
+
                 if (t.childTasks.length > 0) {
                     const childTasks = t.childTasks
                         .reverse()
@@ -127,11 +131,18 @@ function renderTasksAsText(
                             );
                             let formattedPostfix = renderTaskPostfix(childTask);
 
+                            let childTaskString = "";
                             if (settings.renderProjectsHeaders) {
-                                return `\t\t${formattedChildPrefix} ${childTask.content} ${formattedPostfix}`;
+                                childTaskString = `\t\t${formattedChildPrefix} ${childTask.content} ${formattedPostfix}`;
                             } else {
-                                return `\t${formattedChildPrefix} ${childTask.content} ${formattedPostfix}`;
+                                childTaskString = `\t${formattedChildPrefix} ${childTask.content} ${formattedPostfix}`;
                             }
+
+                            // Add createdAt and updatedAt timestamps for the child task
+                            childTaskString += `\n\t\t\t- createdAt: ${childTask.createdAt}`;
+                            childTaskString += `\n\t\t\t- updatedAt: ${childTask.updatedAt}`;
+
+                            return childTaskString;
                         });
                     returnString += "\n" + childTasks.join("\n");
                 }

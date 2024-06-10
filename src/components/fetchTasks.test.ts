@@ -1,5 +1,4 @@
 import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
-import { RawTodoistTask } from '../constants/shared';
 import { ObsidianApi, Domain, Codecs } from '../constants/fetchTasks';
 
 
@@ -64,6 +63,7 @@ describe('fetchTasks component', () => {
     xit('it fetches due time and duration but doesn\'t add up the duration to due_time', () => { })
     xit('task_id is what helps you to fetch single tasks', () => { })
     xit('get-single-api.item.id is what you get in get-all-api.items.task_id', () => { })
+    xit('actually ancestor attribute and parent task seems to have the same attributes. Only changes on how parent of that task is rendered', () => { })
     it('should fetch-all completed and get parent with fetch-single of those who has', async () => {
       // receives 2023-04-29 02:59 2023-06-29 02:59
       // returns: { projectResults : [project_id -> project], tasksResults : [index -> task]}
@@ -89,27 +89,127 @@ describe('fetchTasks component', () => {
 
   const expectedResultFetchCompletedTasks = {
     tasksResults: [
+      /**
+       * item": {
+        "added_at": "2023-06-17T13:26:23.164918Z",
+        "added_by_uid": "7429672",
+        "assigned_by_uid": null,
+        "checked": true,
+        "child_order": 1,
+        "collapsed": false,
+        "completed_at": "2023-06-17T13:26:46.396000000Z",
+        "content": "What it takes - Stephen Schwarzman",
+        "description": "",
+        "due": null,
+        "duration": null,
+        "id": "6973917578",
+        "is_deleted": false,
+        "labels": [],
+        "parent_id": "6973914935",
+        "priority": 1,
+        "project_id": "2308886701",
+        "responsible_uid": null,
+        "section_id": "117184028",
+        "sync_id": null,
+        "updated_at": "1970-01-01T00:00:00Z",
+        "user_id": "7429672",
+        "v2_id": "68r8v2qJ8684Hvmm",
+        "v2_parent_id": "68r8PcHJ28F8Xm4m",
+        "v2_project_id": "6P5Q7J4hfJC67c6m",
+        "v2_section_id": "68539cm5GCpXCHQm"
+    },
+       */
       {
         taskId: '6973917578',
         parentId: '6973914935',
         content: 'What it takes - Stephen Schwarzman',
         completedAt: '2023-06-17T13:26:46.000000Z',
-
-        projectId: '2308886701'
+        projectId: '2308886701',
+        updatedAt: '1970-01-01T00:00:00Z',
+        createdAt: '2023-06-17T13:26:23.164918Z'
       },
+      /**"item": {
+        "added_at": "2023-06-14T11:43:05.493517Z",
+        "added_by_uid": "7429672",
+        "assigned_by_uid": null,
+        "checked": true,
+        "child_order": 4,
+        "collapsed": false,
+        "completed_at": "2023-06-17T13:23:52.663000000Z",
+        "content": "Resolver el numero de telefono",
+        "description": "",
+        "due": {
+            "date": "2023-06-17T10:00:00",
+            "is_recurring": false,
+            "lang": "en",
+            "string": "Jun 17 10:00AM",
+            "timezone": null
+        },
+        "duration": null,
+        "id": "6965182658",
+        "is_deleted": false,
+        "labels": [],
+        "parent_id": null,
+        "priority": 4,
+        "project_id": "2308886701",
+        "responsible_uid": null,
+        "section_id": "117184024",
+        "sync_id": null,
+        "updated_at": "1970-01-01T00:00:00Z",
+        "user_id": "7429672",
+        "v2_id": "68qQj3g365G2F3Hm",
+        "v2_parent_id": null,
+        "v2_project_id": "6P5Q7J4hfJC67c6m",
+        "v2_section_id": "6853xVmrVpWhXWqF"
+    }, */
       {
         taskId: '6965182658',
-        parentId: null,
+        parentId: null as null,
         content: 'Resolver el numero de telefono',
         completedAt: '2023-06-17T13:23:53.000000Z',
-        projectId: '2308886701'
+        projectId: '2308886701',
+        createdAt: '2023-06-14T11:43:05.493517Z',
+        updatedAt: '1970-01-01T00:00:00Z'
       },
+      /**"item": {
+        "added_at": "2023-06-17T13:25:07.453Z",
+        "added_by_uid": "7429672",
+        "assigned_by_uid": null,
+        "checked": false,
+        "child_order": 8,
+        "collapsed": false,
+        "completed_at": null,
+        "content": "Escuchar 3 audiolibros",
+        "description": "",
+        "due": null,
+        "duration": null,
+        "id": "6973914935",
+        "is_deleted": false,
+        "labels": [
+            "✅",
+            "🟩🟩🟩🟩🟩"
+        ],
+        "parent_id": null,
+        "priority": 1,
+        "project_id": "2308886701",
+        "responsible_uid": null,
+        "section_id": "117184028",
+        "sync_id": null,
+        "updated_at": "2023-07-10T03:14:40Z",
+        "user_id": "7429672",
+        "v2_id": "68r8PcHJ28F8Xm4m",
+        "v2_parent_id": null,
+        "v2_project_id": "6P5Q7J4hfJC67c6m",
+        "v2_section_id": "68539cm5GCpXCHQm"
+    }, */
       {
         taskId: '6973914935',
-        parentId: null,
+        parentId: null as null,
         content: 'Escuchar 3 audiolibros',
-        completedAt: null,
-        projectId: '2308886701'
+        completedAt: null as null,
+        projectId: '2308886701',
+        createdAt: '2023-06-17T13:25:07.453Z',
+        updatedAt: '2023-07-10T03:14:40Z'
       }
     ],
     projectsResults: {
@@ -138,7 +238,7 @@ describe('fetchTasks component', () => {
   const getParentApiResponse: string = `{
     "ancestors": [],
     "item": {
-        "added_at": "2023-06-17T13:25:07.453000Z",
+        "added_at": "2023-06-17T13:25:07.453Z",
         "added_by_uid": "7429672",
         "assigned_by_uid": null,
         "checked": false,
@@ -209,7 +309,7 @@ describe('fetchTasks component', () => {
   {
     "ancestors": [
         {
-            "added_at": "2023-06-17T13:25:07.453000Z",
+            "added_at": "2023-06-17T13:25:07.453Z",
             "added_by_uid": "7429672",
             "assigned_by_uid": null,
             "checked": false,
@@ -247,7 +347,7 @@ describe('fetchTasks component', () => {
         "checked": true,
         "child_order": 1,
         "collapsed": false,
-        "completed_at": "2023-06-17T13:26:46.396000Z",
+        "completed_at": "2023-06-17T13:26:46.396000000Z",
         "content": "What it takes - Stephen Schwarzman",
         "description": "",
         "due": null,
@@ -398,7 +498,7 @@ describe('fetchTasks component', () => {
         "checked": true,
         "child_order": 4,
         "collapsed": false,
-        "completed_at": "2023-06-17T13:23:52.663000Z",
+        "completed_at": "2023-06-17T13:23:52.663000000Z",
         "content": "Resolver el numero de telefono",
         "description": "",
         "due": {

@@ -10,4 +10,7 @@ export interface RawTodoistTask {
     readonly content: string;
     readonly completedAt: string | null;
     readonly projectId: string;
+    readonly createdAt: string;
+    readonly updatedAt: string;
 }
+

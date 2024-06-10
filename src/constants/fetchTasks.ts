@@ -21,6 +21,8 @@ export module Codecs {
                 content: task.item.content,
                 completedAt: task.item.completed_at,
                 projectId: task.project.id,
+                createdAt: task.item.added_at,
+                updatedAt: task.item.updated_at,
             };
         } else {
             return { //fetch - get-all-api.items
@@ -29,6 +31,8 @@ export module Codecs {
                 content: task.content,
                 completedAt: task.completed_at,
                 projectId: task.project_id,
+                createdAt: task.added_at,
+                updatedAt: task.updated_at,
             };
         }
 

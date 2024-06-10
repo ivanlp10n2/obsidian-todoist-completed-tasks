@@ -4,4 +4,7 @@ export interface TodoistTask {
     completedAt: Date | null;
     childTasks: TodoistTask[];
     projectId?: string | null;
+    createdAt: Date;
+    updatedAt: Date | null;
 }
+
