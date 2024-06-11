@@ -16,4 +16,18 @@ export interface RawTodoistTask {
     readonly isRecurring: boolean;
     readonly labels: string[];
 }
+export interface TodoistTask {
+    // regarding dates: don't want to spend time parsing dates with timezones. 
+    // filter will be done in obsidian with `tags` and format ISO-8601 is sortable alphabetically too
+    taskId: string;
+    content: string;
+    completedAt: string | null;
+    childTasks: TodoistTask[];
+    projectId?: string | null;
+    createdAt: string; 
+    updatedAt: string | null;
+    dueAt: string | null;
+    isRecurring: boolean;
+    labels: string[];
+}
 

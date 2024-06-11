@@ -2,6 +2,9 @@ import exp from 'constants';
 import { prepareTasksForRendering, renderTasksAsText } from './formatTasks';
 import { TodoistSettings } from 'src/constants/DefaultSettings';
 import { RawTodoistTask } from 'src/constants/shared';
+import { Domain } from 'src/constants/fetchTasks';
+import { TodoistTask } from 'src/constants/shared';
+import moment from 'moment';
 
 
 describe("formatTasks", () => {
@@ -10,6 +13,7 @@ describe("formatTasks", () => {
 			const renderedTasks = prepareTasksForRendering(input);
 			expect(renderedTasks).toEqual(expectedPrepareTaskForRenderingOutput);
 		})
+
 		const input: RawTodoistTask[] = [
 			{
 				"taskId": "6920071239",
@@ -20,7 +24,7 @@ describe("formatTasks", () => {
 				"createdAt": "2023-05-30T00:49:16.000000Z",
 				"updatedAt": "2023-05-30T00:49:16.000000Z",
 				"isRecurring": false,
-				"labels": [] as string[],
+				"labels": ["gilada"],
 				"dueAt": null as null
 			},
 			{
@@ -327,7 +331,31 @@ describe("formatTasks", () => {
 
 	})
 
-	const expectedPrepareTaskForRenderingOutput = [
+	// const todoistTaskBuilder = ({
+	// 	taskId,
+	// 	content,
+	// 	completedAt,
+	// 	projectId,
+	// 	childTasks,
+	// 	createdAt,
+	// 	updatedAt,
+	// 	dueAt,
+	// 	isRecurring,
+	// 	labels
+	// }: TodoistTask) => ({
+	// 	taskId: Number(taskId),
+	// 	content,
+	// 	completedAt: completedAt ? moment.utc(completedAt) : null,
+	// 	projectId: projectId ? Number(projectId) : null,
+	// 	childTasks: childTasks ? childTasks : [],
+	// 	createdAt: createdAt ? moment.utc(createdAt) : null,
+	// 	updatedAt: updatedAt ? moment.utc(updatedAt) : null,
+	// 	dueAt: dueAt ? moment.utc(dueAt) : null,
+	// 	isRecurring: isRecurring ? isRecurring : false,
+	// 	labels: labels ? labels : []
+	// });
+
+	const expectedPrepareTaskForRenderingOutput: TodoistTask[] = [
 		{
 			"taskId": "6920071239",
 			"content": "Lavar la ropa del gym para mañana",
@@ -338,7 +366,7 @@ describe("formatTasks", () => {
 			"updatedAt": "2023-05-30T00:49:16.000000Z",
 			"dueAt": null as null,
 			"isRecurring": false,
-			"labels": [] as string[]
+			"labels": ["gilada"]
 		},
 		{
 			"taskId": "6919294025",
@@ -585,94 +613,182 @@ describe("formatTasks", () => {
 		}
 	]
 
+	const buildRenderText = (task: {
+		taskId: string;
+		content: string;
+		dueAt?: string | null;
+		isRecurring?: boolean;
+		labels: string[];
+		createdAt: string;
+		updatedAt: string;
+	},  indentLevel: number = 2) => {
+	const indent = '\t'.repeat(indentLevel);
+	return `* ${task.content} \n` +
+		`${indent}- taskId: ${task.taskId}\n` +
+		`${indent}- dueAt: ${task.dueAt ?? 'null'}\n` +
+		`${indent}- isRecurring: ${task.isRecurring ?? 'false'}\n` +
+		`${indent}- labels: ${task.labels}\n` +
+		`${indent}- createdAt: ${task.createdAt}\n` +
+		`${indent}- updatedAt: ${task.updatedAt}`;
+	};
+
 
 	const renderOutput = `
 * Inbox
-	* Resolver el tema del candado 
-		- taskId: 6920094789
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
+	${buildRenderText({
+		taskId: "6920094789",
+		content: "Resolver el tema del candado",
+		isRecurring: false,
+		labels: [],
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+	}, 2)}
 * May 2023
-	* Find a way to encourage habits instead of goals 
-		- taskId: 6876083667
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-		* Check more habits you can add 
-			- taskId: 6898058993
-			- createdAt: 2023-05-30T00:49:16.000000Z
-			- updatedAt: 2023-05-30T00:49:16.000000Z
-	* learn about finance tools 
-		- taskId: 6841105886
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-		* Complete _May month 
-			- taskId: 6898082561
-			- createdAt: 2023-05-30T00:49:16.000000Z
-			- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Organize and schedule well organized goals 
-		- taskId: 6841115479
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-		* Check tasks 4 week 
-			- taskId: 6841119029
-			- createdAt: 2023-05-30T00:49:16.000000Z
-			- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Llevarle la ropa a vieja y al lavadero 
-		- taskId: 6909912829
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Agregar gastos de Mayo que me quedan pendientes 
-		- taskId: 6898103720
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Agregar habitos a los que ya tengo de todoist si hacen falta 
-		- taskId: 6898104425
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* averiguar por una fonoaudiologa 
-		- taskId: 6885360249
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Ir a visitar a vampi 
-		- taskId: 6914319149
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* mandarle msj al toto a ver si va a estar el domingo 
-		- taskId: 6898140280
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Ir a la casa de la madrina 
-		- taskId: 6915250355
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Lavar ropa para mañana el gym 
-		- taskId: 6917765156
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Juntarme con vampi 
-		- taskId: 6844551059
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Mandarlr msj a toto para juntarnos los 3 
-		- taskId: 6868152840
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Recordarle al facu dar de baja el linkedin 
-		- taskId: 6841124029
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* documentar info sobre AWS codewhispered 
-		- taskId: 6917841350
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Sacar la basura 
-		- taskId: 6919294025
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
-	* Lavar la ropa del gym para mañana 
-		- taskId: 6920071239
-		- createdAt: 2023-05-30T00:49:16.000000Z
-		- updatedAt: 2023-05-30T00:49:16.000000Z
+	${buildRenderText({
+		content: "Find a way to encourage habits instead of goals",
+		taskId: "6876083667",
+		dueAt: null,
+		isRecurring: false,
+		labels: [],
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+	}, 2)}
+		${buildRenderText({
+			content: "Check more habits you can add",
+			taskId: "6898058993",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",}, 3)}
+	${buildRenderText({
+		content: "learn about finance tools",
+		taskId: "6841105886",
+		dueAt: null,
+		isRecurring: false,
+		labels: [],
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+	}, 2)}
+		${buildRenderText({
+			content: "Complete _May month",
+			taskId: "6898082561",
+			labels: [],
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+		}, 3)}
+	${buildRenderText({
+		content: "Organize and schedule well organized goals",
+		taskId: "6841115479",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+		${buildRenderText({
+			content: "Check tasks 4 week",
+			taskId: "6841119029",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			labels: [],
+		}, 3)}
+	${buildRenderText({
+		content: "Llevarle la ropa a vieja y al lavadero",
+		taskId: "6909912829",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Agregar gastos de Mayo que me quedan pendientes",
+		taskId: "6898103720",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Agregar habitos a los que ya tengo de todoist si hacen falta",
+		taskId: "6898104425",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "averiguar por una fonoaudiologa",
+		taskId: "6885360249",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Ir a visitar a vampi",
+		taskId: "6914319149",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "mandarle msj al toto a ver si va a estar el domingo",
+		taskId: "6898140280",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Ir a la casa de la madrina",
+		taskId: "6915250355",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Lavar ropa para mañana el gym",
+		taskId: "6917765156",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: ["gilada"],
+	}, 2)}
+	${buildRenderText({
+		content: "Juntarme con vampi",
+		taskId: "6844551059",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Mandarlr msj a toto para juntarnos los 3",
+		taskId: "6868152840",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Recordarle al facu dar de baja el linkedin",
+		taskId: "6841124029",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "documentar info sobre AWS codewhispered",
+		taskId: "6917841350",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Sacar la basura",
+		taskId: "6919294025",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: [],
+	}, 2)}
+	${buildRenderText({
+		content: "Lavar la ropa del gym para mañana",
+		taskId: "6920071239",
+		createdAt: "2023-05-30T00:49:16.000000Z",
+		updatedAt: "2023-05-30T00:49:16.000000Z",
+		labels: ["gilada"],
+	}, 2)}
 `
 })
 

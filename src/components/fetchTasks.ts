@@ -133,7 +133,7 @@ export async function fetchCompletedTasks(
             projectsResults: projectsMetadata as ObsidianApi.GetAllTasks.CompletedProjectsMap,
         } as Domain.GetAllCompletedTasks;
 
-        console.log("output for fetchTasks: ", result)
+        // console.log("output for fetchTasks: ", result)
 
         return result;
     } catch (e) {

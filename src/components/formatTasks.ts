@@ -1,12 +1,12 @@
 import { moment, Notice } from "obsidian";
 import { TodoistSettings } from "../constants/DefaultSettings";
 import { RawTodoistTask } from "../constants/shared";
-import { TodoistTask } from "../constants/formatTasks";
+import { TodoistTask } from "src/constants/shared";
 
 const neverUpdated = "1970-01-01T00:00:00Z";
 
 function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
-    console.log("prepare tasks for rendering", tasks);
+    // console.log("prepare tasks for rendering", tasks);
     let childTasks: RawTodoistTask[] = tasks.filter(
         (task: RawTodoistTask) => task.parentId !== null
     );
@@ -23,7 +23,7 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
                 childTasks: [],
                 createdAt: task.createdAt,
                 updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt,
-                dueAt: task.dueAt == undefined ? null : task.dueAt,
+                dueAt: task.dueAt,
                 isRecurring: task.isRecurring,
                 labels: task.labels
             });
@@ -43,18 +43,18 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
             childTasks: [],
             createdAt: task.createdAt,
             updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt,
-            dueAt: task.dueAt == undefined ? null : task.dueAt,
+            dueAt: task.dueAt,
             isRecurring: task.isRecurring,
             labels: task.labels
         });
     });
 
-    console.log("prepare tasks for rendering results", renderedTasks);
+    // console.log("prepare tasks for rendering results", renderedTasks);
     return renderedTasks;
 }
 
 function renderTasksAsText(
-    tasks: any,
+    tasks: TodoistTask[],
     projectsMetadata: any,
     settings: TodoistSettings
 ) {
@@ -128,7 +128,7 @@ function renderTasksAsText(
                 returnString += `\n\t\t- taskId: ${t.taskId}`;
                 returnString += `\n\t\t- dueAt: ${t.dueAt}`;
                 returnString += `\n\t\t- isRecurring: ${t.isRecurring}`;
-                returnString += `\n\t\t- labels: ${t.labels}`;
+                returnString += `\n\t\t- labels: ${t.labels.join(', ')}`;
                 returnString += `\n\t\t- createdAt: ${t.createdAt}`;
                 returnString += `\n\t\t- updatedAt: ${t.updatedAt}`;
 
@@ -153,7 +153,7 @@ function renderTasksAsText(
                             childTaskString += `\n\t\t\t- taskId: ${childTask.taskId}`;
                             childTaskString += `\n\t\t\t- dueAt: ${childTask.dueAt}`;
                             childTaskString += `\n\t\t\t- isRecurring: ${childTask.isRecurring}`;
-                            childTaskString += `\n\t\t\t- labels: ${childTask.labels}`;
+                            childTaskString += `\n\t\t\t- labels: ${childTask.labels.join(', ')}`;
                             childTaskString += `\n\t\t\t- createdAt: ${childTask.createdAt}`;
                             childTaskString += `\n\t\t\t- updatedAt: ${childTask.updatedAt}`;
 
@@ -168,8 +168,8 @@ function renderTasksAsText(
 
         if (settings.renderProjectsHeaders) {
             for (const [key, project] of Object.entries(projectsMetadata)) {
-                let projectTasks: RawTodoistTask[] = tasks.filter(
-                    (task: any) => task.projectId === key
+                let projectTasks: TodoistTask[] = tasks.filter(
+                    (task: TodoistTask) => task.projectId === key
                 );
                 allTasks += renderProjectHeader(project);
 

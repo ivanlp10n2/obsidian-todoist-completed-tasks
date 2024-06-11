@@ -10,7 +10,7 @@ import {
     settingsCheck,
     segmentsCheck,
 } from "./utils";
-import { TodoistTask } from "../constants/formatTasks";
+import { TodoistTask } from "../constants/shared";
 import moment from "moment";
 
 const createFile = (filePath: string, renderedText: string) => {
@@ -69,7 +69,6 @@ export async function updateFileFromServer(
         new Notice("Invalid time frame.", 10000);
         return;
     }
-
     const fetchResults = await fetchCompletedTasks(
         settings.authToken,
         timeFrames
@@ -83,13 +82,7 @@ export async function updateFileFromServer(
     }
 
 
-    let formattedTasks: TodoistTask[] = prepareTasksForRendering(fetchResults.tasksResults);
-
-
-    const currentPath = app.workspace.getActiveFile().parent.path;
-
-    let groupedTasks: GroupedTasks = groupTasksByDate(formattedTasks);
-    const createFoldersIfNotExists = (groupedTasks: GroupedTasks) => {
+    const createFoldersIfNotExists: (groupedTasks: GroupedTasks) => void = (groupedTasks: GroupedTasks) => {
         Object.keys(groupedTasks).forEach((date) => {
             const [year, month, day] = date.split("-");
             const folderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
@@ -105,11 +98,19 @@ export async function updateFileFromServer(
         });
     }
 
-    const filteredGroupedTasks = Object.fromEntries(
+    const filterInvalidTasks: (groupedTasks: GroupedTasks) => GroupedTasks = (groupedTasks: GroupedTasks) => Object.fromEntries(
         Object.entries(groupedTasks)
             .filter(([key, _]) => key !== 'Invalid date')
-            .sort(([a, _], [b, __]) => moment(b, 'YYYY-MM-DD').diff(moment(a, 'YYYY-MM-DD')))
-    );    
+            .sort(([a, _], [b, __]) => a.localeCompare(b))
+    );
+
+    let formattedTasks: TodoistTask[] = prepareTasksForRendering(fetchResults.tasksResults);
+
+    const currentPath = app.workspace.getActiveFile().parent.path;
+
+    let groupedTasks: GroupedTasks = groupTasksByDate(formattedTasks);
+        
+    const filteredGroupedTasks = filterInvalidTasks(groupedTasks);
     console.log("filteredGroupedTasks", filteredGroupedTasks);
     createFoldersIfNotExists(filteredGroupedTasks);
 
@@ -145,7 +146,7 @@ type GroupedTasks = {
     //yyyy-mm-dd -> ([taskid] -> task)
     [key: string]: TodoistTask[];
 }
-const groupTasksByDate = (tasks: TodoistTask[]) => {
+const groupTasksByDate = (tasks: TodoistTask[]): GroupedTasks => {
     const map = new Map<string, TodoistTask[]>();
     tasks.forEach((task: TodoistTask) => {
         //utc
