@@ -6,8 +6,9 @@ import { TodoistTask } from "../constants/formatTasks";
 const neverUpdated = "1970-01-01T00:00:00Z";
 
 function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
+    console.log("prepare tasks for rendering", tasks);
     let childTasks: RawTodoistTask[] = tasks.filter(
-    (task: RawTodoistTask) => task.parentId !== null
+        (task: RawTodoistTask) => task.parentId !== null
     );
 
     let renderedTasks: TodoistTask[] = [];
@@ -21,7 +22,10 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
                 projectId: task.projectId,
                 childTasks: [],
                 createdAt: task.createdAt,
-                updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt
+                updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt,
+                dueAt: task.dueAt == undefined ? null : task.dueAt,
+                isRecurring: task.isRecurring,
+                labels: task.labels
             });
         }
     });
@@ -38,11 +42,14 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
             projectId: task.projectId,
             childTasks: [],
             createdAt: task.createdAt,
-            updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt
+            updatedAt: task.updatedAt == neverUpdated ? null : task.updatedAt,
+            dueAt: task.dueAt == undefined ? null : task.dueAt,
+            isRecurring: task.isRecurring,
+            labels: task.labels
         });
     });
 
-    // console.log("prepare tasks for rendering results", renderedTasks);
+    console.log("prepare tasks for rendering results", renderedTasks);
     return renderedTasks;
 }
 
@@ -119,6 +126,9 @@ function renderTasksAsText(
 
                 // Add createdAt and updatedAt timestamps for the parent task
                 returnString += `\n\t\t- taskId: ${t.taskId}`;
+                returnString += `\n\t\t- dueAt: ${t.dueAt}`;
+                returnString += `\n\t\t- isRecurring: ${t.isRecurring}`;
+                returnString += `\n\t\t- labels: ${t.labels}`;
                 returnString += `\n\t\t- createdAt: ${t.createdAt}`;
                 returnString += `\n\t\t- updatedAt: ${t.updatedAt}`;
 
@@ -141,6 +151,9 @@ function renderTasksAsText(
 
                             // Add createdAt and updatedAt timestamps for the child task
                             childTaskString += `\n\t\t\t- taskId: ${childTask.taskId}`;
+                            childTaskString += `\n\t\t\t- dueAt: ${childTask.dueAt}`;
+                            childTaskString += `\n\t\t\t- isRecurring: ${childTask.isRecurring}`;
+                            childTaskString += `\n\t\t\t- labels: ${childTask.labels}`;
                             childTaskString += `\n\t\t\t- createdAt: ${childTask.createdAt}`;
                             childTaskString += `\n\t\t\t- updatedAt: ${childTask.updatedAt}`;
 

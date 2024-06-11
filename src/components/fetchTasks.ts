@@ -3,10 +3,25 @@ import { Notice } from "obsidian";
 import { RawTodoistTask } from "../constants/shared";
 import { ObsidianApi, Codecs } from "../constants/fetchTasks";
 import { Domain } from "../constants/fetchTasks";
+import { fold } from 'fp-ts/Either';
+import { pipe } from 'fp-ts/function';
 
+// function decode(jsonResponse: unknown): ObsidianApi.GetTask.SingleTaskResponse | ObsidianApi.GetAllTasks.CompletedTasksResponse {
+//   const singleTaskResponseDecoded = ObsidianApi.GetTask.SingleTaskResponseCodec.decode(jsonResponse);
+//   const completedTasksResponseDecoded = ObsidianApi.GetAllTasks.CompletedTasksResponseCodec.decode(jsonResponse);
 
+//   if (singleTaskResponseDecoded._tag === 'Right') {
+//     return singleTaskResponseDecoded.right;
+//   } else if (completedTasksResponseDecoded._tag === 'Right') {
+//     return completedTasksResponseDecoded.right;
+//   } else {
+//     throw new Error("Invalid response type");
+//   }
+// }
 async function debugWrapper(url: string, options: RequestInit): Promise<any> {
     const jsonResponse: any = await fetch(url, options).then((res) => res.json());
+    // const converted: ObsidianApi.GetTask.SingleTaskResponse | ObsidianApi.GetAllTasks.CompletedTasksResponse = jsonResponse;
+    
     return jsonResponse;
 }
 export async function fetchSingleTask(
@@ -43,7 +58,7 @@ export async function fetchCompletedTasks(
     } = timeFrames;
 
     // const limit = renderSubtasks ? 30 : 200;
-    const limit = 200; // https://developer.todoist.com/sync/v9/#get-all-completed-items
+    const limit = ObsidianApi.GetAllTasks.Limit;
     const url = ObsidianApi.GetAllTasks.UrlGetAllItems({
         timeStartFormattedDate: timeStartFormattedDate,
         timeStartFormattedTime: timeStartFormattedTime,
@@ -114,10 +129,12 @@ export async function fetchCompletedTasks(
             }
         });
         const result = {
-            tasksResults: mappedResults,
-            projectsResults: projectsMetadata,
-        }
-        // console.log("output for fetchTasks: ", result)
+            tasksResults: mappedResults as RawTodoistTask[],
+            projectsResults: projectsMetadata as ObsidianApi.GetAllTasks.CompletedProjectsMap,
+        } as Domain.GetAllCompletedTasks;
+
+        console.log("output for fetchTasks: ", result)
+
         return result;
     } catch (e) {
         let errorMsg = ObsidianApi.FetchErrors.HandleErrorMsg(e);

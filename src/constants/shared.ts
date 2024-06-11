@@ -12,5 +12,8 @@ export interface RawTodoistTask {
     readonly projectId: string;
     readonly createdAt: string;
     readonly updatedAt: string;
+    readonly dueAt: string | null;
+    readonly isRecurring: boolean;
+    readonly labels: string[];
 }
 

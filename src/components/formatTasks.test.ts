@@ -18,7 +18,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-30T00:49:16.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"isRecurring": false,
+				"labels": [] as string[],
+				"dueAt": null as null
 			},
 			{
 				"taskId": "6919294025",
@@ -27,7 +30,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T23:33:57.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6917841350",
@@ -36,7 +42,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T22:47:51.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6920094789",
@@ -45,7 +54,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T19:14:13.000000Z",
 				"projectId": "1777918547",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6841124029",
@@ -54,7 +66,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T13:23:06.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6841119029",
@@ -63,7 +78,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:56:57.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6868152840",
@@ -72,7 +90,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:52:39.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6844551059",
@@ -81,7 +102,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:52:33.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6898082561",
@@ -90,7 +114,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:49:48.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6898058993",
@@ -99,7 +126,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:46:58.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6917765156",
@@ -108,7 +138,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-29T01:01:03.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": ["gilada"]
 			},
 			{
 				"taskId": "6915250355",
@@ -117,7 +150,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-28T17:47:12.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6898140280",
@@ -126,7 +162,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-27T15:21:54.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6914319149",
@@ -135,7 +174,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-27T15:20:32.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6885360249",
@@ -144,7 +186,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-27T15:14:05.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6898104425",
@@ -153,7 +198,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-27T06:33:54.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6898103720",
@@ -162,7 +210,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-25T16:05:59.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6909912829",
@@ -171,7 +222,10 @@ describe("formatTasks", () => {
 				"completedAt": "2023-05-25T15:46:12.000000Z",
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6841115479",
@@ -180,7 +234,10 @@ describe("formatTasks", () => {
 				"completedAt": null,
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6841105886",
@@ -189,7 +246,10 @@ describe("formatTasks", () => {
 				"completedAt": null,
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			},
 			{
 				"taskId": "6876083667",
@@ -198,7 +258,10 @@ describe("formatTasks", () => {
 				"completedAt": null,
 				"projectId": "2308886649",
 				"createdAt": "2023-05-30T00:49:16.000000Z",
-				"updatedAt": "2023-05-30T00:49:16.000000Z"
+				"updatedAt": "2023-05-30T00:49:16.000000Z",
+				"dueAt": null as null,
+				"isRecurring": false,
+				"labels": [] as string[]
 			}
 		]
 
@@ -273,6 +336,9 @@ describe("formatTasks", () => {
 			"childTasks": [] as any[],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
 			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6919294025",
@@ -281,7 +347,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6917841350",
@@ -290,7 +359,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6920094789",
@@ -299,7 +371,10 @@ describe("formatTasks", () => {
 			"projectId": "1777918547",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6841124029",
@@ -308,7 +383,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6868152840",
@@ -317,7 +395,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6844551059",
@@ -326,7 +407,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6917765156",
@@ -335,7 +419,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": ["gilada"]
 		},
 		{
 			"taskId": "6915250355",
@@ -344,7 +431,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6898140280",
@@ -353,7 +443,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6914319149",
@@ -362,7 +455,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6885360249",
@@ -371,7 +467,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6898104425",
@@ -380,7 +479,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6898103720",
@@ -389,7 +491,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6909912829",
@@ -398,7 +503,10 @@ describe("formatTasks", () => {
 			"projectId": "2308886649",
 			"childTasks": [],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6841115479",
@@ -413,11 +521,17 @@ describe("formatTasks", () => {
 					"projectId": "2308886649",
 					"childTasks": [] as any[],
 					"createdAt": "2023-05-30T00:49:16.000000Z",
-					"updatedAt": "2023-05-30T00:49:16.000000Z"
+					"updatedAt": "2023-05-30T00:49:16.000000Z",
+					"dueAt": null as null,
+					"isRecurring": false,
+					"labels": [] as string[]
 				}
 			],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6841105886",
@@ -432,11 +546,17 @@ describe("formatTasks", () => {
 					"projectId": "2308886649",
 					"childTasks": [] as any[],
 					"createdAt": "2023-05-30T00:49:16.000000Z",
-					"updatedAt": "2023-05-30T00:49:16.000000Z"
+					"updatedAt": "2023-05-30T00:49:16.000000Z",
+					"dueAt": null as null,
+					"isRecurring": false,
+					"labels": [] as string[]
 				}
 			],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		},
 		{
 			"taskId": "6876083667",
@@ -451,11 +571,17 @@ describe("formatTasks", () => {
 					"projectId": "2308886649",
 					"childTasks": [] as any[],
 					"createdAt": "2023-05-30T00:49:16.000000Z",
-					"updatedAt": "2023-05-30T00:49:16.000000Z"
+					"updatedAt": "2023-05-30T00:49:16.000000Z",
+					"dueAt": null as null,
+					"isRecurring": false,
+					"labels": [] as string[]
 				}
 			],
 			"createdAt": "2023-05-30T00:49:16.000000Z",
-			"updatedAt": "2023-05-30T00:49:16.000000Z"
+			"updatedAt": "2023-05-30T00:49:16.000000Z",
+			"dueAt": null as null,
+			"isRecurring": false,
+			"labels": [] as string[]
 		}
 	]
 

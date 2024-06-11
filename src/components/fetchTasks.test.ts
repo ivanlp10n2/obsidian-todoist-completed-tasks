@@ -1,6 +1,6 @@
 import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
 import { ObsidianApi, Domain, Codecs } from '../constants/fetchTasks';
-
+import { RawTodoistTask } from '../constants/shared';
 
 describe('fetchTasks component', () => {
   const authToken = 'your-auth-token';
@@ -9,11 +9,12 @@ describe('fetchTasks component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   })
+
   describe('fetchSingleTask', () => {
     it('should fetch and decode successfully', async () => {
       const fetchSingleTaskFn = jest.fn().mockResolvedValueOnce(getSingleTaskAPI)
 
-      const result = await fetchSingleTask(authToken, taskId, fetchSingleTaskFn);
+      const result: RawTodoistTask = await fetchSingleTask(authToken, taskId, fetchSingleTaskFn);
 
       expect(fetchSingleTaskFn).toHaveBeenCalledWith(ObsidianApi.GetTask.UrlGetItem(taskId),
         { headers: { Authorization: `Bearer ${authToken}` } }
@@ -64,6 +65,7 @@ describe('fetchTasks component', () => {
     xit('task_id is what helps you to fetch single tasks', () => { })
     xit('get-single-api.item.id is what you get in get-all-api.items.task_id', () => { })
     xit('actually ancestor attribute and parent task seems to have the same attributes. Only changes on how parent of that task is rendered', () => { })
+		xit("only ones that i don't fetch is non-completed and those are parents in my workflow (big tasks managed by label)", () => {})
     it('should fetch-all completed and get parent with fetch-single of those who has', async () => {
       // receives 2023-04-29 02:59 2023-06-29 02:59
       // returns: { projectResults : [project_id -> project], tasksResults : [index -> task]}
@@ -81,13 +83,14 @@ describe('fetchTasks component', () => {
         limit: 20
       }
 
-      const result = await fetchCompletedTasks(authToken, input, fetchParentAndChildren)
+      const result: Domain.GetAllCompletedTasks = await fetchCompletedTasks(authToken, input, fetchParentAndChildren)
 
       expect(result).toEqual(expectedResultFetchCompletedTasks)
     })
   })
 
-  const expectedResultFetchCompletedTasks = {
+  // const expectedResultFetchCompletedTasks: Domain.GetAllCompletedTasks = {
+  const expectedResultFetchCompletedTasks: any = {
     tasksResults: [
       /**
        * item": {
@@ -126,7 +129,10 @@ describe('fetchTasks component', () => {
         completedAt: '2023-06-17T13:26:46.000000Z',
         projectId: '2308886701',
         updatedAt: '1970-01-01T00:00:00Z',
-        createdAt: '2023-06-17T13:26:23.164918Z'
+        createdAt: '2023-06-17T13:26:23.164918Z',
+        dueAt: undefined,
+        isRecurring: false,
+        labels: [] as string[],
       },
       /**"item": {
         "added_at": "2023-06-14T11:43:05.493517Z",
@@ -169,7 +175,10 @@ describe('fetchTasks component', () => {
         completedAt: '2023-06-17T13:23:53.000000Z',
         projectId: '2308886701',
         createdAt: '2023-06-14T11:43:05.493517Z',
-        updatedAt: '1970-01-01T00:00:00Z'
+        updatedAt: '1970-01-01T00:00:00Z',
+        dueAt: '2023-06-17T10:00:00',
+        isRecurring: false,
+        labels: [] as string[],
       },
       /**"item": {
         "added_at": "2023-06-17T13:25:07.453Z",
@@ -209,28 +218,48 @@ describe('fetchTasks component', () => {
         completedAt: null as null,
         projectId: '2308886701',
         createdAt: '2023-06-17T13:25:07.453Z',
-        updatedAt: '2023-07-10T03:14:40Z'
+        updatedAt: '2023-07-10T03:14:40Z',
+        dueAt: undefined,
+        isRecurring: false,
+        labels: [
+          '✅',
+          '🟩🟩🟩🟩🟩'
+        ] as string[],
       }
     ],
+        // export type CompletedTaskProject = {
+        //     name: string;
+        //     id: string;
+        //     parent_id: string;
+        //     is_archived: boolean;
+        //     is_deleted: boolean;
+        //     is_favorite: boolean;
+        //     created_at: string;
+        //     updated_at: string;
+        //     view_style: string;
+        //     color: string;
+        //     child_order: number;
+        //     v2_id: string;
+        //     v2_parent_id: string | null;
     projectsResults: {
       '2308886701': {
-        can_assign_tasks: false,
-        child_order: 0,
-        collapsed: false,
-        color: 'lavender',
-        created_at: '2023-07-13T11:05:04Z',
         id: '2308886701',
+        created_at: '2023-07-13T11:05:04Z',
         is_archived: true,
         is_deleted: false,
         is_favorite: false,
         name: 'June 2023',
         parent_id: null as null,
-        shared: false,
-        sync_id: null as null,
         updated_at: '2024-03-29T14:22:25Z',
+        shared: false,
+        sync_id: null,
         v2_id: '6P5Q7J4hfJC67c6m',
         v2_parent_id: null as null,
-        view_style: 'board'
+        view_style: 'board',
+        color: 'lavender',
+        child_order: 0,
+        collapsed: false,
+        can_assign_tasks: false
       }
     }
   }

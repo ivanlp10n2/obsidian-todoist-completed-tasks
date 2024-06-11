@@ -10,20 +10,17 @@ import {
     settingsCheck,
     segmentsCheck,
 } from "./utils";
+import { TodoistTask } from "../constants/formatTasks";
+import moment from "moment";
 
-const createFoldersAndFiles = (renderedText: string) => {
-    const activeFile = app.workspace.getActiveFile();
-    const directoryPath = activeFile.parent.path;
-    const fileName = "completed-tasks.md";
-    const filePath = `${directoryPath}/${fileName}`;
-
+const createFile = (filePath: string, renderedText: string) => {
     app.vault.create(filePath, renderedText).then(() => {
-        new Notice("Completed tasks file created.");
+        new Notice(`Tasks file ${filePath} created.`);
     }).catch(err => {
-        new Notice("Error creating file: " + err.message);
+        new Notice(`Error creating file ${filePath}: ${err.message}`);
     });
 }
-
+//get division by { completed-tasks/yyyy/mm/dd/taskid-taskTitle }
 function getOrCreateFolder(folderPath: string) {
     const folder = app.vault.getAbstractFileByPath(folderPath);
     if (!folder) {
@@ -78,18 +75,49 @@ export async function updateFileFromServer(
         timeFrames
     );
 
+    console.log("fetchResults", fetchResults);
+
     if (fetchResults.tasksResults.length === 0) {
         new Notice("No completed tasks found for the given timeframe");
         return;
     }
 
 
-    let formattedTasks = prepareTasksForRendering(fetchResults.tasksResults);
-    let renderedText = renderTasksAsText(
-        formattedTasks,
-        fetchResults.projectsResults,
-        settings
-    );
+    let formattedTasks: TodoistTask[] = prepareTasksForRendering(fetchResults.tasksResults);
+
+
+    const currentPath = app.workspace.getActiveFile().parent.path;
+
+    let groupedTasks: GroupedTasks = groupTasksByDate(formattedTasks);
+    const createFoldersIfNotExists = (groupedTasks: GroupedTasks) => {
+        Object.keys(groupedTasks).forEach((date) => {
+            const [year, month, day] = date.split("-");
+            const folderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
+            getOrCreateFolder(folderPath);
+            groupedTasks[date].forEach((task) => {
+                let renderedText = renderTasksAsText(
+                    [task],
+                    fetchResults.projectsResults,
+                    settings
+                );
+                createFile(`${folderPath}/${task.taskId}-${task.content}.md`, renderedText);
+            });
+        });
+    }
+
+    const filteredGroupedTasks = Object.fromEntries(
+        Object.entries(groupedTasks)
+            .filter(([key, _]) => key !== 'Invalid date')
+            .sort(([a, _], [b, __]) => moment(b, 'YYYY-MM-DD').diff(moment(a, 'YYYY-MM-DD')))
+    );    
+    console.log("filteredGroupedTasks", filteredGroupedTasks);
+    createFoldersIfNotExists(filteredGroupedTasks);
+
+    // let renderedText = renderTasksAsText(
+    //     formattedTasks,
+    //     fetchResults.projectsResults,
+    //     settings
+    // );
 
     let rangeStart = fileContent.indexOf(settings.keywordSegmentStart);
     let rangeEnd = fileContent.indexOf(settings.keywordSegmentEnd);
@@ -97,18 +125,36 @@ export async function updateFileFromServer(
     if (fetchStrategy === FETCH_STRATEGIES.fromFile) {
         rangeStart = fileContent.indexOf(timeFrames.startString);
         rangeEnd = fileContent.indexOf(timeFrames.endString);
-        renderedText = `${timeFrames.startString}${renderedText}`;
+        // renderedText = `${timeFrames.startString}${renderedText}`;
     } else {
-        renderedText = `${settings.keywordSegmentStart}${renderedText}`;
+        // renderedText = `${settings.keywordSegmentStart}${renderedText}`;
     }
-    editor.replaceRange(
-        renderedText,
-        editor.offsetToPos(rangeStart),
-        editor.offsetToPos(rangeEnd)
-    );
+    // editor.replaceRange(
+    //     "",
+    //     editor.offsetToPos(rangeStart),
+    //     editor.offsetToPos(rangeEnd)
+    // );
 
-    // createFoldersAndFiles(filePath);
 
-    // createFoldersAndFiles(renderedText);
     new Notice("Completed tasks loaded.");
+}
+// type GroupedDate = {
+//     [key: string]: GroupedTasks;
+// }
+type GroupedTasks = {
+    //yyyy-mm-dd -> ([taskid] -> task)
+    [key: string]: TodoistTask[];
+}
+const groupTasksByDate = (tasks: TodoistTask[]) => {
+    const map = new Map<string, TodoistTask[]>();
+    tasks.forEach((task: TodoistTask) => {
+        //utc
+        const date = moment(task.completedAt).utc().format("YYYY-MM-DD");
+        if (!map.get(date)) {
+            map.set(date, []);
+        }
+        map.get(date).push(task);
+    });
+    const groupedTasks: GroupedTasks = Object.fromEntries(map.entries());
+    return groupedTasks;
 }

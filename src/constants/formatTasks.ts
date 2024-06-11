@@ -6,5 +6,8 @@ export interface TodoistTask {
     projectId?: string | null;
     createdAt: Date;
     updatedAt: Date | null;
+    dueAt: Date | null;
+    isRecurring: boolean;
+    labels: string[];
 }
 

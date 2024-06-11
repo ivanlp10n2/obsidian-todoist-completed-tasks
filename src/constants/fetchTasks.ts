@@ -4,7 +4,7 @@ import { RawTodoistTask } from "./shared";
 
 export module Domain {
     export type GetAllCompletedTasks = {
-        taskResults: RawTodoistTask[],
+        tasksResults: RawTodoistTask[],
         projectsResults: ObsidianApi.GetAllTasks.CompletedProjectsMap,
     }
 }
@@ -22,7 +22,10 @@ export module Codecs {
                 completedAt: task.item.completed_at,
                 projectId: task.project.id,
                 createdAt: task.item.added_at,
-                updatedAt: task.item.updated_at
+                updatedAt: task.item.updated_at,
+                dueAt: task.item.due?.date,
+                isRecurring: false,
+                labels: task.item.labels,
             };
         } else {
             return { //fetch - get-all-api.items
@@ -33,6 +36,9 @@ export module Codecs {
                 projectId: task.project_id,
                 createdAt: task.added_at,
                 updatedAt: task.updated_at,
+                dueAt: task.due?.date,
+                isRecurring: task.due?.is_recurring,
+                labels: task.labels,
             };
         }
 
@@ -126,6 +132,8 @@ export module ObsidianApi {
                     ;
             };
 
+        export const Limit = 200
+
         export type UrlGetAllItemsFilter = {
             timeStartFormattedDate: string; /* 2022-01-01 */
             timeStartFormattedTime: string; /* 00:00:00 */
@@ -166,13 +174,18 @@ export module ObsidianApi {
         export type CompletedTaskProject = {
             name: string;
             id: string;
-            parent_id: string;
+            parent_id: string | null;
             is_archived: boolean;
             is_deleted: boolean;
             is_favorite: boolean;
             created_at: string;
             updated_at: string;
             view_style: string;
+            color: string;
+            child_order: number;
+            v2_id: string;
+            v2_parent_id: string | null;
+
         }
 
         export type CompletedSectionsMap = {
