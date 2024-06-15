@@ -36,11 +36,12 @@ export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks
                 `todoist_task_id: ${task.taskId}` + `\n` +
                 `todoist_is_completed: ${task.completedAt ? 'true' : 'false'}` + `\n` +
                 `todoist_priority: ${task.priority ?? 'null'}` + `\n` +
+                `todoist_project_id: ${task.projectId ?? 'null'}` + `\n` +
+                `todoist_section_id: ${task.sectionId ?? 'null'}` + `\n` +
                 `todoist_created_at: ${task.createdAt}` + `\n` +
                 `todoist_updated_at: ${task.updatedAt ?? 'null'}` + `\n` +
                 `todoist_project_name: ${project.name ?? 'null'}` + `\n` +
                 `todoist_completed_at: ${task.completedAt ?? 'null'}` + `\n` +
-                `todoist_project_id: ${task.projectId ?? 'null'}` + `\n` +
                 `todoist_parent_id: ${task.parentId ?? 'null'}` + `\n` +
                 `todoist_is_recurring: ${task.isRecurring ?? 'false'}` + `\n` +
                 `todoist_labels: ${task.labels}` + `\n` +

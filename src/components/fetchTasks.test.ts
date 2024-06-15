@@ -134,7 +134,8 @@ describe('fetchTasks component', () => {
         dueAt: null,
         isRecurring: false,
         labels: [] as string[],
-        priority: 1
+        priority: 1,
+        sectionId: '117184028'
       },
       /**"item": {
         "added_at": "2023-06-14T11:43:05.493517Z",
@@ -181,7 +182,8 @@ describe('fetchTasks component', () => {
         dueAt: '2023-06-17T10:00:00',
         isRecurring: false,
         labels: [] as string[],
-        priority: 4
+        priority: 4,
+        sectionId: '117184024'
       },
       /**"item": {
         "added_at": "2023-06-17T13:25:07.453Z",
@@ -228,7 +230,8 @@ describe('fetchTasks component', () => {
           '✅',
           '🟩🟩🟩🟩🟩'
         ] as string[],
-        priority: 1
+        priority: 1,
+        sectionId: '117184028'
       }
     ],
         // export type CompletedTaskProject = {

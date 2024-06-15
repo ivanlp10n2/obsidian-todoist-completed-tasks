@@ -16,6 +16,7 @@ export interface RawTodoistTask {
     readonly isRecurring: boolean;
     readonly labels: string[];
     readonly priority: number | null;
+    readonly sectionId: string | null;
 }
 export interface TodoistTask {
     // regarding dates: don't want to spend time parsing dates with timezones. 
@@ -34,4 +35,5 @@ export interface TodoistTask {
     labels: string[];
     description?: string | null;
     priority: number | null;
+    sectionId: string | null;
 }

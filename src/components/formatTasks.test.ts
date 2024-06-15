@@ -64,8 +64,9 @@ describe("formatTasks", () => {
 		"dueAt": "2023-06-14T13:00:00",
 		"isRecurring": true,
 		"labels": ["asdb"],
-		description : null,
-		priority: 1
+		description: null,
+		priority: 1,
+		sectionId: '117184028'
 	}
 	const singleOutput: string =
 		`---
@@ -73,11 +74,12 @@ date: 2023-06-14T15:02:37.000000Z
 todoist_task_id: 6960733805
 todoist_is_completed: true
 todoist_priority: 1
+todoist_project_id: 1777918547
+todoist_section_id: 117184028
 todoist_created_at: 2023-06-13T02:06:05.175619Z
 todoist_updated_at: null
 todoist_project_name: Inbox
 todoist_completed_at: 2023-06-14T15:02:37.000000Z
-todoist_project_id: 1777918547
 todoist_parent_id: null
 todoist_is_recurring: true
 todoist_labels: asdb
@@ -94,6 +96,307 @@ tags: [todoist, todoist-project-Inbox, todoist-status-done]
 App: https://app.todoist.com/app/task/mandar-msj-para-ver-a-mariel-por-el-diente-sensible-6960733805
 Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 
+	const buildRawTask = ({
+		taskId, parentId, description, completedAt, projectId, createdAt, updatedAt, isRecurring, labels, dueAt, priority, sectionId 
+	}: TodoistTask) => {
+
+	}
+	const multipleInput: RawTodoistTask[] = [
+		{
+			taskId: "6920071239",
+			parentId: null,
+			content: "Lavar la ropa del gym para mañana",
+			completedAt: "2023-05-30T00:49:16.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			isRecurring: false,
+			labels: ["gilada"],
+			dueAt: null,
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6919294025",
+			parentId: null,
+			content: "Sacar la basura",
+			completedAt: "2023-05-29T23:33:57.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6917841350",
+			parentId: null,
+			content: "documentar info sobre AWS codewhispered",
+			completedAt: "2023-05-29T22:47:51.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6920094789",
+			parentId: null,
+			content: "Resolver el tema del candado",
+			completedAt: "2023-05-29T19:14:13.000000Z",
+			projectId: "1777918547",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6841124029",
+			parentId: null,
+			content: "Recordarle al facu dar de baja el linkedin",
+			completedAt: "2023-05-29T13:23:06.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6841119029",
+			parentId: "6841115479",
+			content: "Check tasks 4 week",
+			completedAt: "2023-05-29T01:56:57.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6868152840",
+			parentId: null,
+			content: "Mandarlr msj a toto para juntarnos los 3",
+			completedAt: "2023-05-29T01:52:39.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6844551059",
+			parentId: null,
+			content: "Juntarme con vampi",
+			completedAt: "2023-05-29T01:52:33.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6898082561",
+			parentId: "6841105886",
+			content: "Complete _May month",
+			completedAt: "2023-05-29T01:49:48.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6898058993",
+			parentId: "6876083667",
+			content: "Check more habits you can add",
+			completedAt: "2023-05-29T01:46:58.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6917765156",
+			parentId: null,
+			content: "Lavar ropa para mañana el gym",
+			completedAt: "2023-05-29T01:01:03.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: ["gilada"],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6915250355",
+			parentId: null,
+			content: "Ir a la casa de la madrina",
+			completedAt: "2023-05-28T17:47:12.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6898140280",
+			parentId: null,
+			content: "mandarle msj al toto a ver si va a estar el domingo",
+			completedAt: "2023-05-27T15:21:54.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6914319149",
+			parentId: null,
+			content: "Ir a visitar a vampi",
+			completedAt: "2023-05-27T15:20:32.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6885360249",
+			parentId: null,
+			content: "averiguar por una fonoaudiologa",
+			completedAt: "2023-05-27T15:14:05.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6898104425",
+			parentId: null,
+			content: "Agregar habitos a los que ya tengo de todoist si hacen falta",
+			completedAt: "2023-05-27T06:33:54.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6898103720",
+			parentId: null,
+			content: "Agregar gastos de Mayo que me quedan pendientes",
+			completedAt: "2023-05-25T16:05:59.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6909912829",
+			parentId: null,
+			content: "Llevarle la ropa a vieja y al lavadero",
+			completedAt: "2023-05-25T15:46:12.000000Z",
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6841115479",
+			parentId: null,
+			content: "Organize and schedule well organized goals",
+			completedAt: null,
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6841105886",
+			parentId: null,
+			content: "learn about finance tools",
+			completedAt: null,
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		},
+		{
+			taskId: "6876083667",
+			parentId: null,
+			content: "Find a way to encourage habits instead of goals",
+			completedAt: null,
+			projectId: "2308886649",
+			createdAt: "2023-05-30T00:49:16.000000Z",
+			updatedAt: "2023-05-30T00:49:16.000000Z",
+			dueAt: null,
+			isRecurring: false,
+			labels: [],
+			priority: 1,
+			sectionId: '117184028'
+		}
+	];
 	const multipleOutput: TodoistTask[] = [
 		{
 			taskId: '6920071239',
@@ -108,7 +411,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: ['gilada'],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6919294025',
@@ -123,7 +427,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6917841350',
@@ -138,7 +443,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6920094789',
@@ -153,7 +459,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6841124029',
@@ -168,7 +475,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6868152840',
@@ -183,7 +491,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6844551059',
@@ -198,7 +507,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6917765156',
@@ -213,7 +523,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: ['gilada'],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6915250355',
@@ -228,7 +539,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6898140280',
@@ -243,7 +555,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6914319149',
@@ -258,7 +571,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6885360249',
@@ -273,7 +587,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6898104425',
@@ -288,7 +603,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6898103720',
@@ -303,7 +619,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6909912829',
@@ -318,7 +635,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6841115479',
@@ -333,7 +651,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6841119029',
@@ -348,7 +667,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6841105886',
@@ -363,7 +683,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6898082561',
@@ -378,7 +699,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6876083667',
@@ -393,7 +715,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 		{
 			taskId: '6898058993',
@@ -408,285 +731,12 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			dueAt: null,
 			isRecurring: false,
 			labels: [],
-			priority: 1
+			priority: 1,
+			sectionId: '117184028'
 		},
 	];
 
-	const multipleInput: RawTodoistTask[] = [
-		{
-			taskId: "6920071239",
-			parentId: null,
-			content: "Lavar la ropa del gym para mañana",
-			completedAt: "2023-05-30T00:49:16.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			isRecurring: false,
-			labels: ["gilada"],
-			dueAt: null,
-			priority: 1
-		},
-		{
-			taskId: "6919294025",
-			parentId: null,
-			content: "Sacar la basura",
-			completedAt: "2023-05-29T23:33:57.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6917841350",
-			parentId: null,
-			content: "documentar info sobre AWS codewhispered",
-			completedAt: "2023-05-29T22:47:51.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6920094789",
-			parentId: null,
-			content: "Resolver el tema del candado",
-			completedAt: "2023-05-29T19:14:13.000000Z",
-			projectId: "1777918547",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6841124029",
-			parentId: null,
-			content: "Recordarle al facu dar de baja el linkedin",
-			completedAt: "2023-05-29T13:23:06.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6841119029",
-			parentId: "6841115479",
-			content: "Check tasks 4 week",
-			completedAt: "2023-05-29T01:56:57.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6868152840",
-			parentId: null,
-			content: "Mandarlr msj a toto para juntarnos los 3",
-			completedAt: "2023-05-29T01:52:39.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6844551059",
-			parentId: null,
-			content: "Juntarme con vampi",
-			completedAt: "2023-05-29T01:52:33.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6898082561",
-			parentId: "6841105886",
-			content: "Complete _May month",
-			completedAt: "2023-05-29T01:49:48.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6898058993",
-			parentId: "6876083667",
-			content: "Check more habits you can add",
-			completedAt: "2023-05-29T01:46:58.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6917765156",
-			parentId: null,
-			content: "Lavar ropa para mañana el gym",
-			completedAt: "2023-05-29T01:01:03.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: ["gilada"],
-			priority: 1
-		},
-		{
-			taskId: "6915250355",
-			parentId: null,
-			content: "Ir a la casa de la madrina",
-			completedAt: "2023-05-28T17:47:12.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6898140280",
-			parentId: null,
-			content: "mandarle msj al toto a ver si va a estar el domingo",
-			completedAt: "2023-05-27T15:21:54.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6914319149",
-			parentId: null,
-			content: "Ir a visitar a vampi",
-			completedAt: "2023-05-27T15:20:32.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6885360249",
-			parentId: null,
-			content: "averiguar por una fonoaudiologa",
-			completedAt: "2023-05-27T15:14:05.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6898104425",
-			parentId: null,
-			content: "Agregar habitos a los que ya tengo de todoist si hacen falta",
-			completedAt: "2023-05-27T06:33:54.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6898103720",
-			parentId: null,
-			content: "Agregar gastos de Mayo que me quedan pendientes",
-			completedAt: "2023-05-25T16:05:59.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6909912829",
-			parentId: null,
-			content: "Llevarle la ropa a vieja y al lavadero",
-			completedAt: "2023-05-25T15:46:12.000000Z",
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6841115479",
-			parentId: null,
-			content: "Organize and schedule well organized goals",
-			completedAt: null,
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6841105886",
-			parentId: null,
-			content: "learn about finance tools",
-			completedAt: null,
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		},
-		{
-			taskId: "6876083667",
-			parentId: null,
-			content: "Find a way to encourage habits instead of goals",
-			completedAt: null,
-			projectId: "2308886649",
-			createdAt: "2023-05-30T00:49:16.000000Z",
-			updatedAt: "2023-05-30T00:49:16.000000Z",
-			dueAt: null,
-			isRecurring: false,
-			labels: [],
-			priority: 1
-		}
-	];
+
 
 })
 
