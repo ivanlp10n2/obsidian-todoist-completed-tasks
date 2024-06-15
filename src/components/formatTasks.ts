@@ -28,7 +28,7 @@ function prepareTasksForRendering(
     tasks: RawTodoistTask[],
     projectsMetadata: TodoistApi.GetAllTasks.CompletedProjectsMap
 ): TodoistTask[] {
-    const hasParent = (task: RawTodoistTask) => task.parentId !== null;
+    // const hasParent = (task: RawTodoistTask) => task.parentId !== null;
     // const tasksWithParentId: RawTodoistTask[] = tasks.filter(hasParent);
     /**
      * it's expected to have parent of all childs
@@ -67,27 +67,27 @@ function renderTaskAsText(
     }
 }
 
-function renderTasksAsText(
-    tasks: TodoistTask[],
-    projectsMetadata: any,
-): string[] {
-    try {
-        return tasks.reverse().map((t: any, index: number) => {
-            let returnString = "";
-            const project: TodoistApi.GetAllTasks.CompletedTaskProject = projectsMetadata[t.projectId];
-            returnString = buildRenderText2(t, project);
-            return returnString;
-        });
+// function renderTasksAsText(
+//     tasks: TodoistTask[],
+//     projectsMetadata: any,
+// ): string[] {
+//     try {
+//         return tasks.reverse().map((t: any, index: number) => {
+//             let returnString = "";
+//             const project: TodoistApi.GetAllTasks.CompletedTaskProject = projectsMetadata[t.projectId];
+//             returnString = buildRenderText2(t, project);
+//             return returnString;
+//         });
 
-    } catch (error) {
-        console.error(error);
-        new Notice(
-            "There was a problem formatting your tasks. Check the console for more details.",
-            10000
-        );
-        return [];
-    }
-}
+//     } catch (error) {
+//         console.error(error);
+//         new Notice(
+//             "There was a problem formatting your tasks. Check the console for more details.",
+//             10000
+//         );
+//         return [];
+//     }
+// }
 
-export { prepareTasksForRendering, renderTaskAsText, renderTasksAsText };
+export { prepareTasksForRendering, renderTaskAsText };
 
