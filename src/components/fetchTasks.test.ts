@@ -66,7 +66,7 @@ describe('fetchTasks component', () => {
     xit('task_id is what helps you to fetch single tasks', () => { })
     xit('get-single-api.item.id is what you get in get-all-api.items.task_id', () => { })
     xit('actually ancestor attribute and parent task seems to have the same attributes. Only changes on how parent of that task is rendered', () => { })
-		xit("only ones that i don't fetch is non-completed and those are parents in my workflow (big tasks managed by label)", () => {})
+    xit("only ones that i don't fetch is non-completed and those are parents in my workflow (big tasks managed by label)", () => { })
     it('should fetch-all completed and get parent with fetch-single of those who has', async () => {
       // receives 2023-04-29 02:59 2023-06-29 02:59
       // returns: { projectResults : [project_id -> project], tasksResults : [index -> task]}
@@ -127,7 +127,7 @@ describe('fetchTasks component', () => {
         taskId: '6973917578',
         parentId: '6973914935',
         content: 'What it takes - Stephen Schwarzman',
-        completedAt: '2023-06-17T13:26:46.000000Z',
+        completedAt: '2023-06-17T13:26:46.396000000Z',
         projectId: '2308886701',
         updatedAt: '1970-01-01T00:00:00Z',
         createdAt: '2023-06-17T13:26:23.164918Z',
@@ -234,20 +234,20 @@ describe('fetchTasks component', () => {
         sectionId: '117184028'
       }
     ],
-        // export type CompletedTaskProject = {
-        //     name: string;
-        //     id: string;
-        //     parent_id: string;
-        //     is_archived: boolean;
-        //     is_deleted: boolean;
-        //     is_favorite: boolean;
-        //     created_at: string;
-        //     updated_at: string;
-        //     view_style: string;
-        //     color: string;
-        //     child_order: number;
-        //     v2_id: string;
-        //     v2_parent_id: string | null;
+    // export type CompletedTaskProject = {
+    //     name: string;
+    //     id: string;
+    //     parent_id: string;
+    //     is_archived: boolean;
+    //     is_deleted: boolean;
+    //     is_favorite: boolean;
+    //     created_at: string;
+    //     updated_at: string;
+    //     view_style: string;
+    //     color: string;
+    //     child_order: number;
+    //     v2_id: string;
+    //     v2_parent_id: string | null;
     projectsResults: {
       '2308886701': {
         id: '2308886701',
@@ -268,6 +268,38 @@ describe('fetchTasks component', () => {
         collapsed: false,
         can_assign_tasks: false
       }
+    },
+    sectionsResults: {
+      "117184024": {
+        "added_at": "2023-03-02T01:49:42.955631Z",
+        "archived_at": null,
+        "collapsed": false,
+        "id": "117184024",
+        "is_archived": false,
+        "is_deleted": false,
+        "name": "material tasks",
+        "project_id": "2308886701",
+        "section_order": 12,
+        "sync_id": null,
+        "user_id": "7429672",
+        "v2_id": "6853xVmrVpWhXWqF",
+        "v2_project_id": "6P5Q7J4hfJC67c6m",
+      },
+      "117184028": {
+        "added_at": "2023-03-02T01:49:42.278867Z",
+        "archived_at": null,
+        "collapsed": false,
+        "id": "117184028",
+        "is_archived": false,
+        "is_deleted": false,
+        "name": "Better me",
+        "project_id": "2308886701",
+        "section_order": 1,
+        "sync_id": null,
+        "user_id": "7429672",
+        "v2_id": "68539cm5GCpXCHQm",
+        "v2_project_id": "6P5Q7J4hfJC67c6m",
+      },
     }
   }
 
@@ -341,7 +373,7 @@ describe('fetchTasks component', () => {
     }
 }
   `
-  const getSingleChildrenApiResponse: string = `
+const getSingleChildrenApiResponse: string = `
   {
     "ancestors": [
         {
@@ -441,7 +473,7 @@ describe('fetchTasks component', () => {
     }
 }`
 
-  const getAllCompletedTasksApiResponse: string = `
+const getAllCompletedTasksApiResponse: string = `
   {
     "items": [
         {
@@ -525,7 +557,7 @@ describe('fetchTasks component', () => {
         }
       }
   }`
-  const getSingleTaskApiResponse: string = `{
+const getSingleTaskApiResponse: string = `{
     "ancestors": [],
     "item": {
         "added_at": "2023-06-14T11:43:05.493517Z",
@@ -534,7 +566,7 @@ describe('fetchTasks component', () => {
         "checked": true,
         "child_order": 4,
         "collapsed": false,
-        "completed_at": "2023-06-17T13:23:52.663000000Z",
+        "completed_at": "2023-06-17T13:23:53.000000Z",
         "content": "Resolver el numero de telefono",
         "description": "",
         "due": {
@@ -598,10 +630,10 @@ describe('fetchTasks component', () => {
     }
 }
   `
-  const getSingleTaskAPI = JSON.parse(getSingleTaskApiResponse)
-  const getSingleChildrenTaskAPI = JSON.parse(getSingleChildrenApiResponse)
-  const getSingleParentTaskAPI = JSON.parse(getParentApiResponse)
-  const getAllCompletedTasksAPI = JSON.parse(getAllCompletedTasksApiResponse)
-})
+const getSingleTaskAPI = JSON.parse(getSingleTaskApiResponse)
+const getSingleChildrenTaskAPI = JSON.parse(getSingleChildrenApiResponse)
+const getSingleParentTaskAPI = JSON.parse(getParentApiResponse)
+const getAllCompletedTasksAPI = JSON.parse(getAllCompletedTasksApiResponse)
+  })
 
 

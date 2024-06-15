@@ -6,6 +6,7 @@ export module FetchTasksDomain {
     export type GetAllCompletedTasks = {
         tasksResults: RawTodoistTask[],
         projectsResults: TodoistApi.GetAllTasks.CompletedProjectsMap,
+        sectionsResults: TodoistApi.GetAllTasks.CompletedSectionsMap,
     }
 }
 

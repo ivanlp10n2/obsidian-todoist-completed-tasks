@@ -50,25 +50,25 @@ export async function fetchCompletedTasks(
         timeEndFormattedTime: timeEndFormattedTime,
         limit: limit
     })
-    let mappedResults: any[] = [];
+    let mappedResults: RawTodoistTask[] = [];
 
     try {
-        const completedTasksMetadata: TodoistApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
+        const completedTasksResponse: TodoistApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
         // If there are no completed tasks, return an empty array
-        if (completedTasksMetadata.items.length === 0) {
+        if (completedTasksResponse.items.length === 0) {
             return mappedResults;
         }
 
-        const projectsMetadata = completedTasksMetadata.projects;
+        const projectsMetadata = completedTasksResponse.projects;
 
         new Notice(
-            completedTasksMetadata.items.length +
+            completedTasksResponse.items.length +
             " completed tasks found. Processing..."
         );
 
-        const completedTasksPromises: Promise<RawTodoistTask>[] = completedTasksMetadata.items.map(
+        const getTasks: Promise<RawTodoistTask>[] = completedTasksResponse.items.map(
             async (task: TodoistApi.GetAllTasks.CompletedTask) => {
                 return fetchSingleTask(
                     authToken,
@@ -77,20 +77,19 @@ export async function fetchCompletedTasks(
                 );
             }
         );
-        mappedResults = await Promise.all(completedTasksPromises);
+        mappedResults = await Promise.all(getTasks);
 
-        let childTasks = mappedResults.filter(
+        let childTasks: RawTodoistTask[] = mappedResults.filter(
             (task: RawTodoistTask) => task.parentId !== null
         );
 
-        let queuedParentTasks = [] as string[];
-        childTasks.forEach((task: any) => {
+        let queuedParentTasks: string[] = [];
+        childTasks.forEach(async (task: RawTodoistTask) => {
             const parentTask = mappedResults.find(
                 (t: RawTodoistTask) => t.taskId === task.parentId
             );
             if (!parentTask && !queuedParentTasks.includes(task.parentId)) {
-                // console.log("parent task is missed for ", task)
-                let missedParentTask = fetchSingleTask(
+                let missedParentTask: RawTodoistTask = await fetchSingleTask(
                     authToken,
                     task.parentId,
                     fetchJsonResponse
@@ -102,19 +101,20 @@ export async function fetchCompletedTasks(
         mappedResults = await Promise.all(mappedResults);
 
         // Merge metadata dates into the task objects
-        mappedResults.forEach((task: any) => {
-            const taskMetadata = completedTasksMetadata.items.find(
+        mappedResults.map((task: RawTodoistTask) => {
+            const taskMetadata = completedTasksResponse.items.find(
                 (t: any) => t.task_id === task.taskId
             );
             if (!taskMetadata) {
-                task.completedAt = null;
+                task = {...task, completedAt: null};
             } else {
-                task.completedAt = taskMetadata.completed_at;
+                task = {...task, completedAt: taskMetadata.completed_at};
             }
         });
         const result = {
             tasksResults: mappedResults as RawTodoistTask[],
             projectsResults: projectsMetadata as TodoistApi.GetAllTasks.CompletedProjectsMap,
+            sectionsResults: completedTasksResponse.sections as TodoistApi.GetAllTasks.CompletedSectionsMap,
         } as FetchTasksDomain.GetAllCompletedTasks;
 
         if (result.tasksResults.length === 0) {
