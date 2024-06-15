@@ -64,13 +64,15 @@ describe("formatTasks", () => {
 		"dueAt": "2023-06-14T13:00:00",
 		"isRecurring": true,
 		"labels": ["asdb"],
-		description : null
+		description : null,
+		priority: 1
 	}
 	const singleOutput: string =
 		`---
 date: 2023-06-14T15:02:37.000000Z
 todoist_task_id: 6960733805
 todoist_is_completed: true
+todoist_priority: 1
 todoist_created_at: 2023-06-13T02:06:05.175619Z
 todoist_updated_at: null
 todoist_project_name: Inbox
@@ -105,7 +107,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: ['gilada']
+			labels: ['gilada'],
+			priority: 1
 		},
 		{
 			taskId: '6919294025',
@@ -119,7 +122,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6917841350',
@@ -133,7 +137,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6920094789',
@@ -147,7 +152,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6841124029',
@@ -161,7 +167,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6868152840',
@@ -175,7 +182,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6844551059',
@@ -189,7 +197,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6917765156',
@@ -203,7 +212,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: ['gilada']
+			labels: ['gilada'],
+			priority: 1
 		},
 		{
 			taskId: '6915250355',
@@ -217,7 +227,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6898140280',
@@ -231,7 +242,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6914319149',
@@ -245,7 +257,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6885360249',
@@ -259,7 +272,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6898104425',
@@ -273,7 +287,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6898103720',
@@ -287,7 +302,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6909912829',
@@ -301,7 +317,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6841115479',
@@ -315,7 +332,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6841119029',
@@ -329,7 +347,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6841105886',
@@ -343,7 +362,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6898082561',
@@ -357,7 +377,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6876083667',
@@ -371,7 +392,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: '6898058993',
@@ -385,7 +407,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: '2023-05-30T00:49:16.000000Z',
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 	];
 
@@ -400,7 +423,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			isRecurring: false,
 			labels: ["gilada"],
-			dueAt: null
+			dueAt: null,
+			priority: 1
 		},
 		{
 			taskId: "6919294025",
@@ -412,7 +436,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6917841350",
@@ -424,7 +449,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6920094789",
@@ -436,7 +462,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6841124029",
@@ -448,7 +475,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6841119029",
@@ -460,7 +488,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6868152840",
@@ -472,7 +501,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6844551059",
@@ -484,7 +514,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6898082561",
@@ -496,7 +527,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6898058993",
@@ -508,7 +540,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6917765156",
@@ -520,7 +553,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: ["gilada"]
+			labels: ["gilada"],
+			priority: 1
 		},
 		{
 			taskId: "6915250355",
@@ -532,7 +566,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6898140280",
@@ -544,7 +579,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6914319149",
@@ -556,7 +592,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6885360249",
@@ -568,7 +605,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6898104425",
@@ -580,7 +618,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6898103720",
@@ -592,7 +631,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6909912829",
@@ -604,7 +644,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6841115479",
@@ -616,7 +657,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6841105886",
@@ -628,7 +670,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		},
 		{
 			taskId: "6876083667",
@@ -640,7 +683,8 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			updatedAt: "2023-05-30T00:49:16.000000Z",
 			dueAt: null,
 			isRecurring: false,
-			labels: []
+			labels: [],
+			priority: 1
 		}
 	];
 

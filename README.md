@@ -13,6 +13,8 @@
         - ✅todoist-sync/YYYY/MM/DD/task-title.md
         - ✅I would create folders based on `dueAt`
             -✅ update `status` based on `completedAt`
+        - if is completed -> prefix ✅
+        - if not completed yet -> prefix ⚙️
     - with metadata:
         - ✅status: inprogress | completed
         - section: section-name
@@ -20,7 +22,7 @@
         - ✅createdAt: YYYY-MM-DD:HH:MM:SS
         - ✅dueAt: YYYY-MM-DD:HH:MM:SS
         - ✅completedAt: YYYY-MM-DD:HH:MM:SS
-        - priority: 1
+        - ✅priority: 1 (P1 = 4, P2 = 3, P3 = 2, P4 = 1)
         - ✅tags: #todoist #sync #labels
     - and data structure:
         - ✅description

@@ -89,9 +89,16 @@ const deleteFileTasks = (tasks: TodoistTask[], folderPath: string, encodeFilenam
 function createFileTasks(tasks: TodoistTask[], projectsMetadata: any, folderPath: string, encodeFilename: (str: string) => string): void {
     tasks.forEach((task) => {
         let markdownContent: string = renderMarkdown(task, projectsMetadata[task.projectId])
-        const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
+        const fileName = `${folderPath}/${prefixName(task)}-${task.taskId}-${encodeFilename(task.title)}.md`
         createFile(fileName, markdownContent);
     });
+}
+
+const prefixName = (task: TodoistTask) => {
+    if (task.completedAt) {
+        return "✅"
+    }
+    return ""
 }
 
 const getTimeFrames = (fetchStrategy: string, time: number, fileContent: string) => {

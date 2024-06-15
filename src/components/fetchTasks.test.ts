@@ -2,6 +2,7 @@ import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
 import { TodoistApi, FetchTasksDomain, Codecs } from '../constants/fetchTasks';
 import { RawTodoistTask } from '../constants/shared';
 
+
 describe('fetchTasks component', () => {
   const authToken = 'your-auth-token';
   const taskId = 'task-id';
@@ -133,6 +134,7 @@ describe('fetchTasks component', () => {
         dueAt: null,
         isRecurring: false,
         labels: [] as string[],
+        priority: 1
       },
       /**"item": {
         "added_at": "2023-06-14T11:43:05.493517Z",
@@ -179,6 +181,7 @@ describe('fetchTasks component', () => {
         dueAt: '2023-06-17T10:00:00',
         isRecurring: false,
         labels: [] as string[],
+        priority: 4
       },
       /**"item": {
         "added_at": "2023-06-17T13:25:07.453Z",
@@ -225,6 +228,7 @@ describe('fetchTasks component', () => {
           '✅',
           '🟩🟩🟩🟩🟩'
         ] as string[],
+        priority: 1
       }
     ],
         // export type CompletedTaskProject = {

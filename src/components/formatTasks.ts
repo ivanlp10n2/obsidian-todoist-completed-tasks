@@ -19,6 +19,7 @@ function createTodoistTask(task: RawTodoistTask, projectName: string): TodoistTa
         dueAt: task.dueAt,
         isRecurring: task.isRecurring,
         labels: task.labels,
+        priority: task.priority
     };
 }
 

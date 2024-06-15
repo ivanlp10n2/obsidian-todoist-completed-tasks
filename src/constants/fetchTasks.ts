@@ -26,6 +26,7 @@ export module Codecs {
                 dueAt: task.item.due?.date ?? null,
                 isRecurring: task.item.due?.is_recurring ?? false,
                 labels: task.item.labels,
+                priority: task.item.priority
             };
         } else {
             return { //fetch - get-all-api.items
@@ -39,6 +40,7 @@ export module Codecs {
                 dueAt: task.due?.date,
                 isRecurring: task.due?.is_recurring,
                 labels: task.labels,
+                priority: task.priority
             };
         }
 
