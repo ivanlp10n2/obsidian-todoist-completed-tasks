@@ -1,26 +1,11 @@
-import { moment, Notice } from "obsidian";
-import { TodoistSettings } from "../constants/DefaultSettings";
-import { RawTodoistTask } from "../constants/shared";
-import { TodoistTask } from "src/constants/shared";
+import { Notice } from "obsidian";
 import { TodoistApi } from "src/constants/fetchTasks";
+import { TodoistTask } from "src/constants/shared";
+import { RawTodoistTask } from "../constants/shared";
 
 const neverUpdated = "1970-01-01T00:00:00Z";
 
-type neededToRender = {
-    taskId: string;
-    content: string;
-    dueAt?: string | null;
-    isRecurring?: boolean;
-    labels: string[];
-    createdAt: string;
-    updatedAt: string;
-    projectId?: string;
-    parentId?: string;
-    completedAt?: string | null;
-    description?: null
-}
-function buildRenderText(task: neededToRender, project: TodoistApi.GetAllTasks.CompletedTaskProject, indentLevel: number = 2): string {
-    // const indent = '\t'.repeat(indentLevel);
+function buildRenderText(task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject, indentLevel: number = 2): string {
     const metaTag = `---`
     const newRender: string =
         `${metaTag}` +
@@ -41,7 +26,7 @@ function buildRenderText(task: neededToRender, project: TodoistApi.GetAllTasks.C
         `tags: [todoist, ${project.name ?? 'null'}, ${task.completedAt ? 'done' : 'inprogress'}]` + `\n` +
         `${metaTag}` +
         `\n` +
-        `## ${task.content}\n` +
+        `## ${task.title}\n` +
         `### Overview\n` +
         `${task.description}\n` +
         `### Subtasks\n`
@@ -50,9 +35,9 @@ function buildRenderText(task: neededToRender, project: TodoistApi.GetAllTasks.C
 
     return newRender;
 }
-function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
+function prepareTasksForRendering(tasks: RawTodoistTask[], projectsMetadata: TodoistApi.GetAllTasks.CompletedProjectsMap): TodoistTask[] {
     // console.log("prepare tasks for rendering", tasks);
-    let childTasks: RawTodoistTask[] = tasks.filter(
+    let tasksWithParentId: RawTodoistTask[] = tasks.filter(
         (task: RawTodoistTask) => task.parentId !== null
     );
 
@@ -62,10 +47,10 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
         if (task.parentId === null) {
             renderedTasks.push({
                 taskId: task.taskId,
-                content: task.content,
+                title: task.content,
                 completedAt: task.completedAt,
                 projectId: task.projectId,
-                projectName: task.projectId, // todo: get project name from projectId
+                projectName: projectsMetadata[task.projectId].name,
                 parentId: task.parentId,
                 childTasks: [],
                 createdAt: task.createdAt,
@@ -77,14 +62,14 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
         }
     });
 
-    childTasks.forEach(async (task: any) => {
+    tasksWithParentId.forEach(async (task: any) => {
         const parentTaskIndex: number = renderedTasks.findIndex(
             (t: TodoistTask) => t.taskId === task.parentId
         );
 
         renderedTasks[parentTaskIndex].childTasks.push({
             taskId: task.taskId,
-            content: task.content,
+            title: task.content,
             completedAt: task.completedAt,
             projectId: task.projectId,
             projectName: task.projectName,
@@ -102,92 +87,34 @@ function prepareTasksForRendering(tasks: RawTodoistTask[]): TodoistTask[] {
     return renderedTasks;
 }
 
+function renderTaskAsText(
+    task: TodoistTask,
+    project: TodoistApi.GetAllTasks.CompletedTaskProject,
+): string {
+    try {
+        return buildRenderText(task, project);
+    } catch (error) {
+        console.error(error);
+        new Notice(
+            "There was a problem formatting your tasks. Check the console for more details.",
+            10000
+        );
+        return "";
+    }
+}
+
 function renderTasksAsText(
     tasks: TodoistTask[],
     projectsMetadata: any,
-    settings: TodoistSettings
 ): string[] {
-    function renderTaskFinishDate(task: any) {
-        if (task.completedAt === null) {
-            return "N/A";
-        }
-
-        if (settings.taskPostfix.includes("{task_finish_date}")) {
-            const formattedDate = moment(task.completedAt).format(
-                "YYYY-MM-DD"
-            );
-            return formattedDate;
-        }
-
-        if (settings.taskPostfix.includes("{task_finish_datetime}")) {
-            const formattedDate = moment(task.completedAt).format(
-                "YYYY-MM-DD HH:mm"
-            );
-            return formattedDate;
-        }
-
-        if (settings.taskPostfix.includes("{current_date}")) {
-            const formattedDate = moment(task.completedAt).format(
-                "YYYY-MM-DD"
-            );
-            return formattedDate;
-        }
-
-        if (settings.taskPostfix.includes("{current_datetime}")) {
-            const formattedDate = moment(task.completedAt).format(
-                "YYYY-MM-DD HH:mm"
-            );
-            return formattedDate;
-        }
-    }
-
-    function renderTaskPostfix(task: any) {
-        let regex =
-            /{task_finish_date}|{task_finish_datetime}|{current_date}|{current_datetime}/g;
-        return settings.taskPostfix.replace(regex, renderTaskFinishDate(task));
-    }
-
-    function renderTaskPrefix(task: any, index: number) {
-        let regex = /{auto_increment}/g;
-        return settings.taskPrefix.replace(regex, `${index + 1}`);
-    }
-
     try {
-        let allTasks = "";
+        return tasks.reverse().map((t: any, index: number) => {
+            let returnString = "";
+            const project: TodoistApi.GetAllTasks.CompletedTaskProject = projectsMetadata[t.projectId];
+            returnString = buildRenderText(t, project);
+            return returnString;
+        });
 
-        function renderTaskText(tasks: TodoistTask[], settings: TodoistSettings) {
-            const metaTag = `---`;
-            const newLine = `\n`;
-            const indent = `\t`;
-            return tasks.reverse().map((t: any, index: number) => {
-                let returnString = "";
-                const project: TodoistApi.GetAllTasks.CompletedTaskProject = projectsMetadata[t.projectId];
-                returnString = buildRenderText(t, project);
-                return returnString;
-            });
-        }
-
-        // if (settings.renderProjectsHeaders) {
-        //     for (const [key, project] of Object.entries(projectsMetadata)) {
-        //         let projectTasks: TodoistTask[] = tasks.filter(
-        //             (task: TodoistTask) => task.projectId === key
-        //         );
-        //         allTasks += renderProjectHeader(project);
-
-        //         let formattedTasks: string[] = renderTaskText(projectTasks, settings);
-
-        //         allTasks += formattedTasks.join("\n");
-        //     }
-
-        //     allTasks = allTasks + `\n`;
-
-        //     return allTasks;
-        // } else {
-            let formattedTasks: string[] = renderTaskText(tasks, settings);
-            // formattedTasks = formattedTasks.join("\n");
-            // formattedTasks = `\n` + formattedTasks + `\n`;
-            return formattedTasks;
-        // }
     } catch (error) {
         console.error(error);
         new Notice(
@@ -198,4 +125,5 @@ function renderTasksAsText(
     }
 }
 
-export { renderTasksAsText, prepareTasksForRendering };
+export { prepareTasksForRendering, renderTaskAsText, renderTasksAsText };
+

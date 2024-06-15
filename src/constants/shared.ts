@@ -20,7 +20,7 @@ export interface TodoistTask {
     // regarding dates: don't want to spend time parsing dates with timezones. 
     // filter will be done in obsidian with `tags` and format ISO-8601 is sortable alphabetically too
     taskId: string;
-    content: string;
+    title: string;
     completedAt: string | null;
     childTasks: TodoistTask[];
     projectId?: string | null;
@@ -31,6 +31,6 @@ export interface TodoistTask {
     dueAt: string | null;
     isRecurring: boolean;
     labels: string[];
-    // description: string;
+    description?: string | null;
 }
 

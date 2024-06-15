@@ -121,7 +121,10 @@ export async function fetchCompletedTasks(
             projectsResults: projectsMetadata as TodoistApi.GetAllTasks.CompletedProjectsMap,
         } as FetchTasksDomain.GetAllCompletedTasks;
 
-        // console.log("output for fetchTasks: ", result)
+        if (result.tasksResults.length === 0) {
+            new Notice("No completed tasks found for the given timeframe");
+            return;
+        }
 
         return result;
     } catch (e) {

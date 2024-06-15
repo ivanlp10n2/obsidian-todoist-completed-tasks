@@ -6,22 +6,22 @@ function getTimeframesForUsersToday(): any {
     let currentTime = new Date();
     currentTime.setHours(0, 0, 0, 0);
 
-    const taskStartInServerTime =
+    const taskStartInServerTime: number =
         currentTime.getTime() + currentTime.getTimezoneOffset() * 60 * 1000;
-    const timeStartFormattedDate = moment(taskStartInServerTime).format(
+    const timeStartFormattedDate: string = moment(taskStartInServerTime).format(
         "YYYY-MM-DD"
     );
-    const timeStartFormattedTime = moment(taskStartInServerTime).format(
+    const timeStartFormattedTime: string = moment(taskStartInServerTime).format(
         "HH:mm"
     );
 
-    const taskEndInServerTime =
+    const taskEndInServerTime: number =
         currentTime.getTime() +
         currentTime.getTimezoneOffset() * 60 * 1000 +
         24 * 60 * 60 * 1000;
-    const timeEndFormattedDate =
+    const timeEndFormattedDate: string =
         moment(taskEndInServerTime).format("YYYY-MM-DD");
-    const timeEndFormattedTime = moment(taskEndInServerTime).format("HH:mm");
+    const timeEndFormattedTime: string = moment(taskEndInServerTime).format("HH:mm");
 
     return {
         timeStartFormattedDate,
@@ -34,22 +34,22 @@ function getTimeframesForUsersToday(): any {
 function getTimeframesForLastNHours(hours: number) {
     let currentTime = new Date();
 
-    const taskStartInServerTime =
+    const taskStartInServerTime: number =
         currentTime.getTime() +
         currentTime.getTimezoneOffset() * 60 * 1000 -
         hours * 60 * 60 * 1000;
-    const timeStartFormattedDate = moment(taskStartInServerTime).format(
+    const timeStartFormattedDate: string = moment(taskStartInServerTime).format(
         "YYYY-MM-DD"
     );
-    const timeStartFormattedTime = moment(taskStartInServerTime).format(
+    const timeStartFormattedTime: string = moment(taskStartInServerTime).format(
         "HH:mm"
     );
 
-    const taskEndInServerTime =
+    const taskEndInServerTime: number =
         currentTime.getTime() + currentTime.getTimezoneOffset() * 60 * 1000;
-    const timeEndFormattedDate =
+    const timeEndFormattedDate: string =
         moment(taskEndInServerTime).format("YYYY-MM-DD");
-    const timeEndFormattedTime = moment(taskEndInServerTime).format("HH:mm");
+    const timeEndFormattedTime: string = moment(taskEndInServerTime).format("HH:mm");
 
     return {
         timeStartFormattedDate,
@@ -62,19 +62,19 @@ function getTimeframesForLastNHours(hours: number) {
 function getTimeframesForLastNHoursWithoutOffset(hours: number) {
     let currentTime = new Date();
 
-    const taskStartInServerTime =
+    const taskStartInServerTime: number =
         currentTime.getTime() - hours * 60 * 60 * 1000;
-    const timeStartFormattedDate = moment(taskStartInServerTime).format(
+    const timeStartFormattedDate: string = moment(taskStartInServerTime).format(
         "YYYY-MM-DD"
     );
-    const timeStartFormattedTime = moment(taskStartInServerTime).format(
+    const timeStartFormattedTime: string = moment(taskStartInServerTime).format(
         "HH:mm"
     );
 
-    const taskEndInServerTime = currentTime.getTime();
-    const timeEndFormattedDate =
+    const taskEndInServerTime: number = currentTime.getTime();
+    const timeEndFormattedDate: string =
         moment(taskEndInServerTime).format("YYYY-MM-DD");
-    const timeEndFormattedTime = moment(taskEndInServerTime).format("HH:mm");
+    const timeEndFormattedTime: string = moment(taskEndInServerTime).format("HH:mm");
 
     return {
         timeStartFormattedDate,
@@ -84,9 +84,9 @@ function getTimeframesForLastNHoursWithoutOffset(hours: number) {
     };
 }
 
-function getTimeFromKeySegments(fileContent: string) {
-    const startString = fileContent.match(CONSTANTS_REGEX.regexStartCompiled);
-    const endString = fileContent.match(CONSTANTS_REGEX.regexEndCompiled);
+function getTimeFromKeySegments(fileContent: string): any {
+    const startString: string[] = fileContent.match(CONSTANTS_REGEX.regexStartCompiled);
+    const endString: string[] = fileContent.match(CONSTANTS_REGEX.regexEndCompiled);
 
     let datetimeRegex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2})/;
     const startDateString = startString[0].match(datetimeRegex);
@@ -98,18 +98,18 @@ function getTimeFromKeySegments(fileContent: string) {
 
     const taskStartInServerTime =
         startTimeObj.getTime() + currentTimeObj.getTimezoneOffset() * 60 * 1000;
-    const timeStartFormattedDate = moment(taskStartInServerTime).format(
+    const timeStartFormattedDate: string = moment(taskStartInServerTime).format(
         "YYYY-MM-DD"
     );
-    const timeStartFormattedTime = moment(taskStartInServerTime).format(
+    const timeStartFormattedTime: string = moment(taskStartInServerTime).format(
         "HH:mm"
     );
 
     const taskEndInServerTime =
         endTimeObj.getTime() + currentTimeObj.getTimezoneOffset() * 60 * 1000;
-    const timeEndFormattedDate =
+    const timeEndFormattedDate: string =
         moment(taskEndInServerTime).format("YYYY-MM-DD");
-    const timeEndFormattedTime = moment(taskEndInServerTime).format("HH:mm");
+    const timeEndFormattedTime: string = moment(taskEndInServerTime).format("HH:mm");
 
     if (
         timeStartFormattedDate === "Invalid date" ||
