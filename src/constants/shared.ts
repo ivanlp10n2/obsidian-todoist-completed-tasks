@@ -22,7 +22,7 @@ export interface TodoistTask {
     taskId: string;
     title: string;
     completedAt: string | null;
-    childTasks: TodoistTask[];
+    childTasks: string[];
     projectId?: string | null;
     projectName?: string | null;
     parentId?: string | null;
@@ -33,4 +33,3 @@ export interface TodoistTask {
     labels: string[];
     description?: string | null;
 }
-
