@@ -1,17 +1,17 @@
-import { App, Notice, MarkdownView } from "obsidian";
-import { TodoistSettings } from "../constants/DefaultSettings";
-import { fetchCompletedTasks } from "./fetchTasks";
-import { prepareTasksForRendering, renderTaskAsText } from "./formatTasks";
-import { FETCH_STRATEGIES } from "../constants/shared";
-import {
-    getTimeframesForUsersToday,
-    getTimeframesForLastNHours,
-    getTimeFromKeySegments,
-    settingsCheck,
-    segmentsCheck,
-} from "./utils";
-import { TodoistTask } from "../constants/shared";
 import moment from "moment";
+import { App, MarkdownView, Notice } from "obsidian";
+import { TodoistSettings } from "../constants/DefaultSettings";
+import { renderMarkdown } from "../constants/formatTasks";
+import { FETCH_STRATEGIES, TodoistTask } from "../constants/shared";
+import { fetchCompletedTasks } from "./fetchTasks";
+import { prepareTasksForRendering } from "./formatTasks";
+import {
+    getTimeFromKeySegments,
+    getTimeframesForLastNHours,
+    getTimeframesForUsersToday,
+    segmentsCheck,
+    settingsCheck,
+} from "./utils";
 
 const createFile = (filePath: string, renderedText: string) => {
     app.vault.create(filePath, renderedText).then(() => {
@@ -70,9 +70,9 @@ export async function updateFileFromServer(
 
 function createFileTasks(tasks: TodoistTask[], projectsMetadata: any, folderPath: string): void {
     tasks.forEach((task) => {
-        let renderedText: string = renderTaskAsText(task, projectsMetadata)
+        let markdownContent: string = renderMarkdown(task, projectsMetadata[task.projectId])
         const fileName = `${folderPath}/${task.taskId}-${task.title}.md`
-        createFile(fileName, renderedText);
+        createFile(fileName, markdownContent);
     });
 }
 

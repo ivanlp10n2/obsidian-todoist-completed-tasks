@@ -1,8 +1,6 @@
-import { Notice } from "obsidian";
 import { TodoistApi } from "src/constants/fetchTasks";
 import { TodoistTask } from "src/constants/shared";
 import { RawTodoistTask } from "../constants/shared";
-import { buildRenderText2 } from "../constants/formatTasks";
 
 
 const neverUpdated = "1970-01-01T00:00:00Z";
@@ -51,43 +49,5 @@ function prepareTasksForRendering(
     return renderedTasks;
 }
 
-function renderTaskAsText(
-    task: TodoistTask,
-    project: TodoistApi.GetAllTasks.CompletedTaskProject,
-): string {
-    try {
-        return buildRenderText2(task, project);
-    } catch (error) {
-        console.error(error);
-        new Notice(
-            "There was a problem formatting your tasks. Check the console for more details.",
-            10000
-        );
-        return "";
-    }
-}
-
-// function renderTasksAsText(
-//     tasks: TodoistTask[],
-//     projectsMetadata: any,
-// ): string[] {
-//     try {
-//         return tasks.reverse().map((t: any, index: number) => {
-//             let returnString = "";
-//             const project: TodoistApi.GetAllTasks.CompletedTaskProject = projectsMetadata[t.projectId];
-//             returnString = buildRenderText2(t, project);
-//             return returnString;
-//         });
-
-//     } catch (error) {
-//         console.error(error);
-//         new Notice(
-//             "There was a problem formatting your tasks. Check the console for more details.",
-//             10000
-//         );
-//         return [];
-//     }
-// }
-
-export { prepareTasksForRendering, renderTaskAsText };
+export { prepareTasksForRendering };
 

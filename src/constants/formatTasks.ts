@@ -48,7 +48,7 @@ export function buildRenderText(task: TodoistTask, project: TodoistApi.GetAllTas
 
 }
 
-export const buildRenderText2: (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject) => string =
+export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject) => string =
     (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject)  => {
         const metaTag = `---`
         const newRender: string =
@@ -65,7 +65,7 @@ export const buildRenderText2: (task: TodoistTask, project: TodoistApi.GetAllTas
             `todoist_parent_id: ${task.parentId ?? 'null'}` + `\n` +
             `todoist_status: ${task.completedAt ? 'done' : 'inprogress'}` + `\n` +
             `todoist_is_recurring: ${task.isRecurring ?? 'false'}` + `\n` +
-            `todoist_lables: ${task.labels}` + `\n` +
+            `todoist_labels: ${task.labels}` + `\n` +
             `todosit_status: ${task.completedAt ? 'done' : 'inprogress'}` + `\n` +
             `tags: [todoist, ${project.name ?? 'null'}, ${task.completedAt ? 'done' : 'inprogress'}]` + `\n` +
             `${metaTag}` +

@@ -1,6 +1,7 @@
 import { TodoistApi } from 'src/constants/fetchTasks';
 import { RawTodoistTask, TodoistTask } from 'src/constants/shared';
-import { prepareTasksForRendering, renderTaskAsText } from './formatTasks';
+import { prepareTasksForRendering } from './formatTasks';
+import { renderMarkdown } from '../constants/formatTasks';
 
 describe("formatTasks", () => {
 	describe("prepareTasksForRendering", () => {
@@ -13,7 +14,7 @@ describe("formatTasks", () => {
 
 	describe("renderTasksAsText", () => {
 		it("should render for a single task", () => {
-			const result = renderTaskAsText(singleInput, inputProjects[singleInput.projectId])
+			const result = renderMarkdown(singleInput, inputProjects[singleInput.projectId])
 			expect(result).toEqual(singleOutput);
 		})
 	})
@@ -63,8 +64,8 @@ describe("formatTasks", () => {
 		"createdAt": "2023-06-13T02:06:05.175619Z",
 		"updatedAt": null,
 		"dueAt": "2023-06-14T13:00:00",
-		"isRecurring": false,
-		"labels": []
+		"isRecurring": true,
+		"labels": ["asdb"]
 	}
 	const singleOutput: string =
 		`---
@@ -78,8 +79,8 @@ todoist_completed_at: 2023-06-14T15:02:37.000000Z
 todoist_project_id: 1777918547
 todoist_parent_id: null
 todoist_status: done
-todoist_is_recurring: false
-todoist_lables: 
+todoist_is_recurring: true
+todoist_labels: asdb
 todosit_status: done
 tags: [todoist, Inbox, done]
 ---
