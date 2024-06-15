@@ -7,36 +7,37 @@
 - [x] feat: test serialization and document jsons in code
     - at least `fetchTasks` and `formatTasks`
 - [x] feat: refactor tested code
-- [ ] res: define what's the best way to handle data for dataview
-    - I will have to `upsert` notes for each task
-    - I will create folders for each day
-        - todoist-sync/YYYY/MM/DD/task-title.md
-        - I would create folders based on `dueAt`
-            - update `status` based on `completedAt`
+- [x] res: define what's the best way to handle data for dataview
+    - ✅I will have to `upsert` notes for each task
+    - ✅I will create folders for each day
+        - ✅todoist-sync/YYYY/MM/DD/task-title.md
+        - ✅I would create folders based on `dueAt`
+            -✅ update `status` based on `completedAt`
     - with metadata:
-        - status: inprogress | completed
+        - ✅status: inprogress | completed
         - section: section-name
-        - project: project-name
-        - createdAt: YYYY-MM-DD:HH:MM:SS
-        - dueAt: YYYY-MM-DD:HH:MM:SS
-        - completedAt: YYYY-MM-DD:HH:MM:SS
+        - ✅project: project-name
+        - ✅createdAt: YYYY-MM-DD:HH:MM:SS
+        - ✅dueAt: YYYY-MM-DD:HH:MM:SS
+        - ✅completedAt: YYYY-MM-DD:HH:MM:SS
         - priority: 1
-        - tags: #todoist #sync #labels
+        - ✅tags: #todoist #sync #labels
     - and data structure:
-        - description
+        - ✅description
         - sub-tasks
             - link to `todoist-sync/YYYY/MM/DD/task-title/sub-task-title.md`
         - comments
             - link to `todoist-sync/YYYY/MM/DD/task-title/comments.md`
-- [ ] res: define how can I save it into a particular path
-    - [ ] res: how can I create files in there or put at the end if the already exists
-- [ ] tech: add new values to test
-- [ ] implement solution. can be a new serialization impl
-    - [ ] deserialize
-    - [ ] save in folder with upsert strategy
-    - [ ] paste script only (depends on how do we handle data) 
-- [ ] test all other important functions to start refactoring
-- convention in code would be: 
+- [x] res: define how can I save it into a particular path
+    - [x] res: how can I create files in there or put at the end if the already exists
+        - no update. all or none ✅
+- [x] ✅ tech: add new values to test
+- [x] ✅ implement solution. can be a new serialization impl
+    - [x] deserialize
+    - [x] save in folder with upsert strategy
+    - [x] paste script only (depends on how do we handle data) 
+- [x] ✅ test all other important functions to start refactoring
+- [x] ✅ convention in code would be: 
     - `startLowerCamelCase` for variable and class names
     - `StartUpperCamelCase` for constants
     - `snake_case` for json and object fields becase todoist also uses it
