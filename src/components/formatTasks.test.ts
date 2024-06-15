@@ -69,18 +69,17 @@ describe("formatTasks", () => {
 	const singleOutput: string =
 		`---
 date: 2023-06-14T15:02:37.000000Z
-todoist_is_completed: true
 todoist_task_id: 6960733805
+todoist_is_completed: true
 todoist_created_at: 2023-06-13T02:06:05.175619Z
 todoist_updated_at: null
 todoist_project_name: Inbox
 todoist_completed_at: 2023-06-14T15:02:37.000000Z
 todoist_project_id: 1777918547
 todoist_parent_id: null
-todoist_status: done
 todoist_is_recurring: true
 todoist_labels: asdb
-todosit_status: done
+todoist_status: done
 tags: [todoist, todoist-project-Inbox, todoist-status-done]
 ---
 

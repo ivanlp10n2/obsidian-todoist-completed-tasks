@@ -29,21 +29,21 @@ export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks
         }
         const buildMetadata = (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject) => {
             const metaTag = `---`
+            const completedStatus = task.completedAt ? 'done' : 'inprogress'
             return `${metaTag}` +
                 `\n` +
                 `date: ${task.completedAt ?? task.createdAt}` + `\n` +
-                `todoist_is_completed: ${task.completedAt ? 'true' : 'false'}` + `\n` +
                 `todoist_task_id: ${task.taskId}` + `\n` +
+                `todoist_is_completed: ${task.completedAt ? 'true' : 'false'}` + `\n` +
                 `todoist_created_at: ${task.createdAt}` + `\n` +
                 `todoist_updated_at: ${task.updatedAt ?? 'null'}` + `\n` +
                 `todoist_project_name: ${project.name ?? 'null'}` + `\n` +
                 `todoist_completed_at: ${task.completedAt ?? 'null'}` + `\n` +
                 `todoist_project_id: ${task.projectId ?? 'null'}` + `\n` +
                 `todoist_parent_id: ${task.parentId ?? 'null'}` + `\n` +
-                `todoist_status: ${task.completedAt ? 'done' : 'inprogress'}` + `\n` +
                 `todoist_is_recurring: ${task.isRecurring ?? 'false'}` + `\n` +
                 `todoist_labels: ${task.labels}` + `\n` +
-                `todosit_status: ${task.completedAt ? 'done' : 'inprogress'}` + `\n` +
+                `todoist_status: ${completedStatus}` + `\n` +
                 `tags: [${buildTags(task, project)}]` + `\n` +
                 `${metaTag}` +
                 `\n`

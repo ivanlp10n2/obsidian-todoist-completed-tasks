@@ -23,14 +23,14 @@ export module Codecs {
                 projectId: task.project.id,
                 createdAt: task.item.added_at,
                 updatedAt: task.item.updated_at,
-                dueAt: task.item.due?.date,
-                isRecurring: false,
+                dueAt: task.item.due?.date ?? null,
+                isRecurring: task.item.due?.is_recurring ?? false,
                 labels: task.item.labels,
             };
         } else {
             return { //fetch - get-all-api.items
                 taskId: task.task_id,
-                parentId: null as null,
+                parentId: task.parent_id,
                 content: task.content,
                 completedAt: task.completed_at,
                 projectId: task.project_id,

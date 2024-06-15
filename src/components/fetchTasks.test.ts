@@ -130,7 +130,7 @@ describe('fetchTasks component', () => {
         projectId: '2308886701',
         updatedAt: '1970-01-01T00:00:00Z',
         createdAt: '2023-06-17T13:26:23.164918Z',
-        dueAt: undefined,
+        dueAt: null,
         isRecurring: false,
         labels: [] as string[],
       },
@@ -219,7 +219,7 @@ describe('fetchTasks component', () => {
         projectId: '2308886701',
         createdAt: '2023-06-17T13:25:07.453Z',
         updatedAt: '2023-07-10T03:14:40Z',
-        dueAt: undefined,
+        dueAt: null,
         isRecurring: false,
         labels: [
           '✅',
