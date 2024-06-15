@@ -1,5 +1,5 @@
 import { fetchSingleTask, fetchCompletedTasks } from './fetchTasks';
-import { ObsidianApi, Domain, Codecs } from '../constants/fetchTasks';
+import { TodoistApi, FetchTasksDomain, Codecs } from '../constants/fetchTasks';
 import { RawTodoistTask } from '../constants/shared';
 
 describe('fetchTasks component', () => {
@@ -16,7 +16,7 @@ describe('fetchTasks component', () => {
 
       const result: RawTodoistTask = await fetchSingleTask(authToken, taskId, fetchSingleTaskFn);
 
-      expect(fetchSingleTaskFn).toHaveBeenCalledWith(ObsidianApi.GetTask.UrlGetItem(taskId),
+      expect(fetchSingleTaskFn).toHaveBeenCalledWith(TodoistApi.GetTask.UrlGetItem(taskId),
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       const singleTaskRaw = Codecs.ConvertToRawDomain(getSingleTaskAPI, true)
@@ -26,7 +26,7 @@ describe('fetchTasks component', () => {
     it('should handle authentication error', async () => {
       const errorResponse = {
         httpStatusCode: 403,
-        responseData: ObsidianApi.FetchErrors.UnauthenticatedErrorMsg
+        responseData: TodoistApi.FetchErrors.UnauthenticatedErrorMsg
       };
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorResponse);
 
@@ -37,7 +37,7 @@ describe('fetchTasks component', () => {
     it('should handle network error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: ObsidianApi.FetchErrors.NetworkErrorMsg
+        responseData: TodoistApi.FetchErrors.NetworkErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -49,7 +49,7 @@ describe('fetchTasks component', () => {
     it('should handle default error', async () => {
       const errorRespose = {
         httpStatusCode: 500,
-        responseData: ObsidianApi.FetchErrors.DefaultErrorMsg
+        responseData: TodoistApi.FetchErrors.DefaultErrorMsg
       }
       const fetchResponse = jest.fn().mockRejectedValueOnce(errorRespose);
       const result = async () => fetchSingleTask(authToken, taskId, fetchResponse)
@@ -75,15 +75,15 @@ describe('fetchTasks component', () => {
           .mockResolvedValueOnce(Promise.resolve(getSingleTaskAPI))
           .mockResolvedValueOnce(Promise.resolve(getSingleParentTaskAPI))
 
-      const input: ObsidianApi.GetAllTasks.UrlGetAllItemsFilter = {
-        timeStartFormattedDate: ObsidianApi.GetAllTasks.DefaultParams.timeStartFormattedDate,
-        timeStartFormattedTime: ObsidianApi.GetAllTasks.DefaultParams.timeStartFormattedTime,
-        timeEndFormattedDate: ObsidianApi.GetAllTasks.DefaultParams.timeEndFormattedDate,
-        timeEndFormattedTime: ObsidianApi.GetAllTasks.DefaultParams.timeEndFormattedTime,
+      const input: TodoistApi.GetAllTasks.UrlGetAllItemsFilter = {
+        timeStartFormattedDate: TodoistApi.GetAllTasks.DefaultParams.timeStartFormattedDate,
+        timeStartFormattedTime: TodoistApi.GetAllTasks.DefaultParams.timeStartFormattedTime,
+        timeEndFormattedDate: TodoistApi.GetAllTasks.DefaultParams.timeEndFormattedDate,
+        timeEndFormattedTime: TodoistApi.GetAllTasks.DefaultParams.timeEndFormattedTime,
         limit: 20
       }
 
-      const result: Domain.GetAllCompletedTasks = await fetchCompletedTasks(authToken, input, fetchParentAndChildren)
+      const result: FetchTasksDomain.GetAllCompletedTasks = await fetchCompletedTasks(authToken, input, fetchParentAndChildren)
 
       expect(result).toEqual(expectedResultFetchCompletedTasks)
     })

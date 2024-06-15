@@ -2,10 +2,10 @@
 import { RawTodoistTask } from "./shared";
 
 
-export module Domain {
+export module FetchTasksDomain {
     export type GetAllCompletedTasks = {
         tasksResults: RawTodoistTask[],
-        projectsResults: ObsidianApi.GetAllTasks.CompletedProjectsMap,
+        projectsResults: TodoistApi.GetAllTasks.CompletedProjectsMap,
     }
 }
 
@@ -45,7 +45,7 @@ export module Codecs {
     }
 }
 
-export module ObsidianApi {
+export module TodoistApi {
     const TodoistApi = "https://api.todoist.com/sync/v9";
     export module GetTask {
         export const UrlGetItem = (todoistId: string): string => {

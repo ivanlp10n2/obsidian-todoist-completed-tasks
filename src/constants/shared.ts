@@ -24,10 +24,13 @@ export interface TodoistTask {
     completedAt: string | null;
     childTasks: TodoistTask[];
     projectId?: string | null;
+    projectName?: string | null;
+    parentId?: string | null;
     createdAt: string; 
     updatedAt: string | null;
     dueAt: string | null;
     isRecurring: boolean;
     labels: string[];
+    // description: string;
 }
 

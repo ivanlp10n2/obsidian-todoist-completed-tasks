@@ -1,23 +1,11 @@
 import { Notice } from "obsidian";
 
 import { RawTodoistTask } from "../constants/shared";
-import { ObsidianApi, Codecs } from "../constants/fetchTasks";
-import { Domain } from "../constants/fetchTasks";
+import { TodoistApi, Codecs } from "../constants/fetchTasks";
+import { FetchTasksDomain } from "../constants/fetchTasks";
 import { fold } from 'fp-ts/Either';
 import { pipe } from 'fp-ts/function';
 
-// function decode(jsonResponse: unknown): ObsidianApi.GetTask.SingleTaskResponse | ObsidianApi.GetAllTasks.CompletedTasksResponse {
-//   const singleTaskResponseDecoded = ObsidianApi.GetTask.SingleTaskResponseCodec.decode(jsonResponse);
-//   const completedTasksResponseDecoded = ObsidianApi.GetAllTasks.CompletedTasksResponseCodec.decode(jsonResponse);
-
-//   if (singleTaskResponseDecoded._tag === 'Right') {
-//     return singleTaskResponseDecoded.right;
-//   } else if (completedTasksResponseDecoded._tag === 'Right') {
-//     return completedTasksResponseDecoded.right;
-//   } else {
-//     throw new Error("Invalid response type");
-//   }
-// }
 async function debugWrapper(url: string, options: RequestInit): Promise<any> {
     const jsonResponse: any = await fetch(url, options).then((res) => res.json());
     // const converted: ObsidianApi.GetTask.SingleTaskResponse | ObsidianApi.GetAllTasks.CompletedTasksResponse = jsonResponse;
@@ -31,13 +19,13 @@ export async function fetchSingleTask(
     fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
 ): Promise<RawTodoistTask> {
     try {
-        const url = ObsidianApi.GetTask.UrlGetItem(taskId);
+        const url = TodoistApi.GetTask.UrlGetItem(taskId);
         let task = await fetchJsonResponse(url,
             { headers: { Authorization: `Bearer ${authToken}` }, })
             .then((res: any) => { return Codecs.ConvertToRawDomain(res, true); });
         return task;
     } catch (e: any) {
-        let errorMsg = ObsidianApi.FetchErrors.HandleErrorMsg(e);
+        let errorMsg = TodoistApi.FetchErrors.HandleErrorMsg(e);
         console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;
@@ -58,8 +46,8 @@ export async function fetchCompletedTasks(
     } = timeFrames;
 
     // const limit = renderSubtasks ? 30 : 200;
-    const limit = ObsidianApi.GetAllTasks.Limit;
-    const url = ObsidianApi.GetAllTasks.UrlGetAllItems({
+    const limit = TodoistApi.GetAllTasks.Limit;
+    const url = TodoistApi.GetAllTasks.UrlGetAllItems({
         timeStartFormattedDate: timeStartFormattedDate,
         timeStartFormattedTime: timeStartFormattedTime,
         timeEndFormattedDate: timeEndFormattedDate,
@@ -69,7 +57,7 @@ export async function fetchCompletedTasks(
     let mappedResults: any[] = [];
 
     try {
-        const completedTasksMetadata: ObsidianApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
+        const completedTasksMetadata: TodoistApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
         // If there are no completed tasks, return an empty array
@@ -85,7 +73,7 @@ export async function fetchCompletedTasks(
         );
 
         const completedTasksPromises: Promise<RawTodoistTask>[] = completedTasksMetadata.items.map(
-            async (task: ObsidianApi.GetAllTasks.CompletedTask) => {
+            async (task: TodoistApi.GetAllTasks.CompletedTask) => {
                 return fetchSingleTask(
                     authToken,
                     task.task_id,
@@ -130,14 +118,14 @@ export async function fetchCompletedTasks(
         });
         const result = {
             tasksResults: mappedResults as RawTodoistTask[],
-            projectsResults: projectsMetadata as ObsidianApi.GetAllTasks.CompletedProjectsMap,
-        } as Domain.GetAllCompletedTasks;
+            projectsResults: projectsMetadata as TodoistApi.GetAllTasks.CompletedProjectsMap,
+        } as FetchTasksDomain.GetAllCompletedTasks;
 
         // console.log("output for fetchTasks: ", result)
 
         return result;
     } catch (e) {
-        let errorMsg = ObsidianApi.FetchErrors.HandleErrorMsg(e);
+        let errorMsg = TodoistApi.FetchErrors.HandleErrorMsg(e);
         console.error(errorMsg, e);
         new Notice(errorMsg);
         throw e;

@@ -42,6 +42,24 @@
     - `snake_case` for json and object fields becase todoist also uses it
     - `kebab-case` for filenames and folders
 
+- for obsidian tags I will start with `todoist_` and then the tag name
+```yaml
+---
+date: ${todoist_completed_at}$
+todoist_created_at: str
+todoist_updated_at: str | null
+todoist_completed_at: str | null
+todoist_task_id: str | null
+todoist_project_name: str | null
+todoist_project_id: str | null
+todoist_parent_id: str | null
+todoist_status: done | inprogress | todo
+todoist_is_recurring: boolean
+todoist_lables: str[]
+tags: [todoist, project_name, status]
+---
+```
+
 ## how to run it as dev
 -  `npm install`
 -  `npm run build`

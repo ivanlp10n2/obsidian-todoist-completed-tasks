@@ -88,11 +88,13 @@ export async function updateFileFromServer(
             const folderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
             getOrCreateFolder(folderPath);
             groupedTasks[date].forEach((task) => {
-                let renderedText = renderTasksAsText(
+                console.log("received task", task);
+                let renderedText: string = renderTasksAsText(
                     [task],
                     fetchResults.projectsResults,
                     settings
-                );
+                ).join("\n");
+                console.log("task to create", renderedText);
                 createFile(`${folderPath}/${task.taskId}-${task.content}.md`, renderedText);
             });
         });
