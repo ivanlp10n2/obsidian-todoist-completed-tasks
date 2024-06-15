@@ -3,13 +3,9 @@ import { Notice } from "obsidian";
 import { RawTodoistTask } from "../constants/shared";
 import { TodoistApi, Codecs } from "../constants/fetchTasks";
 import { FetchTasksDomain } from "../constants/fetchTasks";
-import { fold } from 'fp-ts/Either';
-import { pipe } from 'fp-ts/function';
 
 async function debugWrapper(url: string, options: RequestInit): Promise<any> {
     const jsonResponse: any = await fetch(url, options).then((res) => res.json());
-    // const converted: ObsidianApi.GetTask.SingleTaskResponse | ObsidianApi.GetAllTasks.CompletedTasksResponse = jsonResponse;
-    
     return jsonResponse;
 }
 export async function fetchSingleTask(

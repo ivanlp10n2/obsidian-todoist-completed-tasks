@@ -1,7 +1,7 @@
-import { TodoistApi } from 'src/constants/fetchTasks';
 import { RawTodoistTask, TodoistTask } from 'src/constants/shared';
 import { prepareTasksForRendering } from './formatTasks';
 import { renderMarkdown } from '../constants/formatTasks';
+import { TodoistApi } from 'src/constants/fetchTasks';
 
 describe("formatTasks", () => {
 	describe("prepareTasksForRendering", () => {
@@ -52,8 +52,6 @@ describe("formatTasks", () => {
 		}
 	}
 
-
-
 	const singleInput: TodoistTask =
 	{
 		"taskId": "6960733805",
@@ -65,7 +63,8 @@ describe("formatTasks", () => {
 		"updatedAt": null,
 		"dueAt": "2023-06-14T13:00:00",
 		"isRecurring": true,
-		"labels": ["asdb"]
+		"labels": ["asdb"],
+		description : null
 	}
 	const singleOutput: string =
 		`---
@@ -82,13 +81,17 @@ todoist_status: done
 todoist_is_recurring: true
 todoist_labels: asdb
 todosit_status: done
-tags: [todoist, Inbox, done]
+tags: [todoist, todoist-project-Inbox, todoist-status-done]
 ---
+
 ## mandar msj para ver a mariel por el diente sensible
-### Overview
-undefined
+### Description
+
 ### Subtasks
-`
+
+### Href
+App: https://app.todoist.com/app/task/mandar-msj-para-ver-a-mariel-por-el-diente-sensible-6960733805
+Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 
 	const multipleOutput: TodoistTask[] = [
 		{

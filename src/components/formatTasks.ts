@@ -26,15 +26,6 @@ function prepareTasksForRendering(
     tasks: RawTodoistTask[],
     projectsMetadata: TodoistApi.GetAllTasks.CompletedProjectsMap
 ): TodoistTask[] {
-    // const hasParent = (task: RawTodoistTask) => task.parentId !== null;
-    // const tasksWithParentId: RawTodoistTask[] = tasks.filter(hasParent);
-    /**
-     * it's expected to have parent of all childs
-        * what happens when not all childs have parent? maybe task was deleted?
-        * shouldn't happen
-     * set (parent) -- set (child)
-     */
-
     const renderedTasks: TodoistTask[] = tasks
         .map((task) => createTodoistTask(task, projectsMetadata[task.projectId].name));
 

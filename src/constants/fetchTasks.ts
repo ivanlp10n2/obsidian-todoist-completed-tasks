@@ -46,6 +46,8 @@ export module Codecs {
 }
 
 export module TodoistApi {
+    // const TodoistApp = "https://app.todoist.com/app/task"
+	// https://app.todoist.com/app/task/been-operated-or-at-least-schedule-it-7942048825
     const TodoistApi = "https://api.todoist.com/sync/v9";
     export module GetTask {
         export const UrlGetItem = (todoistId: string): string => {
