@@ -17,7 +17,9 @@ const createFile = (filePath: string, renderedText: string) => {
     app.vault.create(filePath, renderedText).then(() => {
         new Notice(`Tasks file ${filePath} created.`);
     }).catch(err => {
-        new Notice(`Error creating file ${filePath}: ${err.message}`);
+        const errorMsg = `Error creating file ${filePath}: ${err.message}`
+        console.error(errorMsg, err)
+        new Notice(errorMsg);
     });
 }
 //get division by { completed-tasks/yyyy/mm/dd/taskid-taskTitle }
@@ -31,7 +33,9 @@ async function createNewFolder(folderPath: string) {
         await app.vault.createFolder(folderPath);
         new Notice('Folder created successfully.');
     } catch (error) {
-        new Notice('Error creating folder: ' + error.message);
+        const errorMsg = 'Error creating folder: ' + error.message
+        console.error(errorMsg, error)
+        new Notice(errorMsg);
     }
 }
 
@@ -61,17 +65,31 @@ export async function updateFileFromServer(
         const [year, month, day] = date.split("-");
         const folderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
         getOrCreateFolder(folderPath);
-        createFileTasks(tasks, fetchResults.projectsResults, folderPath);
+
+        const encodeFilename = (str: string) => str.replace(/[\\/:*?""<>|]/g, '_')
+        deleteFileTasks(tasks, folderPath, encodeFilename)
+        createFileTasks(tasks, fetchResults.projectsResults, folderPath, encodeFilename);
     });
 
     new Notice("Completed tasks loaded.");
 
 }
 
-function createFileTasks(tasks: TodoistTask[], projectsMetadata: any, folderPath: string): void {
+const deleteFileTasks = (tasks: TodoistTask[], folderPath: string, encodeFilename: (str: string) => string): void => {
+    tasks.forEach((task) => {
+        const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
+        const file = app.vault.getAbstractFileByPath(fileName)
+        if (file) {
+            app.vault.delete(file);
+            new Notice(`File ${fileName} override.`);
+        }
+    });
+}
+
+function createFileTasks(tasks: TodoistTask[], projectsMetadata: any, folderPath: string, encodeFilename: (str: string) => string): void {
     tasks.forEach((task) => {
         let markdownContent: string = renderMarkdown(task, projectsMetadata[task.projectId])
-        const fileName = `${folderPath}/${task.taskId}-${task.title}.md`
+        const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
         createFile(fileName, markdownContent);
     });
 }
