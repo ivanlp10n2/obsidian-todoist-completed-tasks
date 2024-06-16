@@ -4,42 +4,52 @@
 ---
 
 ### 📋 current todolist :
-- [x] feat: test serialization and document jsons in code
+- ✅ feat: test serialization and document jsons in code
     - at least `fetchTasks` and `formatTasks`
-- [x] feat: refactor tested code
-- [x] res: define what's the best way to handle data for dataview
+- ✅ feat: refactor tested code
+- ✅ res: define what's the best way to handle data for dataview
     - ✅I will have to `upsert` notes for each task
-    - ✅I will create folders for each day
-        - ✅todoist-sync/YYYY/MM/DD/task-title.md
-        - ✅I would create folders based on `dueAt`
-            -✅ update `status` based on `completedAt`
-        - if is completed -> prefix ✅
-        - if not completed yet -> prefix ⚙️
+		- source of truth is `todoist` and `obsidian` is used for persistence, **pull-only**. 
+        - Obsidian is used for analytics 📈 and monitoring 👀
+    - ✅ will create folders for each day 📅
+    - ⚙separate `tasks` from `planned-tasks` using section name (tbd in domain encoding)
+        - for `tasks` I will use `todoist-sync/YYYY/MM/YYYY-MM-DD/{status-emoji}-task-title.md`
+            - ✅ if is completed -> prefix ✅
+            - ⚙ if not completed yet -> prefix ⚙️ 
+                - (this should consider I'm fetching `completed-tasks` most of the time but when it's parent)
+        - for `planned-tasks` I will use `todoist-sync/YYYY/MM/YYYY-MM-DD/task-title/planned-tasks.md`
+        - ✅I would create folders based on `dueAt` -> `completedAt` -> `createdAt` 
     - with metadata:
         - ✅status: inprogress | completed
-        - section: section-name
+            - ✅ update `status` based on `completedAt`
+        - ✅section: section-name
         - ✅project: project-name
         - ✅createdAt: YYYY-MM-DD:HH:MM:SS
         - ✅dueAt: YYYY-MM-DD:HH:MM:SS
         - ✅completedAt: YYYY-MM-DD:HH:MM:SS
         - ✅priority: 1 (P1 = 4, P2 = 3, P3 = 2, P4 = 1)
         - ✅tags: #todoist #sync #labels
-    - and data structure:
+    - ⚙️ and data structure:
         - ✅description
         - sub-tasks
             - link to `todoist-sync/YYYY/MM/DD/task-title/sub-task-title.md`
+            - think how to link and find them. maybe re-think naming
         - comments
             - link to `todoist-sync/YYYY/MM/DD/task-title/comments.md`
-- [x] res: define how can I save it into a particular path
-    - [x] res: how can I create files in there or put at the end if the already exists
-        - no update. all or none ✅
-- [x] ✅ tech: add new values to test
-- [x] ✅ implement solution. can be a new serialization impl
-    - [x] deserialize
-    - [x] save in folder with upsert strategy
-    - [x] paste script only (depends on how do we handle data) 
-- [x] ✅ test all other important functions to start refactoring
-- [x] ✅ convention in code would be: 
+            - needs to `comments` api client
+        - ✅href
+            - link to `todoist-app` and `todoist-api` at the end for easier debug
+            - `task-name=task_name_replaced_spaces_with_hyphen(-)`
+			- `{task-name}-task-id` lol
+- ✅ res: define how can I save it into a particular path
+    - ✅ res: how can I create files in there or put at the end if the already exists
+-  ✅ tech: add new values to test
+-  ✅ implement solution. can be a new serialization impl
+    - deserialize
+    - save in folder with upsert strategy
+    - paste script only (depends on how do we handle data) 
+- ✅ test all other important functions to start refactoring
+- ✅ convention in code would be: 
     - `startLowerCamelCase` for variable and class names
     - `StartUpperCamelCase` for constants
     - `snake_case` for json and object fields becase todoist also uses it
@@ -78,7 +88,7 @@ tags: [todoist, project_name, status]
 
 ---
 
-## Project structure that I'll go for components
+## Project structure that I'll go for components (side-effect) and functions (pure)
 ```
 src/constants/: stateless - all inside this folder. Should not have side effect with no dependencies. reusable in tests
 src/constants/{component_name}.ts: stateless - types and constants of the component for test re-usability
@@ -98,7 +108,6 @@ I don't know what the domain is. I'll just go for the components and then see if
     - refactor it to a function
     - if it has side-effects or is stateful -> it goes into the file or class
     - if is a pure function -> it goes into constants/s.ts
-
 
 ---
 
