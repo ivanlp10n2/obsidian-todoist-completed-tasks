@@ -28,7 +28,7 @@ export module Codecs {
                 isRecurring: task.item.due?.is_recurring ?? false,
                 labels: task.item.labels,
                 priority: task.item.priority,
-                sectionId: task.section.id
+                sectionId: task.item.section_id
             };
         } else {
             return { //fetch - get-all-api.items

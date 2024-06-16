@@ -11,8 +11,8 @@ export function prepareTasksForRendering(
         .map((task: RawTodoistTask) => 
             CreateTodoistTask(
                 task, 
-                projectsMetadata[task.projectId].name, 
-                sectionMetadata[task.sectionId]?.name
+                projectsMetadata[task.projectId] ? projectsMetadata[task.projectId].name : '', 
+                sectionMetadata[task.sectionId] ? sectionMetadata[task.sectionId].name : ''
             )
         );
 

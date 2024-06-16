@@ -1,4 +1,3 @@
-import { TodoistApi } from "./fetchTasks";
 import { TodoistTask } from "./shared";
 
 export type TimeFrames = {
@@ -8,13 +7,13 @@ export type TimeFrames = {
     timeEndFormattedTime: string;
 }
 
-export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject, section: TodoistApi.GetAllTasks.CompletedTaskSection) => string =
-    (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject, section: TodoistApi.GetAllTasks.CompletedTaskSection) => {
-        const buildTags = (task: TodoistTask, project: TodoistApi.GetAllTasks.CompletedTaskProject, section: TodoistApi.GetAllTasks.CompletedTaskSection) => {
+export const renderMarkdown: (task: TodoistTask) => string =
+    (task: TodoistTask) => {
+        const buildTags = (task: TodoistTask) => {
             const tags = ['todoist']
             const completedStatus = task.completedAt ? 'done' : 'inprogress'
-            const projectName = project.name.replace(' ', '-') ?? 'null'
-            const sectionName = section.name.replace(' ', '-') ?? 'null'
+            const projectName = task.projectName.replace(' ', '-') ?? 'null'
+            const sectionName = task.sectionName.replace(' ', '-') ?? 'null'
             tags.push(`todoist-project-${projectName}`)
             tags.push(`todoist-section-${sectionName}`)
             tags.push(`todoist-status-${completedStatus}`)
@@ -22,9 +21,7 @@ export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks
             return renderTags
         }
         const buildMetadata = (
-            task: TodoistTask,
-            project: TodoistApi.GetAllTasks.CompletedTaskProject,
-            section: TodoistApi.GetAllTasks.CompletedTaskSection
+            task: TodoistTask
         ) => {
             const metaTag = `---`
             const completedStatus = task.completedAt ? 'done' : 'inprogress'
@@ -37,14 +34,14 @@ export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks
                 `\n` + `todoist_section_id: ${task.sectionId ?? 'null'}` + 
                 `\n` + `todoist_created_at: ${task.createdAt}` + 
                 `\n` + `todoist_updated_at: ${task.updatedAt ?? 'null'}` + 
-                `\n` + `todoist_project_name: ${project.name ?? 'null'}` + 
-                `\n` + `todoist_section_name: ${section.name ?? 'null'}` + 
+                `\n` + `todoist_project_name: ${task.projectName ?? 'null'}` + 
+                `\n` + `todoist_section_name: ${task.sectionName ?? 'null'}` + 
                 `\n` + `todoist_completed_at: ${task.completedAt ?? 'null'}` + 
                 `\n` + `todoist_parent_id: ${task.parentId ?? 'null'}` + 
                 `\n` + `todoist_is_recurring: ${task.isRecurring ?? 'false'}` + 
                 `\n` + `todoist_labels: ${task.labels ?? 'null'}` + 
                 `\n` + `todoist_status: ${completedStatus}` + 
-                `\n` + `tags: [${buildTags(task, project, section)}]` + 
+                `\n` + `tags: [${buildTags(task)}]` + 
                 `\n` + `${metaTag}`
         }
 
@@ -77,7 +74,7 @@ export const renderMarkdown: (task: TodoistTask, project: TodoistApi.GetAllTasks
         }
 
         const newRender: string =
-            buildMetadata(task, project, section) +
+            buildMetadata(task) +
             `\n` +
             `${buildSubTitle(task)}` +
             `${buildDescription(task)}` +

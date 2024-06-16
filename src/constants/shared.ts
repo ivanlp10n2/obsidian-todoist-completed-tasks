@@ -64,23 +64,3 @@ export function CreateTodoistTask(
         sectionName: sectionName
     };
 }
-
-export const createTodoistTask2 = (task: RawTodoistTask, projectName: string, sectionName: string): TodoistTask => {
-    return {
-        taskId: task.taskId,
-        title: task.content,
-        completedAt: task.completedAt,
-        projectId: task.projectId,
-        projectName: projectName,
-        parentId: task.parentId,
-        childTasks: [],
-        createdAt: task.createdAt,
-        updatedAt: task.updatedAt === NeverUpdated ? null : task.updatedAt,
-        dueAt: task.dueAt,
-        isRecurring: task.isRecurring,
-        labels: task.labels,
-        priority: task.priority,
-        sectionId: task.sectionId,
-        sectionName: sectionName
-    };
-}

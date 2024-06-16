@@ -14,7 +14,7 @@ describe("formatTasks", () => {
 
 	describe("renderTasksAsText", () => {
 		it("should render for a single task", () => {
-			const result = renderMarkdown(singleInput, inputProjects[singleInput.projectId], inputSections[singleInput.sectionId])
+			const result = renderMarkdown(singleInput)
 			expect(result).toEqual(singleOutput);
 		})
 	})
@@ -109,7 +109,9 @@ describe("formatTasks", () => {
 		"labels": ["asdb"],
 		description: null,
 		priority: 1,
-		sectionId: '117184028', sectionName: 'Better me'
+		sectionId: '117184028', 
+		sectionName: 'Better me',
+		projectName: 'Inbox'
 	}
 	const singleOutput: string =
 		`---
