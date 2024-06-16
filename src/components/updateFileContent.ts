@@ -37,12 +37,8 @@ export async function updateFileFromServer(
 
     const currentPath = app.workspace.getActiveFile().parent.path;
     Object.entries(filteredGroupedTasks).forEach(([date, tasks]) => {
-        const [year, month, day] = date.split("-");
-        const dailyFolderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
-        getOrCreateFolder(dailyFolderPath);
-        const monthFolderPath = `${currentPath}/completed-tasks/${year}/${month}`;
 
-        const [dailyTasks, projectTasks]  = partitionArray(tasks, 
+        const [dailyTasks, projectTasks] = partitionArray(tasks,
             (task: TodoistTask) => {
                 if (task.sectionId && !task.sectionName)
                     console.error("task.sectionId && !task.sectionName", task)
@@ -50,59 +46,53 @@ export async function updateFileFromServer(
             }
         )
 
-        const encodeFilename = (str: string) => str.replace(/[\\/:*?""<>|]/g, '_')
-        upsertProjectTasks(projectTasks, monthFolderPath, encodeFilename)
-        upsertDailyTasks(dailyTasks, dailyFolderPath, encodeFilename)
+        upsertAllTasks(date, projectTasks, dailyTasks, currentPath)
     });
 
     new Notice("Completed tasks loaded.");
-}
-function upsertProjectTasks(
-    ideas: TodoistTask[], 
-    monthFolder: string, 
-    encodeFilename: (str: string) => string
-): void {
-    ideas.forEach((idea: TodoistTask) => {
-        const fileName = `${monthFolder}/${prefixName(idea)}-${idea.taskId}-${encodeFilename(idea.title)}.md`
-        deleteFileTasks([idea], monthFolder, encodeFilename)
-        createFileTasks([idea], monthFolder, encodeFilename);
-    });
-}
-function upsertDailyTasks(
-    tasks: TodoistTask[], 
-    dayFolder: string, 
-    encodeFilename: (str: string) => string
-): void {
-    tasks.forEach((task: TodoistTask) => {
-        const fileName = `${dayFolder}/${prefixName(task)}-${task.taskId}-${encodeFilename(task.title)}.md`
-        deleteFileTasks([task], dayFolder, encodeFilename)
-        createFileTasks([task], dayFolder, encodeFilename);
-    });
 }
 
 function partitionArray<T>(array: T[], criteria: (item: T) => boolean): [T[], T[]] {
     const truePartition = array.filter(criteria);
     const falsePartition = array.filter(item => !criteria(item));
     return [truePartition, falsePartition];
-  }
-  
-const deleteFileTasks = (tasks: TodoistTask[], folderPath: string, encodeFilename: (str: string) => string): void => {
-    tasks.forEach((task) => {
-        const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
-        const file = app.vault.getAbstractFileByPath(fileName)
-        if (file) {
-            app.vault.delete(file);
-            new Notice(`File ${fileName} override.`);
-        }
+}
+
+function upsertAllTasks(date: string, projectTasks: TodoistTask[], dailyTasks: TodoistTask[], currentPath: string) {
+    const [year, month, day] = date.split("-");
+
+    const monthFolderPath = `${currentPath}/completed-tasks/${year}/${month}`;
+    upsertTasks(projectTasks, monthFolderPath)
+
+    const dailyFolderPath = `${monthFolderPath}/${year}-${month}-${day}`;
+    upsertTasks(dailyTasks, dailyFolderPath)
+}
+
+function upsertTasks(
+    tasks: TodoistTask[],
+    folder: string,
+): void {
+    const encodeFilename = (str: string) => str.replace(/[\\/:*?""<>|]/g, '_')
+    getOrCreateFolder(folder);
+    tasks.forEach((task: TodoistTask) => {
+        deleteFileTask(task, folder, encodeFilename)
+        createFileTask(task, folder, encodeFilename);
     });
 }
 
-function createFileTasks(tasks: TodoistTask[], folderPath: string, encodeFilename: (str: string) => string): void {
-    tasks.forEach((task) => {
-        let markdownContent: string = renderMarkdown(task)
-        const fileName = `${folderPath}/${prefixName(task)}-${task.taskId}-${encodeFilename(task.title)}.md`
-        createFile(fileName, markdownContent);
-    });
+const deleteFileTask = (task: TodoistTask, folderPath: string, encodeFilename: (str: string) => string): void => {
+    const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
+    const file = app.vault.getAbstractFileByPath(fileName)
+    if (file) {
+        app.vault.delete(file);
+        new Notice(`File ${fileName} override.`);
+    }
+}
+
+function createFileTask(task: TodoistTask, folderPath: string, encodeFilename: (str: string) => string): void {
+    let markdownContent: string = renderMarkdown(task)
+    const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
+    createFile(fileName, markdownContent);
 }
 
 const prefixName = (task: TodoistTask) => {
@@ -139,9 +129,9 @@ type GroupedTasks = {
 const groupTasksByDate = (tasks: TodoistTask[]): GroupedTasks => {
     const map = new Map<string, TodoistTask[]>();
     const dateCriteria: (task: TodoistTask) => string = (task: TodoistTask) => {
-        return task.completedAt ? task.completedAt
-            : task.dueAt ? task.dueAt
-                : task.createdAt;
+        return task.dueAt ? task.dueAt
+            : task.completedAt ? task.completedAt
+            : task.createdAt;
     }
     tasks.forEach((task: TodoistTask) => {
         //utc

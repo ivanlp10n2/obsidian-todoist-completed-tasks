@@ -115,19 +115,19 @@ describe("formatTasks", () => {
 	}
 	const singleOutput: string =
 		`---
-date: 2023-06-14T15:02:37.000000Z
-todoist_task_id: 6960733805
+date: 2023-06-14T13:00:00
 todoist_is_completed: true
+todoist_is_recurring: true
+todoist_created_at: 2023-06-13T02:06:05.175619Z
+todoist_updated_at: null
+todoist_task_id: 6960733805
 todoist_priority: 1
 todoist_project_id: 1777918547
 todoist_section_id: 117184028
-todoist_created_at: 2023-06-13T02:06:05.175619Z
-todoist_updated_at: null
 todoist_project_name: Inbox
 todoist_section_name: Better me
 todoist_completed_at: 2023-06-14T15:02:37.000000Z
 todoist_parent_id: null
-todoist_is_recurring: true
 todoist_labels: asdb
 todoist_status: done
 tags: [todoist, todoist-project-Inbox, todoist-section-Better-me, todoist-status-done]
