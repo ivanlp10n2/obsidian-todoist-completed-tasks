@@ -1,38 +1,23 @@
 import { TodoistApi } from "src/constants/fetchTasks";
-import { TodoistTask } from "src/constants/shared";
-import { RawTodoistTask } from "../constants/shared";
+import { RawTodoistTask, TodoistTask, CreateTodoistTask } from "../constants/shared";
 
 
-const neverUpdated = "1970-01-01T00:00:00Z";
-
-function createTodoistTask(task: RawTodoistTask, projectName: string): TodoistTask {
-    return {
-        taskId: task.taskId,
-        title: task.content,
-        completedAt: task.completedAt,
-        projectId: task.projectId,
-        projectName,
-        parentId: task.parentId,
-        childTasks: [],
-        createdAt: task.createdAt,
-        updatedAt: task.updatedAt === neverUpdated ? null : task.updatedAt,
-        dueAt: task.dueAt,
-        isRecurring: task.isRecurring,
-        labels: task.labels,
-        priority: task.priority,
-        sectionId: task.sectionId
-    };
-}
-
-function prepareTasksForRendering(
+export function prepareTasksForRendering(
     tasks: RawTodoistTask[],
-    projectsMetadata: TodoistApi.GetAllTasks.CompletedProjectsMap
+    projectsMetadata: TodoistApi.GetAllTasks.CompletedProjectsMap,
+    sectionMetadata: TodoistApi.GetAllTasks.CompletedSectionsMap
 ): TodoistTask[] {
     const renderedTasks: TodoistTask[] = tasks
-        .map((task) => createTodoistTask(task, projectsMetadata[task.projectId].name));
+        .map((task: RawTodoistTask) => 
+            CreateTodoistTask(
+                task, 
+                projectsMetadata[task.projectId].name, 
+                sectionMetadata[task.sectionId]?.name
+            )
+        );
 
-    renderedTasks.forEach((task) => {
-        const parentTaskIndex: number = renderedTasks.findIndex((t) => t.taskId === task.parentId);
+    renderedTasks.forEach((task: TodoistTask) => {
+        const parentTaskIndex: number = renderedTasks.findIndex((t: TodoistTask) => t.taskId === task.parentId);
         const isParentTaskFound = parentTaskIndex !== -1;
         if (isParentTaskFound) {
             renderedTasks[parentTaskIndex].childTasks.push(task.taskId);
@@ -41,6 +26,4 @@ function prepareTasksForRendering(
 
     return renderedTasks;
 }
-
-export { prepareTasksForRendering };
 

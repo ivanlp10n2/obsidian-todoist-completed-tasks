@@ -12,32 +12,7 @@ import {
     segmentsCheck,
     settingsCheck,
 } from "./utils";
-
-const createFile = (filePath: string, renderedText: string) => {
-    app.vault.create(filePath, renderedText).then(() => {
-        new Notice(`Tasks file ${filePath} created.`);
-    }).catch(err => {
-        const errorMsg = `Error creating file ${filePath}: ${err.message}`
-        console.error(errorMsg, err)
-        new Notice(errorMsg);
-    });
-}
-//get division by { completed-tasks/yyyy/mm/dd/taskid-taskTitle }
-function getOrCreateFolder(folderPath: string) {
-    const folder = app.vault.getAbstractFileByPath(folderPath)
-    if (!folder) { createNewFolder(folderPath) }
-}
-
-async function createNewFolder(folderPath: string) {
-    try {
-        await app.vault.createFolder(folderPath);
-        new Notice('Folder created successfully.');
-    } catch (error) {
-        const errorMsg = 'Error creating folder: ' + error.message
-        console.error(errorMsg, error)
-        new Notice(errorMsg);
-    }
-}
+import { FetchTasksDomain } from "../constants/fetchTasks";
 
 export async function updateFileFromServer(
     settings: TodoistSettings,
@@ -54,9 +29,9 @@ export async function updateFileFromServer(
     ) { return; }
 
     let timeFrames: any = getTimeFrames(fetchStrategy, time, fileContent);
-    const fetchResults: any = await fetchCompletedTasks(settings.authToken, timeFrames);
+    const fetchResults: FetchTasksDomain.GetAllCompletedTasks = await fetchCompletedTasks(settings.authToken, timeFrames);
 
-    let formattedTasks: TodoistTask[] = prepareTasksForRendering(fetchResults.tasksResults, fetchResults.projectsResults);
+    let formattedTasks: TodoistTask[] = prepareTasksForRendering(fetchResults.tasksResults, fetchResults.projectsResults, fetchResults.sectionsResults);
     let groupedTasks: GroupedTasks = groupTasksByDate(formattedTasks);
     const filteredGroupedTasks: GroupedTasks = filterInvalidTasks(groupedTasks);
 
@@ -66,6 +41,10 @@ export async function updateFileFromServer(
         const folderPath = `${currentPath}/completed-tasks/${year}/${month}/${year}-${month}-${day}`;
         getOrCreateFolder(folderPath);
 
+        // const [sectionIdeas, sectionTasks]  = partitionArray(tasks, (task) => 
+            // task.sectionId === settings.sectionIdeasId
+        // )
+
         const encodeFilename = (str: string) => str.replace(/[\\/:*?""<>|]/g, '_')
         deleteFileTasks(tasks, folderPath, encodeFilename)
         createFileTasks(tasks, fetchResults.projectsResults, folderPath, encodeFilename);
@@ -74,7 +53,12 @@ export async function updateFileFromServer(
     new Notice("Completed tasks loaded.");
 
 }
-
+function partitionArray<T>(array: T[], criteria: (item: T) => boolean): [T[], T[]] {
+    const truePartition = array.filter(criteria);
+    const falsePartition = array.filter(item => !criteria(item));
+    return [truePartition, falsePartition];
+  }
+  
 const deleteFileTasks = (tasks: TodoistTask[], folderPath: string, encodeFilename: (str: string) => string): void => {
     tasks.forEach((task) => {
         const fileName = `${folderPath}/${task.taskId}-${encodeFilename(task.title)}.md`
@@ -149,3 +133,30 @@ const filterInvalidTasks: (groupedTasks: GroupedTasks) => GroupedTasks = (groupe
         .filter(([key, _]) => key !== 'Invalid date')
         .sort(([a, _], [b, __]) => a.localeCompare(b))
 );
+
+const createFile = (filePath: string, renderedText: string) => {
+    app.vault.create(filePath, renderedText).then(() => {
+        new Notice(`Tasks file ${filePath} created.`);
+    }).catch(err => {
+        const errorMsg = `Error creating file ${filePath}: ${err.message}`
+        console.error(errorMsg, err)
+        new Notice(errorMsg);
+    });
+}
+//get division by { completed-tasks/yyyy/mm/dd/taskid-taskTitle }
+function getOrCreateFolder(folderPath: string) {
+    const folder = app.vault.getAbstractFileByPath(folderPath)
+    if (!folder) { createNewFolder(folderPath) }
+}
+
+async function createNewFolder(folderPath: string) {
+    try {
+        await app.vault.createFolder(folderPath);
+        new Notice('Folder created successfully.');
+    } catch (error) {
+        const errorMsg = 'Error creating folder: ' + error.message
+        console.error(errorMsg, error)
+        new Notice(errorMsg);
+    }
+}
+

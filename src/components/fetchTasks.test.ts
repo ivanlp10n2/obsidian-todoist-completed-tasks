@@ -373,7 +373,7 @@ describe('fetchTasks component', () => {
     }
 }
   `
-const getSingleChildrenApiResponse: string = `
+  const getSingleChildrenApiResponse: string = `
   {
     "ancestors": [
         {
@@ -473,7 +473,7 @@ const getSingleChildrenApiResponse: string = `
     }
 }`
 
-const getAllCompletedTasksApiResponse: string = `
+  const getAllCompletedTasksApiResponse: string = `
   {
     "items": [
         {
@@ -557,7 +557,7 @@ const getAllCompletedTasksApiResponse: string = `
         }
       }
   }`
-const getSingleTaskApiResponse: string = `{
+  const getSingleTaskApiResponse: string = `{
     "ancestors": [],
     "item": {
         "added_at": "2023-06-14T11:43:05.493517Z",
@@ -630,10 +630,10 @@ const getSingleTaskApiResponse: string = `{
     }
 }
   `
-const getSingleTaskAPI = JSON.parse(getSingleTaskApiResponse)
-const getSingleChildrenTaskAPI = JSON.parse(getSingleChildrenApiResponse)
-const getSingleParentTaskAPI = JSON.parse(getParentApiResponse)
-const getAllCompletedTasksAPI = JSON.parse(getAllCompletedTasksApiResponse)
-  })
+  const getSingleTaskAPI: TodoistApi.GetAllTasks.CompletedTasksResponse = JSON.parse(getSingleTaskApiResponse)
+  const getSingleChildrenTaskAPI: TodoistApi.GetAllTasks.CompletedTasksResponse = JSON.parse(getSingleChildrenApiResponse)
+  const getSingleParentTaskAPI: TodoistApi.GetAllTasks.CompletedTasksResponse = JSON.parse(getParentApiResponse)
+  const getAllCompletedTasksAPI: TodoistApi.GetAllTasks.CompletedTasksResponse = JSON.parse(getAllCompletedTasksApiResponse)
+})
 
 

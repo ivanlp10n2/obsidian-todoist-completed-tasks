@@ -11,12 +11,11 @@ async function debugWrapper(url: string, options: RequestInit): Promise<any> {
 export async function fetchSingleTask(
     authToken: string,
     taskId: string,
-    // fetchJsonResponse: (url: string, options: RequestInit) => Promise<ObsidianGetTaskApi.ObsidianItemApi> = debugWrapper
     fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
 ): Promise<RawTodoistTask> {
     try {
         const url = TodoistApi.GetTask.UrlGetItem(taskId);
-        let task = await fetchJsonResponse(url,
+        let task: RawTodoistTask = await fetchJsonResponse(url,
             { headers: { Authorization: `Bearer ${authToken}` }, })
             .then((res: any) => { return Codecs.ConvertToRawDomain(res, true); });
         return task;
@@ -31,9 +30,8 @@ export async function fetchSingleTask(
 export async function fetchCompletedTasks(
     authToken: string,
     timeFrames: any,
-    // fetchJsonResponse: (url: string, options: RequestInit) => Promise<ObsidianCompletedTaskApi.CompletedTasksApiResponse> = debugWrapper
-    fetchJsonResponse: (url: string, options: RequestInit) => Promise<any> = debugWrapper
-): Promise<any> {
+    fetchJsonResponse: (url: string, options: RequestInit) => Promise<TodoistApi.GetAllTasks.CompletedTasksResponse> = debugWrapper
+): Promise<FetchTasksDomain.GetAllCompletedTasks> {
     const {
         timeStartFormattedDate,
         timeStartFormattedTime,
@@ -41,7 +39,6 @@ export async function fetchCompletedTasks(
         timeEndFormattedTime,
     } = timeFrames;
 
-    // const limit = renderSubtasks ? 30 : 200;
     const limit = TodoistApi.GetAllTasks.Limit;
     const url = TodoistApi.GetAllTasks.UrlGetAllItems({
         timeStartFormattedDate: timeStartFormattedDate,
@@ -56,12 +53,14 @@ export async function fetchCompletedTasks(
         const completedTasksResponse: TodoistApi.GetAllTasks.CompletedTasksResponse = await fetchJsonResponse(url, {
             headers: { Authorization: `Bearer ${authToken}`, },
         })
-        // If there are no completed tasks, return an empty array
-        if (completedTasksResponse.items.length === 0) {
-            return mappedResults;
-        }
 
-        const projectsMetadata = completedTasksResponse.projects;
+        if (completedTasksResponse.items.length === 0) {
+            return {
+                tasksResults: mappedResults,
+                projectsResults: {},
+                sectionsResults: {},
+            } as FetchTasksDomain.GetAllCompletedTasks;
+        }
 
         new Notice(
             completedTasksResponse.items.length +
@@ -113,7 +112,7 @@ export async function fetchCompletedTasks(
         });
         const result = {
             tasksResults: mappedResults as RawTodoistTask[],
-            projectsResults: projectsMetadata as TodoistApi.GetAllTasks.CompletedProjectsMap,
+            projectsResults: completedTasksResponse.projects as TodoistApi.GetAllTasks.CompletedProjectsMap,
             sectionsResults: completedTasksResponse.sections as TodoistApi.GetAllTasks.CompletedSectionsMap,
         } as FetchTasksDomain.GetAllCompletedTasks;
 

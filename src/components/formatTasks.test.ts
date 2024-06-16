@@ -6,7 +6,7 @@ import { TodoistApi } from 'src/constants/fetchTasks';
 describe("formatTasks", () => {
 	describe("prepareTasksForRendering", () => {
 		it("should add parent tasks", () => {
-			const renderedTasks: TodoistTask[] = prepareTasksForRendering(multipleInput, inputProjects);
+			const renderedTasks: TodoistTask[] = prepareTasksForRendering(multipleInput, inputProjects, inputSections);
 			const sorted = (tasks: TodoistTask[]) => tasks.sort((a, b) => a.taskId.localeCompare(b.taskId));
 			expect(sorted(renderedTasks)).toEqual(sorted(multipleOutput));
 		})
@@ -14,7 +14,7 @@ describe("formatTasks", () => {
 
 	describe("renderTasksAsText", () => {
 		it("should render for a single task", () => {
-			const result = renderMarkdown(singleInput, inputProjects[singleInput.projectId])
+			const result = renderMarkdown(singleInput, inputProjects[singleInput.projectId], inputSections[singleInput.sectionId])
 			expect(result).toEqual(singleOutput);
 		})
 	})
@@ -52,6 +52,49 @@ describe("formatTasks", () => {
 		}
 	}
 
+	/**
+	 *         export type CompletedTaskSection = {
+            added_at: string;
+            archived_at: string | null;
+            collapsed: boolean;
+            id: string;
+            is_archived: boolean;
+            is_deleted: boolean;
+            name: string;
+            project_id: string;
+            section_order: number;
+            user_id: string;
+        }
+
+
+	 */
+	const inputSections: TodoistApi.GetAllTasks.CompletedSectionsMap =  {
+		"117184024": {
+		  "added_at": "2023-03-02T01:49:42.955631Z",
+		  "archived_at": null,
+		  "collapsed": false,
+		  "id": "117184024",
+		  "is_archived": false,
+		  "is_deleted": false,
+		  "name": "material tasks",
+		  "project_id": "2308886701",
+		  "section_order": 12,
+		  "user_id": "7429672",
+		},
+		"117184028": {
+		  "added_at": "2023-03-02T01:49:42.278867Z",
+		  "archived_at": null,
+		  "collapsed": false,
+		  "id": "117184028",
+		  "is_archived": false,
+		  "is_deleted": false,
+		  "name": "Better me",
+		  "project_id": "2308886701",
+		  "section_order": 1,
+		  "user_id": "7429672",
+		},
+	  }
+
 	const singleInput: TodoistTask =
 	{
 		"taskId": "6960733805",
@@ -66,7 +109,7 @@ describe("formatTasks", () => {
 		"labels": ["asdb"],
 		description: null,
 		priority: 1,
-		sectionId: '117184028'
+		sectionId: '117184028', sectionName: 'Better me'
 	}
 	const singleOutput: string =
 		`---
@@ -79,12 +122,13 @@ todoist_section_id: 117184028
 todoist_created_at: 2023-06-13T02:06:05.175619Z
 todoist_updated_at: null
 todoist_project_name: Inbox
+todoist_section_name: Better me
 todoist_completed_at: 2023-06-14T15:02:37.000000Z
 todoist_parent_id: null
 todoist_is_recurring: true
 todoist_labels: asdb
 todoist_status: done
-tags: [todoist, todoist-project-Inbox, todoist-status-done]
+tags: [todoist, todoist-project-Inbox, todoist-section-Better-me, todoist-status-done]
 ---
 
 ## mandar msj para ver a mariel por el diente sensible
@@ -412,7 +456,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: ['gilada'],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me',
 		},
 		{
 			taskId: '6919294025',
@@ -428,7 +472,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me',
 		},
 		{
 			taskId: '6917841350',
@@ -444,7 +488,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6920094789',
@@ -460,7 +504,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6841124029',
@@ -476,7 +520,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6868152840',
@@ -492,7 +536,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6844551059',
@@ -508,7 +552,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6917765156',
@@ -524,7 +568,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: ['gilada'],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6915250355',
@@ -540,7 +584,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6898140280',
@@ -556,7 +600,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6914319149',
@@ -572,7 +616,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6885360249',
@@ -588,7 +632,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6898104425',
@@ -604,7 +648,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6898103720',
@@ -620,7 +664,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6909912829',
@@ -636,7 +680,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6841115479',
@@ -652,7 +696,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6841119029',
@@ -668,7 +712,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6841105886',
@@ -684,7 +728,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6898082561',
@@ -700,7 +744,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6876083667',
@@ -716,7 +760,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 		{
 			taskId: '6898058993',
@@ -732,7 +776,7 @@ Api: https://api.todoist.com/sync/v9/items/get?item_id=6960733805`
 			isRecurring: false,
 			labels: [],
 			priority: 1,
-			sectionId: '117184028'
+			sectionId: '117184028', sectionName: 'Better me'
 		},
 	];
 
