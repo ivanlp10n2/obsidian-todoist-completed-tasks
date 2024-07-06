@@ -4,9 +4,6 @@
 ---
 
 ### 📋 current todolist :
-- ✅ feat: test serialization and document jsons in code
-    - at least `fetchTasks` and `formatTasks`
-- ✅ feat: refactor tested code
 - ✅ res: define what's the best way to handle data for dataview
     - ✅I will have to `upsert` notes for each task
 		- source of truth is `todoist` and `obsidian` is used for persistence, **pull-only**. 
@@ -15,13 +12,12 @@
     - ⚙separate `tasks` from `planned-tasks` using section name (tbd in domain encoding)
         - for `tasks` I will use `todoist-sync/YYYY/MM/YYYY-MM-DD/{status-emoji}-task-title.md`
             - ✅ if is completed -> prefix ✅
-            - ⚙ if not completed yet -> prefix ⚙️ 
+            - ⚙️ if not completed yet -> prefix ⚙️ 
                 - (this should consider I'm fetching `completed-tasks` most of the time but when it's parent)
         - for `planned-tasks` I will use `todoist-sync/YYYY/MM/YYYY-MM-DD/task-title/planned-tasks.md`
         - ✅I would create folders based on `dueAt` -> `completedAt` -> `createdAt` 
-    - with metadata:
-        - ✅status: inprogress | completed
-            - ✅ update `status` based on `completedAt`
+    - ✅with metadata:
+        - ✅status: inprogress | completed. ✅ update `status` based on `completedAt`
         - ✅section: section-name
         - ✅project: project-name
         - ✅createdAt: YYYY-MM-DD:HH:MM:SS

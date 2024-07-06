@@ -24,6 +24,8 @@ export function prepareTasksForRendering(
         }
     });
 
+    console.log("final rendered TODOIST TASKS:", renderedTasks)
+
     return renderedTasks;
 }
 
