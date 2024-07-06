@@ -1,5 +1,8 @@
 # Todoist Completed Tasks - Obsidian Plugin
 #### forked to do my things, donations are for they
+#### Update 20240706: I did a new repository with a new architecture. I'll follow from there. see if you can find it in the repos. I want to decouple `todoist-api` and `obsidian-todoist task management`. and at some point build some sync thing for my own things, now my main motivation is to have it all in my vault for future analysis and data insights. but if you're interested in re-use it for your own purposes feel 100% free to do so.
+
+Thanks to the original maintainer for this project that I used as bootstrap to understand the domain of todoist. I couldn't find motivation and seeing this work moved me to build my own too. thanks for sharing :) 
 
 ---
 
